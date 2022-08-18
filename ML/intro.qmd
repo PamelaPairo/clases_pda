@@ -1,0 +1,46 @@
+---
+title: "Aprendizaje Supervisado"
+author: "Pamela E. Pairo"
+title-slide-attributes:
+    data-background-image: "img/portada.jpg"
+format: 
+  revealjs:
+    slide-number: c
+    incremental: true
+    width: 1600
+    height: 1000
+    logo: "img/logo.jpg"
+    footer: "[Introducción al Aprendizaje Automático](https://github.com/PamelaPairo/clases_pda)"
+    theme: mytheme.scss
+    chalkboard:
+      theme: whiteboard
+      boardmarker-width: 5
+      buttons: false
+    echo: true
+editor: visual
+---
+
+## Sobre Mi {.center .center-x background-color="#1c5253"}
+
+![](img/pairo.png){.fragment width="250" fig-align="center"}
+
+. . .
+
+Formación: Lic. y Dra en Cs Biológicas (Ecóloga de Comunidades)
+
+. . .
+
+Comencé el camino de la Ciencia de Datos en el 2020.
+
+. . .
+
+Trabajé en el Área de Desarrollos y Soluciones Ambientales de la Comisión Nacional de Actividades Espaciales (CONAE)
+
+. . .
+
+Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) - AFIP
+
+. . .
+
+Mail: pamepairo@gmail.com 
+
