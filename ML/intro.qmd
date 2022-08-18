@@ -20,7 +20,9 @@ format:
 editor: visual
 ---
 
-## Sobre Mi {.center .center-x background-color="#1c5253"}
+# Sobre Mi {.center .center-x background-color="#1c5253"}
+
+. . .
 
 ![](img/pairo.png){.fragment width="250" fig-align="center"}
 
@@ -42,5 +44,10 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 
 . . .
 
-Mail: pamepairo@gmail.com 
+Mail: pamepairo@gmail.com
 
+. . .
+
+## ¿Que es la Ciencia de Datos?
+
+![](http://anabelforte.com/wp-content/uploads/2020/06/3patas.png){fig-align="center"}
