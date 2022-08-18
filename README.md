@@ -1,1 +1,1 @@
-# Materiales de las clases de Machine Learning del Posgrado en Digital Accounting- UCEMA
+# Materiales de las clases de "Práctica y técnicas en Ciencia de Datos" del Posgrado en Digital Accounting
