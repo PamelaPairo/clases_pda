@@ -11,7 +11,7 @@ format:
     height: 1000
     logo: "img/logo.jpg"
     footer: "[Introducción al Aprendizaje Automático](https://github.com/PamelaPairo/clases_pda)"
-    theme: mytheme.scss
+    theme: [default, mytheme.scss]
     chalkboard:
       theme: whiteboard
       boardmarker-width: 5
@@ -46,8 +46,10 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 
 Mail: pamepairo@gmail.com
 
-. . .
 
-## ¿Que es la Ciencia de Datos?
 
-![](http://anabelforte.com/wp-content/uploads/2020/06/3patas.png){fig-align="center"}
+## ¿Que es la Ciencia de Datos? {chalkboard-buttons="true"}
+
+![](http://anabelforte.com/wp-content/uploads/2020/06/3patas.png){.fragment width="850" fig-align="center"}
+
+>Conjunto de disciplinas que utiliza métodos científicos para obtener conocimientos a partir de los datos dándoles un mayor valor.
