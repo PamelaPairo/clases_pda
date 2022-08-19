@@ -18,6 +18,7 @@ format:
       buttons: false
     echo: true
 editor: visual
+self-contained: true
 ---
 
 # Sobre Mi {.center .center-x background-color="#1c5253"}
