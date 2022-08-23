@@ -81,3 +81,26 @@ Mail: pamepairo@gmail.com
 Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferencias-ia-deep-machine-learning/)
 :::
 
+## Machine learning
+
+![](https://redshiftzero.github.io/img/ml_applications.png){.fragment width="1000" fig-align="center"}
+
+## Ejemplos en negocios `r emo::ji("dollar")`
+
+![](img/logos.jpg){.absolute top=200 left=0 width="450" height="350"}
+
+![](img/cards.png){.absolute top=50 right=50 width="450" height="300"}
+
+![](img/netflix.jpg){.absolute bottom=0 right=30 width="350" height="350"}
+
+## Tipos de Aprendizaje
+
+- [**Aprendizaje supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + salida esperada
+
+- [**Aprendizaje no supervisado**]{style="color: #88188a;"}: Datos de entrenamiento (sin salida esperada)
+
+- [**Aprendizaje semi-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + pocas salida esperadas
+
+- [**Aprendizaje auto-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento auto generados (tareas pretexto)
+
+- [**Aprendizaje por refuerzo**]{style="color: #88188a;"}: "Recompensas" por secuencias de acciones

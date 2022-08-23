@@ -380,8 +380,28 @@
 <div class="footer">
 <p>Imagen extraída de <a href="https://hardzone.es/tutoriales/rendimiento/diferencias-ia-deep-machine-learning/">aquí</a></p>
 </div>
-<p><img src="img/logo.jpg" class="slide-logo"></p>
-<div class="footer footer-default">
+</section>
+<section id="machine-learning" class="slide level2">
+<h2>Machine learning</h2>
+
+<img data-src="https://redshiftzero.github.io/img/ml_applications.png" class="fragment r-stretch quarto-figure-center" width="1000"></section>
+<section id="ejemplos-en-negocios" class="slide level2">
+<h2>Ejemplos en negocios 💵</h2>
+<p><img data-src="img/logos.jpg" class="absolute" style="top: 200px; left: 0px; width: 450px; height: 350px; "></p>
+<p><img data-src="img/cards.png" class="absolute" style="top: 50px; right: 50px; width: 450px; height: 300px; "></p>
+<p><img data-src="img/netflix.jpg" class="absolute" style="bottom: 0px; right: 30px; width: 350px; height: 350px; "></p>
+</section>
+<section id="tipos-de-aprendizaje" class="slide level2">
+<h2>Tipos de Aprendizaje</h2>
+<ul>
+<li class="fragment"><p><span style="color: #88188a;"><strong>Aprendizaje supervisado</strong></span>: Datos de entrenamiento + salida esperada</p></li>
+<li class="fragment"><p><span style="color: #88188a;"><strong>Aprendizaje no supervisado</strong></span>: Datos de entrenamiento (sin salida esperada)</p></li>
+<li class="fragment"><p><span style="color: #88188a;"><strong>Aprendizaje semi-supervisado</strong></span>: Datos de entrenamiento + pocas salida esperadas</p></li>
+<li class="fragment"><p><span style="color: #88188a;"><strong>Aprendizaje auto-supervisado</strong></span>: Datos de entrenamiento auto generados (tareas pretexto)</p></li>
+<li class="fragment"><p><span style="color: #88188a;"><strong>Aprendizaje por refuerzo</strong></span>: “Recompensas” por secuencias de acciones</p></li>
+</ul>
+
+<img src="img/logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://github.com/PamelaPairo/clases_pda">Introducción al Aprendizaje Automático</a></p>
 </div>
 </section></section>
@@ -598,6 +618,48 @@
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
