@@ -6,7 +6,7 @@ title-slide-attributes:
 format: 
   revealjs:
     slide-number: c
-    incremental: true
+    incremental: false
     width: 1600
     height: 1000
     logo: "img/logo.jpg"
@@ -97,10 +97,35 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 
 - [**Aprendizaje supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + salida esperada
 
+. . .
+
 - [**Aprendizaje no supervisado**]{style="color: #88188a;"}: Datos de entrenamiento (sin salida esperada)
+
+. . .
 
 - [**Aprendizaje semi-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + pocas salida esperadas
 
+. . .
+
 - [**Aprendizaje auto-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento auto generados (tareas pretexto)
 
+. . .
+
 - [**Aprendizaje por refuerzo**]{style="color: #88188a;"}: "Recompensas" por secuencias de acciones
+
+## Tipos de aprendizaje {chalkboard-buttons="true"}
+
+![](img/ml.png){.fragment width="1000" fig-align="center"}
+
+## Conceptos Importantes `r emo::ji("bulb")` 
+
+* [__Muestra, punto, observación, instancia__]{style="color: #1c5253;"} se refiere a una unidad de análisis.
+
+* [__Atributos, predictores, variables independientes o descriptores__]{style="color: #1c5253;"} son los datos de entrada para la ecuación de predicción.
+
+* [__Salida, variable dependiente, variable respuesta, clase, o "target"__]{style="color: #1c5253;"} es la cantidad a ser predicha. 
+
+* [__Datos categóricos, también conocidos como nominales o atributos__]{style="color: #1c5253;"} toman valores específicos que no tienen escala. Ejemplo: bueno/malo, rojo/azul, etc. 
+
+* [__Datos continuos__]{style="color: #1c5253;"} son a base de escalas numéricas. El costo de un producto, la presión sanguínea, etc.
+
