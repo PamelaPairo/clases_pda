@@ -18,7 +18,6 @@ format:
       buttons: false
     echo: true
 editor: visual
-self-contained: true
 ---
 
 # Sobre Mi {.center .center-x background-color="#1c5253"}
@@ -47,10 +46,38 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 
 Mail: pamepairo@gmail.com
 
-
-
 ## ¿Que es la Ciencia de Datos? {chalkboard-buttons="true"}
 
 ![](http://anabelforte.com/wp-content/uploads/2020/06/3patas.png){.fragment width="850" fig-align="center"}
 
->Conjunto de disciplinas que utiliza métodos científicos para obtener conocimientos a partir de los datos dándoles un mayor valor.
+> Conjunto de disciplinas que utiliza métodos científicos para obtener conocimientos a partir de los datos dándoles un mayor valor.
+
+## AI, ML y DL 🤔
+
+:::: {.columns}
+::: {.column width="50%"}
+
+![](https://hardzone.es/app/uploads-hardzone.es/2020/03/IA-1.jpg){.fragment width="850" fig-align="center"}
+
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+
+- [**IA (Inteligencia Artificial)**]{style="color: #88188a;"}: una máquina que es capaz de imitar el razonamiento humano.
+
+- [**ML (Machine Learning)**]{style="color: #88188a;"}: un subconjunto de Inteligencia Artificial donde las personas "entrenan" a las máquinas para reconocer patrones basados en datos y hacer sus **predicciones**.
+
+- [**DL (Deep Learning)**]{style="color: #88188a;"}: un subconjunto de ML en el que la máquina es capaz de razonar y sacar sus propias conclusiones, aprendiendo por sí misma
+
+:::
+
+:::
+
+::::
+
+::: {.footer}
+Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferencias-ia-deep-machine-learning/)
+:::
+
