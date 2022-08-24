@@ -1,0 +1,13 @@
+---
+title: "Práctico 1"
+author: "Pamela E. Pairo"
+format:
+  html:
+    toc: true
+    toc-depth: 4
+editor: visual
+---
+
+## Detección del Fraude
+
+A lo largo de las clases se trabajará con un dataset extraído de [Kaggle](https://www.kaggle.com/datasets/ealaxi/banksim1?select=bs140513_032310.csv)
