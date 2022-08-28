@@ -94,6 +94,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="01_tp_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="01_tp_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+<script src="01_tp_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="01_tp_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 
 </head>
 
@@ -106,6 +109,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#detección-del-fraude" id="toc-detección-del-fraude" class="nav-link active" data-scroll-target="#detección-del-fraude">Detección del Fraude</a></li>
+  <li><a href="#boxplot" id="toc-boxplot" class="nav-link" data-scroll-target="#boxplot">Boxplot</a></li>
+  <li><a href="#encodings-o-codificación-de-variables-categóricas" id="toc-encodings-o-codificación-de-variables-categóricas" class="nav-link" data-scroll-target="#encodings-o-codificación-de-variables-categóricas">Encodings o codificación de variables categóricas</a>
+  <ul class="collapse">
+  <li><a href="#realizando-one-hot-encoding" id="toc-realizando-one-hot-encoding" class="nav-link" data-scroll-target="#realizando-one-hot-encoding">Realizando one-hot encoding:</a></li>
+  </ul></li>
+  <li><a href="#correlación-entre-variables" id="toc-correlación-entre-variables" class="nav-link" data-scroll-target="#correlación-entre-variables">Correlación entre variables</a></li>
   </ul>
 </nav>
 </div>
@@ -186,18 +195,258 @@ $ fraud       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <li><p><code>Amount</code>: representa el valor de la transacción. Solo hay 52 valores iguales a 0 y ningún valor negativo.</p></li>
 <li><p><code>Fraud</code>: una columna indicadora codificada con 0 si la transacción fue limpia y con 1 si la transacción fue fraudulenta.</p></li>
 </ul>
-<p><code>zipcodeOri</code> y <code>zipMerchant</code>: these two features were removed from the dataset, as they contained a constant value of 28007, which is a postal code in Ansonville, North Carolina, United States. Therefore, the amount will be from now on expressed in us dollars.</p>
+<p><code>zipcodeOri</code> y <code>zipMerchant</code>: contienen un valor constante de 28007, que es un código postal en Ansonville, Carolina del Norte, Estados Unidos.</p>
+</section>
+<section id="boxplot" class="level2">
+<h2 class="anchored" data-anchor-id="boxplot">Boxplot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a> data <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fraud) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">cnt =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">freq =</span> <span class="fu">round</span>(cnt <span class="sc">/</span> <span class="fu">sum</span>(cnt), <span class="dv">2</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(data<span class="sc">$</span>amount)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01_tp_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Según Fraud:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(amount<span class="sc">~</span>fraud,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span>data,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">xlab=</span><span class="st">"Fraude"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">ylab=</span><span class="st">"Cantidad"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">col=</span><span class="st">"orange"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="at">border=</span><span class="st">"brown"</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01_tp_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Cuántos datos corresponden a transacciones fraudulentes y no fraudulentas?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a> data <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fraud) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">cnt =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">freq =</span> <span class="fu">round</span>(cnt <span class="sc">/</span> <span class="fu">sum</span>(cnt), <span class="dv">2</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 x 3
   fraud   cnt  freq
   &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
 1     0 17639  0.99
 2     1   200  0.01</code></pre>
+</div>
+</div>
+</section>
+<section id="encodings-o-codificación-de-variables-categóricas" class="level2">
+<h2 class="anchored" data-anchor-id="encodings-o-codificación-de-variables-categóricas">Encodings o codificación de variables categóricas</h2>
+<p>Los algoritmos de aprendizaje automático requieren <strong>exclusivamente datos numéricos</strong>. Por lo que, es necesario transformar nuestras variables categóricas a algún formato numérico.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(data, category) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>() </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> category </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 'es_leisure' </td>
+   <td style="text-align:right;"> 15 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_contents' </td>
+   <td style="text-align:right;"> 20 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_travel' </td>
+   <td style="text-align:right;"> 25 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_otherservices' </td>
+   <td style="text-align:right;"> 35 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_home' </td>
+   <td style="text-align:right;"> 47 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_hotelservices' </td>
+   <td style="text-align:right;"> 47 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_tech' </td>
+   <td style="text-align:right;"> 78 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_sportsandtoys' </td>
+   <td style="text-align:right;"> 109 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_hyper' </td>
+   <td style="text-align:right;"> 163 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_barsandrestaurants' </td>
+   <td style="text-align:right;"> 182 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_fashion' </td>
+   <td style="text-align:right;"> 188 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_wellnessandbeauty' </td>
+   <td style="text-align:right;"> 452 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_health' </td>
+   <td style="text-align:right;"> 539 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_food' </td>
+   <td style="text-align:right;"> 822 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 'es_transportation' </td>
+   <td style="text-align:right;"> 15117 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<section id="realizando-one-hot-encoding" class="level3">
+<h3 class="anchored" data-anchor-id="realizando-one-hot-encoding">Realizando one-hot encoding:</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(data, gender) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 x 2
+  gender     n
+  &lt;chr&gt;  &lt;int&gt;
+1 'U'       15
+2 'E'       26
+3 'M'     7961
+4 'F'     9837</code></pre>
+</div>
+</div>
+<p>Vamos a categorizar a la variable <code>Age</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#define one-hot encoding function</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>dummy <span class="ot">&lt;-</span> <span class="fu">dummyVars</span>(<span class="st">"fraud ~ gender"</span>, <span class="at">data=</span>data)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#perform one-hot encoding on data frame</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>final_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">predict</span>(dummy, <span class="at">newdata=</span>data))</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#view final data frame</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (final_df, <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"html"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> gender.E. </th>
+   <th style="text-align:right;"> gender.F. </th>
+   <th style="text-align:right;"> gender.M. </th>
+   <th style="text-align:right;"> gender.U. </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+</section>
+<section id="correlación-entre-variables" class="level2">
+<h2 class="anchored" data-anchor-id="correlación-entre-variables">Correlación entre variables</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>numericals <span class="ot">&lt;-</span> <span class="fu">select_if</span>(data, is.numeric)<span class="co"># selección de variables numéricas</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">### Correlation Matrix</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>cormat <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="at">x =</span> <span class="fu">cor</span>(numericals), <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># round use to just to get first two digits after decimal point.</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cormat)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        step amount fraud
+step    1.00  -0.02 -0.02
+amount -0.02   1.00  0.52
+fraud  -0.02   0.52  1.00</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ggcorrplot<span class="sc">::</span><span class="fu">ggcorrplot</span>(<span class="fu">cor</span>(numericals))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="01_tp_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>

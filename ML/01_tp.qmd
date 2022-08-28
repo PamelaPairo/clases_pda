@@ -55,6 +55,25 @@ glimpse(data)
 
 `zipcodeOri` y `zipMerchant`: contienen un valor constante de 28007, que es un código postal en Ansonville, Carolina del Norte, Estados Unidos. 
 
+## Boxplot
+
+```{r}
+boxplot(data$amount)
+```
+
+Según Fraud:
+
+```{r}
+boxplot(amount~fraud,
+data=data,
+xlab="Fraude",
+ylab="Cantidad",
+col="orange",
+border="brown"
+)
+```
+¿Cuántos datos corresponden a transacciones fraudulentes y no fraudulentas?
+
 ```{r}
  data %>%
   group_by(fraud) %>%
@@ -62,6 +81,58 @@ glimpse(data)
   mutate(freq = round(cnt / sum(cnt), 2))
 ```
 
+## Encodings o codificación de variables categóricas
+
+Los algoritmos de aprendizaje automático requieren **exclusivamente datos numéricos**. Por lo que, es necesario transformar nuestras variables categóricas a algún formato numérico.
+
+```{r}
+library(kableExtra)
+
+count(data, category) %>% arrange(n) %>% 
+  knitr::kable(format = "html")%>%
+  kable_styling() 
+```
+
+### Realizando one-hot encoding:
+
+```{r}
+count(data, gender) %>% arrange(n)
+```
+
+Vamos a categorizar a la variable `Age`
+
+```{r}
+library(caret)
+
+#define one-hot encoding function
+dummy <- dummyVars("fraud ~ gender", data=data)
+
+#perform one-hot encoding on data frame
+final_df <- data.frame(predict(dummy, newdata=data))
+
+#view final data frame
+head (final_df, 10) %>% 
+  knitr::kable(format = "html")%>%
+  kable_styling()
+```
+
+## Correlación entre variables
+
+```{r}
+numericals <- select_if(data, is.numeric)# selección de variables numéricas
+
+### Correlation Matrix
+cormat <- round(x = cor(numericals), digits = 2)
+
+# round use to just to get first two digits after decimal point.
+head(cormat)
+
+```
+```{r}
+library(ggcorrplot)
+
+ggcorrplot::ggcorrplot(cor(numericals))
+```
 
 
 
