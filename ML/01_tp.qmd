@@ -134,8 +134,35 @@ library(ggcorrplot)
 ggcorrplot::ggcorrplot(cor(numericals))
 ```
 
+## Visualizando valores faltantes
 
+En el caso de tener valores faltantes (NA), es importante analizar su distribución y así determinar la mejor forma de preprocesarlos.
 
+Puede ocurrir que un _feature_ posea muchos datos faltantes por lo que quizas convenga eliminar esa caracterisca.
+
+Si hay datos faltantes corresponde hacer una **imputación**.
+
+**imputación**: estimar un valor que puede haber sido muestreado pero no se lo conoce.
+
+```{r}
+sum(is.na(data))# para saber cuantos na hay en la base de datos
+```
+Visualizando NA´s
+
+```{r}
+data %>%
+  is.na() %>%
+  reshape2::melt() %>%
+  ggplot(aes(Var2, Var1, fill=value)) + 
+    geom_raster() + 
+    coord_flip() +
+    scale_y_continuous(NULL, expand = c(0, 0)) +
+    scale_fill_grey(name = "", 
+                    labels = c("Present", 
+                               "Missing")) +
+    xlab("Observation") +
+    theme(axis.text.y  = element_text(size = 4))
+```
 
 
 
