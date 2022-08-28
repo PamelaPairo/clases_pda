@@ -11,7 +11,7 @@ format:
     height: 1000
     logo: "img/logo.jpg"
     footer: "[Introducción al Aprendizaje Automático](https://github.com/PamelaPairo/clases_pda)"
-    theme: [default, mytheme.scss]
+    theme: [mytheme.scss]
     chalkboard:
       theme: whiteboard
       boardmarker-width: 5
@@ -44,88 +44,106 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 
 . . .
 
-Mail: pamepairo@gmail.com
+Mail: pamepairo\@gmail.com
 
 ## ¿Que es la Ciencia de Datos? {chalkboard-buttons="true"}
 
-![](http://anabelforte.com/wp-content/uploads/2020/06/3patas.png){.fragment width="850" fig-align="center"}
+![](http://anabelforte.com/wp-content/uploads/2020/06/3patas.png){fig-align="center"}
 
 > Conjunto de disciplinas que utiliza métodos científicos para obtener conocimientos a partir de los datos dándoles un mayor valor.
 
 ## AI, ML y DL 🤔
 
-:::: {.columns}
+::: columns
 ::: {.column width="50%"}
-
 ![](https://hardzone.es/app/uploads-hardzone.es/2020/03/IA-1.jpg){.fragment width="850" fig-align="center"}
-
 :::
 
 ::: {.column width="50%"}
+::: fragment
+-   [**IA (Inteligencia Artificial)**]{style="color: #88188a;"}: una máquina que es capaz de imitar el razonamiento humano.
 
-::: {.fragment}
+-   [**ML (Machine Learning)**]{style="color: #88188a;"}: un subconjunto de Inteligencia Artificial donde las personas "entrenan" a las máquinas para reconocer patrones basados en datos y hacer sus **predicciones**.
 
-- [**IA (Inteligencia Artificial)**]{style="color: #88188a;"}: una máquina que es capaz de imitar el razonamiento humano.
-
-- [**ML (Machine Learning)**]{style="color: #88188a;"}: un subconjunto de Inteligencia Artificial donde las personas "entrenan" a las máquinas para reconocer patrones basados en datos y hacer sus **predicciones**.
-
-- [**DL (Deep Learning)**]{style="color: #88188a;"}: un subconjunto de ML en el que la máquina es capaz de razonar y sacar sus propias conclusiones, aprendiendo por sí misma
-
+-   [**DL (Deep Learning)**]{style="color: #88188a;"}: un subconjunto de ML en el que la máquina es capaz de razonar y sacar sus propias conclusiones, aprendiendo por sí misma
+:::
+:::
 :::
 
-:::
-
-::::
-
-::: {.footer}
+::: footer
 Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferencias-ia-deep-machine-learning/)
 :::
 
 ## Machine learning
 
-![](https://redshiftzero.github.io/img/ml_applications.png){.fragment width="1000" fig-align="center"}
+![](https://redshiftzero.github.io/img/ml_applications.png){.fragment fig-align="center" width="900"}
 
 ## Ejemplos en negocios `r emo::ji("dollar")`
 
-![](img/logos.jpg){.absolute top=200 left=0 width="450" height="350"}
+![](img/logos.jpg){.absolute top="50" right="50" width="400" height="200"}
 
-![](img/cards.png){.absolute top=50 right=50 width="450" height="300"}
+![](img/cards.png){.absolute top="50" right="50" width="450" height="300"}
 
-![](img/netflix.jpg){.absolute bottom=0 right=30 width="350" height="350"}
+![](img/netflix.jpg){.absolute bottom="0" right="30" width="350" height="350"}
 
 ## Tipos de Aprendizaje
 
-- [**Aprendizaje supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + salida esperada
+-   [**Aprendizaje supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + salida esperada
 
 . . .
 
-- [**Aprendizaje no supervisado**]{style="color: #88188a;"}: Datos de entrenamiento (sin salida esperada)
+-   [**Aprendizaje no supervisado**]{style="color: #88188a;"}: Datos de entrenamiento (sin salida esperada)
 
 . . .
 
-- [**Aprendizaje semi-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + pocas salida esperadas
+-   [**Aprendizaje semi-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + pocas salida esperadas
 
 . . .
 
-- [**Aprendizaje auto-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento auto generados (tareas pretexto)
+-   [**Aprendizaje auto-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento auto generados (tareas pretexto)
 
 . . .
 
-- [**Aprendizaje por refuerzo**]{style="color: #88188a;"}: "Recompensas" por secuencias de acciones
+-   [**Aprendizaje por refuerzo**]{style="color: #88188a;"}: "Recompensas" por secuencias de acciones
 
 ## Tipos de aprendizaje {chalkboard-buttons="true"}
 
-![](img/ml.png){.fragment width="1000" fig-align="center"}
+![](img/ml.png){fig-align="center"}
 
-## Conceptos Importantes `r emo::ji("bulb")` 
+## Conceptos Importantes `r emo::ji("bulb")`
 
-* [__Muestra, punto, observación, instancia__]{style="color: #1c5253;"} se refiere a una unidad de análisis.
+-   [**Muestra, punto, observación, instancia**]{style="color: #1c5253;"} se refiere a una unidad de análisis.
 
-* [__Atributos, predictores, variables independientes o descriptores__]{style="color: #1c5253;"} son los datos de entrada para la ecuación de predicción.
+-   [**Atributos, predictores, variables independientes o descriptores**]{style="color: #1c5253;"} son los datos de entrada para la ecuación de predicción.
 
-* [__Salida, variable dependiente, variable respuesta, clase, o "target"__]{style="color: #1c5253;"} es la cantidad a ser predicha. 
+-   [**Salida, variable dependiente, variable respuesta, clase, o "target"**]{style="color: #1c5253;"} es la cantidad a ser predicha.
 
-* [__Datos categóricos, también conocidos como nominales o atributos__]{style="color: #1c5253;"} toman valores específicos que no tienen escala. Ejemplo: bueno/malo, rojo/azul, etc. 
+-   [**Datos categóricos, también conocidos como nominales o atributos**]{style="color: #1c5253;"} toman valores específicos que no tienen escala. Ejemplo: bueno/malo, rojo/azul, etc.
 
-* [__Datos continuos__]{style="color: #1c5253;"} son a base de escalas numéricas. El costo de un producto, la presión sanguínea, etc.
+-   [**Datos continuos**]{style="color: #1c5253;"} son a base de escalas numéricas. El costo de un producto, la presión sanguínea, etc.
 
+## Ciclo de un proyecto en ciencia de datos
+
+![](img/ciclo_data.png){fig-align="center"}
+
+## Regresión vs. Clasificación
+
+::: columns
+::: {.column width="50%"}
+::: {style="font-size: 1.2em; text-align: left; margin-top: 100px"}
+::: incremental
+-   Si $y$ $\epsilon$ $R^n$: Entonces es un problema de **regresión**.
+
+::: {style="font-size: 1.1em; text-align: left; margin-top: 150px"}
+-   Si $y$ es categórica: Entonces es un problema de **clasificación**.
+:::
+:::
+:::
+:::
+
+::: {.column width="50%"}
+![](img/regresion.png){.absolute top="0" right="30" width="500" height="450"}
+
+![](img/clasification.png){.absolute bottom="0" right="30" width="500" height="450"}
+:::
+:::

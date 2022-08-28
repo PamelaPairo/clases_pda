@@ -1,6 +1,9 @@
 ---
 title: "Práctico 1"
 author: "Pamela E. Pairo"
+lang: es
+description: |
+  Análisis Exploratorio
 format:
   html:
     toc: true
@@ -11,3 +14,57 @@ editor: visual
 ## Detección del Fraude
 
 A lo largo de las clases se trabajará con un dataset extraído de [Kaggle](https://www.kaggle.com/datasets/ealaxi/banksim1?select=bs140513_032310.csv)
+
+```{r, message=FALSE}
+# Carga de paquetes necesarios
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+
+library(tidyverse)
+library(tidymodels)
+```
+
+```{r}
+data <- read_csv('data/df_fraude.csv')
+glimpse(data)
+```
+
+- `Step`: representa el día en que la transacción sucede. En total son 180 _steps_, por lo que la base de datos es por 6 meses.
+
+- `Customer`: representa el ID de la persona que inicia la transacción. Está formada con la letra C seguida por una secuencia unica de 10 numeros.
+
+- `Age`: esta variable se divide en intervalos de edad, comenzando de 0 a 6 y la letra U que significa _Unknown_. La edad es _Unknow_ solo para las transacciones que tienen el mismo género que _Enterprise_. La codificación de los números es:
+
+  + 0: menor a 18 años
+  + 1: entre 19 y 25 años
+  + 2: entre 26 y 35 años
+  + 3: entre 36 y 45 años
+  + 4: entre 46 y 55 años
+  + 5: entre 56 y 65 años
+  + 6: mayor a 65 años
+
+- `Gender`: esta variable se codifica como F para Mujer, M para Hombre, E para Empresa y U para _Unknown_.
+
+- `Merchant`: esta variable representa la identificación única de la parte que recibe la transacción. Similar a la identificación del cliente, la secuencia está formada por la letra M, seguida de una serie de 9 números. Hay un total de 50 comerciantes únicos en el conjunto de datos.
+
+- `Category`: hay 15 categorías únicas que etiquetan el tipo general de transacción: transporte, comida, salud, bienestar y belleza, moda, bares y restaurantes, hiper, deportes y juguetes, tecnología, hogar, servicios de hotel, otros servicios, contenidos, viajes, ocio.
+
+- `Amount`: representa el valor de la transacción. Solo hay 52 valores iguales a 0 y ningún valor negativo.
+
+- `Fraud`: una columna indicadora codificada con 0 si la transacción fue limpia y con 1 si la transacción fue fraudulenta.
+
+`zipcodeOri` y `zipMerchant`: contienen un valor constante de 28007, que es un código postal en Ansonville, Carolina del Norte, Estados Unidos. 
+
+```{r}
+ data %>%
+  group_by(fraud) %>%
+  summarise(cnt = n()) %>%
+  mutate(freq = round(cnt / sum(cnt), 2))
+```
+
+
+
+
+
+
+
