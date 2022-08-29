@@ -76,7 +76,7 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 
 ## Machine learning
 
-![](https://redshiftzero.github.io/img/ml_applications.png){.fragment fig-align="center" width="900"}
+![](https://redshiftzero.github.io/img/ml_applications.png){.fragment fig-align="center"}
 
 ## Ejemplos en negocios `r emo::ji("dollar")`
 
@@ -147,3 +147,32 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 ![](img/clasification.png){.absolute bottom="0" right="30" width="500" height="450"}
 :::
 :::
+
+## Regresión vs. Clasificación: Ejemplos {.center .center-x}
+
+Eficiencia de combustible para automóviles
+
+. . .
+
+Predecir si clientes van a contratar un seguro
+
+. . .
+
+Predicción de precios de casas según variables geográficas
+
+. . .
+
+Analisis de sentimientos de noticias financieras (negativo/positivo)
+
+## Entrenamiento, validación y testeo
+
+* [__Set de entrenamiento__]{style="color: #1c5253;"} son los datos utilizados para el modelado. 
+
+* [__Set de validación__]{style="color: #1c5253;"}  ajuste/elección de hiperparámetros
+
+* [__Set de testeo__]{style="color: #1c5253;"} son los datos utilizados para medir el desempeño del modelo, entre un conjunto de candidatos. 
+
+![](img/split_data.png){.fragment width="600" lenght="700" fig-align="center"}
+
+# Análisis exploratorio de datos y Curación 📈 📊 🔨{.center .center-x background-color="#1c5253"}
+
