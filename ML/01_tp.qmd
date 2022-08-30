@@ -31,6 +31,8 @@ data <- read_csv('data/df_fraude.csv')
 glimpse(data)
 ```
 
+### Descripción de las variables
+
 -   `Step`: representa el día en que la transacción sucede. En total son 180 *steps*, por lo que la base de datos es por 6 meses.
 
 -   `Customer`: representa el ID de la persona que inicia la transacción. Está formada con la letra C seguida por una secuencia unica de 10 numeros.
@@ -168,3 +170,11 @@ data %>%
     xlab("Observation") +
     theme(axis.text.y  = element_text(size = 4))
 ```
+
+## Preguntas
+
+- Para predecir si una transacción es o no fraudulenta. ¿Todas las variables son importantes?
+
+- Codificar el resto de las variables categóricas
+
+- Graficar la distribución de la variables `amount`
