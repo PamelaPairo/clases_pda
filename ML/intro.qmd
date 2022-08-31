@@ -192,7 +192,52 @@ Analisis de sentimientos de noticias financieras (negativo/positivo)
 
 * [__Set de testeo__]{style="color: #1c5253;"} son los datos utilizados para medir el desempeño del modelo, entre un conjunto de candidatos. 
 
-![](img/split_data.png){.fragment width="600" lenght="700" fig-align="center"}
+![](img/split_data.png){.fragment width="500" lenght="700" fig-align="center"}
 
 # Análisis exploratorio de datos y Curación 📈 📊 🔨{.center .center-x background-color="#1c5253"}
+
+## Análisis exploratorio de datos 🔎
+
+- Distribución de las variables
+
+. . .
+
+- Outliers o datos atípicos
+
+. . .
+
+- Presencia de valores faltantes
+
+. . .
+
+- Desbalance de las clases o grupos en estudio
+
+. . .
+
+- Análisis de la correlación entre variables
+
+
+## Curación de datos `r emo::ji("hammer")`
+
+- Imputación de datos ruidosos, faltantes o erróneos.
+
+. . .
+
+- Codificación de variables categóricas.
+
+. . .
+
+- Transformación de variables.
+
+. . .
+
+- Ingeniería de outliers.
+
+. . .
+
+- Escalado de Features
+
+. . .
+
+- Discretización de variables continuas (ej. edad)
 
