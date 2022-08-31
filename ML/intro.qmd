@@ -1,5 +1,5 @@
 ---
-title: "Aprendizaje Supervisado"
+title: "Aprendizaje Automático"
 author: "Pamela E. Pairo"
 title-slide-attributes:
     data-background-image: "img/portada.jpg"
@@ -10,7 +10,7 @@ format:
     width: 1600
     height: 1000
     logo: "img/logo.jpg"
-    footer: "[Introducción al Aprendizaje Automático](https://github.com/PamelaPairo/clases_pda)"
+    footer: "[Introducción al Aprendizaje Automático- PDA](https://github.com/PamelaPairo/clases_pda)"
     theme: [mytheme.scss]
     chalkboard:
       theme: whiteboard
@@ -44,9 +44,29 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 
 . . .
 
-Mail: pamepairo\@gmail.com
+📧 pamepairo\@gmail.com
 
-## ¿Que es la Ciencia de Datos? {chalkboard-buttons="true"}
+# Hoja de ruta 🚀 {background-color="#C5E1A5"}
+
+- **Clase 1**: ¿Qué es la ciencia de datos? Conceptos importantes. Clasificación vs. Regresión. Análisis exploratorio y curación. Ingeniería de features.Entrenamiento, evaluación y testeo. Ejercitación
+
+. . .
+
+- **Clase 2**: Árboles de decisión. Ensambles. Sobreajuste. Trade off Sesgo-Varianza. SVM. Naïve Bayes. Hiperparámetros. Ejercitación
+
+. . .
+
+- **Clase 3**: Validación cruzada. Métricas. Selección de modelos. Ejercitación
+
+. . .
+
+- **Clase 4**: Desbalanceo de clases. Problemas multiclase. Ejercitación
+
+. . .
+
+- **Clase 5**: Clustering. K-means. PCA. Embeddings. Ejercitación
+
+## ¿Qué es la Ciencia de Datos? {chalkboard-buttons="true"}
 
 ![](http://anabelforte.com/wp-content/uploads/2020/06/3patas.png){fig-align="center"}
 
@@ -76,11 +96,11 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 
 ## Machine learning
 
-![](https://redshiftzero.github.io/img/ml_applications.png){.fragment fig-align="center"}
+![](https://redshiftzero.github.io/img/ml_applications.png){fig-align="center"}
 
 ## Ejemplos en negocios `r emo::ji("dollar")`
 
-![](img/logos.jpg){.absolute top="50" right="50" width="400" height="200"}
+![](img/logos.jpg){.absolute top="50" right="50"}
 
 ![](img/cards.png){.absolute top="50" right="50" width="450" height="300"}
 
