@@ -114,11 +114,17 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 
 ## Ejemplos en negocios `r emo::ji("dollar")`
 
-![](img/logos.jpg){.absolute top="50" right="50"}
+::: {layout="[[1,1], [1, 1]]"}
 
-![](img/cards.png){.absolute top="50" right="50" width="450" height="300"}
+![Probabilidad de que un usuario cliquee un anuncio (Click Prediction Models)](img/logos.jpg)
 
-![](img/netflix.jpg){.absolute bottom="0" right="30" width="350" height="350"}
+![Product Recommender](img/netflix.jpg)
+
+![Detectar la probabilidad de que la transacción sea un fraude (Fraud Detection Models)](img/cards.png)
+
+
+:::
+
 
 ## Tipos de Aprendizaje 
 
@@ -255,5 +261,20 @@ Analisis de sentimientos de noticias financieras (negativo/positivo)
 ::: footer
 Imagen extraída de [aquí](https://www.raconteur.net/the-role-of-a-data-scientist-and-why-we-need-them/)
 :::
+
+## {background-image="img/computadora.jpg" background-size="cover"}
+
+### Manos a R! {.r-fit-text}
+
+::: {.column width="40%"}
+[Pero antes veamos con qué tipo de archivos vamos a trabajar...]{style="color: white;"}
+
+:::
+
+::: footer
+Foto de <a href="https://unsplash.com/@emilep?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Emile Perron</a> en <a href="https://unsplash.com/es?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  
+:::
+
 
 # Demo Análisis exploratorio de datos y Curación 💻{.center .center-x background-color="#1c5253"}
