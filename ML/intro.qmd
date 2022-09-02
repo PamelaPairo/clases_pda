@@ -50,23 +50,35 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 
 # Hoja de ruta 🚀 {background-color="#C5E1A5"}
 
+::: {.fragment .semi-fade-out}
 - **Clase 1**: ¿Qué es la ciencia de datos? Conceptos importantes. Clasificación vs. Regresión. Análisis exploratorio y curación. Ingeniería de features.Entrenamiento, evaluación y testeo. Ejercitación
 
-. . .
+:::
 
+
+::: {.fragment .fade-in}
+::: {.fragment .semi-fade-out}
 - **Clase 2**: Árboles de decisión. Ensambles. Sobreajuste. Trade off Sesgo-Varianza. SVM. Naïve Bayes. Hiperparámetros. Ejercitación
+:::
+:::
 
-. . .
-
+::: {.fragment .fade-in}
+::: {.fragment .semi-fade-out}
 - **Clase 3**: Validación cruzada. Métricas. Selección de modelos. Ejercitación
+:::
+:::
 
-. . .
-
+::: {.fragment .fade-in}
+::: {.fragment .semi-fade-out}
 - **Clase 4**: Desbalanceo de clases. Problemas multiclase. Ejercitación
+:::
+:::
 
-. . .
-
+::: {.fragment .fade-in}
+::: {.fragment .semi-fade-out}
 - **Clase 5**: Clustering. K-means. PCA. Embeddings. Ejercitación
+:::
+:::
 
 ## ¿Qué es la Ciencia de Datos? {chalkboard-buttons="true"}
 
@@ -82,7 +94,7 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 :::
 
 ::: {.column width="50%"}
-::: fragment
+::: {.incremental}
 -   [**IA (Inteligencia Artificial)**]{style="color: #88188a;"}: una máquina que es capaz de imitar el razonamiento humano.
 
 -   [**ML (Machine Learning)**]{style="color: #88188a;"}: un subconjunto de Inteligencia Artificial donde las personas "entrenan" a las máquinas para reconocer patrones basados en datos y hacer sus **predicciones**.
@@ -108,25 +120,20 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 
 ![](img/netflix.jpg){.absolute bottom="0" right="30" width="350" height="350"}
 
-## Tipos de Aprendizaje
+## Tipos de Aprendizaje 
+
+::: {.incremental}
 
 -   [**Aprendizaje supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + salida esperada
 
-. . .
-
 -   [**Aprendizaje no supervisado**]{style="color: #88188a;"}: Datos de entrenamiento (sin salida esperada)
-
-. . .
 
 -   [**Aprendizaje semi-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + pocas salida esperadas
 
-. . .
-
 -   [**Aprendizaje auto-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento auto generados (tareas pretexto)
 
-. . .
-
 -   [**Aprendizaje por refuerzo**]{style="color: #88188a;"}: "Recompensas" por secuencias de acciones
+:::
 
 ## Tipos de aprendizaje {chalkboard-buttons="true"}
 
@@ -200,48 +207,46 @@ Analisis de sentimientos de noticias financieras (negativo/positivo)
 
 ## Análisis exploratorio de datos 🔎
 
+::: {.incremental}
+
 - Distribución de las variables
 
-. . .
 
 - Outliers o datos atípicos
 
-. . .
 
 - Presencia de valores faltantes
 
-. . .
 
 - Desbalance de las clases o grupos en estudio
 
-. . .
 
 - Análisis de la correlación entre variables
 
+:::
 
 ## Curación de datos `r emo::ji("hammer")`
 
+::: {.incremental}
+
 - Imputación de datos ruidosos, faltantes o erróneos.
 
-. . .
 
 - Codificación de variables categóricas.
 
-. . .
 
 - Transformación de variables.
 
-. . .
 
 - Ingeniería de outliers.
 
-. . .
 
 - Escalado de Features
 
-. . .
 
 - Discretización de variables continuas (ej. edad)
+
+:::
 
 ## Distribución del tiempo {chalkboard-buttons="true"}
 
