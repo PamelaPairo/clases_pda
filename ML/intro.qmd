@@ -241,3 +241,12 @@ Analisis de sentimientos de noticias financieras (negativo/positivo)
 
 - Discretización de variables continuas (ej. edad)
 
+## Distribución del tiempo {chalkboard-buttons="true"}
+
+![](https://www.raconteur.net//wp-content/uploads/2016/10/What-data-scientists-spend-the-most-time-doing.jpg){fig-align="center"}
+
+::: footer
+Imagen extraída de [aquí](https://www.raconteur.net/the-role-of-a-data-scientist-and-why-we-need-them/)
+:::
+
+# Demo Análisis exploratorio de datos y Curación 💻{.center .center-x background-color="#1c5253"}
