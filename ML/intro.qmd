@@ -1,6 +1,8 @@
 ---
 title: "Aprendizaje Automático"
-author: "Pamela E. Pairo"
+author: 
+- Pamela E. Pairo
+- Posgrado Digital Accounting
 title-slide-attributes:
     data-background-image: "img/portada.jpg"
 format: 
