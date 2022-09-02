@@ -114,15 +114,13 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 
 ## Ejemplos en negocios `r emo::ji("dollar")`
 
-::: {layout="[[1,1], [1, 1]]"}
-
-![Probabilidad de que un usuario cliquee un anuncio (Click Prediction Models)](img/logos.jpg)
-
-![Product Recommender](img/netflix.jpg)
+::: {layout="[[1,1], [1,1]]"}
 
 ![Detectar la probabilidad de que la transacción sea un fraude (Fraud Detection Models)](img/cards.png)
 
+![Product Recommender](img/netflix.jpg)
 
+![Probabilidad de que un usuario cliquee un anuncio (Click Prediction Models)](img/logos.jpg)
 :::
 
 
@@ -264,17 +262,68 @@ Imagen extraída de [aquí](https://www.raconteur.net/the-role-of-a-data-scienti
 
 ## {background-image="img/computadora.jpg" background-size="cover"}
 
-### Manos a R! {.r-fit-text}
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: left; position: absolute; top: 25%; width: 56%;">
 
-::: {.column width="40%"}
-[Pero antes veamos con qué tipo de archivos vamos a trabajar...]{style="color: white;"}
-
-:::
+[¡Manos a R!]{style="font-size: 100px;"}
+ 
+ Pero antes veamos con qué tipo de archivos vamos a trabajar...
+</h3>
 
 ::: footer
 Foto de <a href="https://unsplash.com/@emilep?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Emile Perron</a> en <a href="https://unsplash.com/es?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-  
 :::
 
+## <img src="https://raw.githubusercontent.com/quarto-dev/quarto-web/main/favicon.png" style="display: inline-block; margin: 0; margin-bottom: -2px; height: 45px;"/></img> Quarto, la próxima generación de RMarkdown
+
+> Quarto es una interfaz de línea de comandos (CLI) que presenta formatos de texto sin formato (`.qmd`, `.rmd`, `.md`) O formatos mixtos (`.ipynb`/Jupyter notebook) en informes estáticos en PDF/Word/HTML , libros, sitios web, presentaciones y más 🎉
+
+. . .
+
+Un archivo .qmd y .Rmd permiten unificar bloques de códigos o _chunks_ con texto plano o con formato simple de leer usando [markdown](https://markdown.es/sintaxis-markdown/). Al poder intercalar cálculos y gráficos con su análisis o explicación, se unifica el flujo de trabajo. Esto es muy importante si buscamos que nuestro trabajo sea [**reproducible**]{style="text-decoration: underline;"}, pero además ahorra tiempo.
+
+. . .
+
+También...
+
+Soporta varios lenguajes como R, Python y Julia y _environments_ como Observable, VS Code y Jupyter Lab.
+
+## Archivo .qmd {chalkboard-buttons="true"}
+
+::: {.panel-tabset}
+
+### Código
+    ---
+    title: "ggplot2 demo"
+    author: "Norah Jones"
+    date: "5/22/2021"
+    format: 
+      html:
+        fig-width: 8
+        fig-height: 4
+        code-fold: true
+    ---
+
+    ## Air Quality
+
+    @fig-airquality further explores the impact of temperature 
+      on ozone level.
+
+    ```{{r}}
+    #| label: fig-airquality
+    #| fig-cap: Temperature and ozone level.
+    #| warning: false
+    library(ggplot2)
+    ggplot(airquality, aes(Temp, Ozone)) + 
+      geom_point() + 
+      geom_smooth(method = "loess"
+    )
+    ```
+
+
+
+### Salida
+![](https://quarto.org/images/hello-knitr.png){width=50%}
+
+:::
 
 # Demo Análisis exploratorio de datos y Curación 💻{.center .center-x background-color="#1c5253"}
