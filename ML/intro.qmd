@@ -7,13 +7,13 @@ title-slide-attributes:
     data-background-image: "img/portada.jpg"
 format: 
   revealjs:
+    theme: [mytheme.scss]
     slide-number: c
     incremental: false
     width: 1600
     height: 1000
     logo: "img/logo.jpg"
     footer: "[Introducción al Aprendizaje Automático- PDA](https://github.com/PamelaPairo/clases_pda)"
-    theme: [mytheme.scss]
     chalkboard:
       theme: whiteboard
       boardmarker-width: 5
@@ -279,7 +279,7 @@ Foto de <a href="https://unsplash.com/@emilep?utm_source=unsplash&utm_medium=ref
 
 . . .
 
-Un archivo .qmd y .Rmd permiten unificar bloques de códigos o _chunks_ con texto plano o con formato simple de leer usando [markdown](https://markdown.es/sintaxis-markdown/). Al poder intercalar cálculos y gráficos con su análisis o explicación, se unifica el flujo de trabajo. Esto es muy importante si buscamos que nuestro trabajo sea [**reproducible**]{style="text-decoration: underline;"}, pero además ahorra tiempo.
+Un archivo .qmd y .Rmd permiten unificar bloques de códigos o _chunks_ con texto plano o con formato simple de leer usando [[markdown](https://markdown.es/sintaxis-markdown/)]{style="text-decoration: underline;"}. Al poder intercalar cálculos y gráficos con su análisis o explicación, se unifica el flujo de trabajo. Esto es muy importante si buscamos que nuestro trabajo sea **reproducible**, pero además ahorra tiempo.
 
 . . .
 
@@ -290,6 +290,16 @@ Soporta varios lenguajes como R, Python y Julia y _environments_ como Observable
 ## Archivo .qmd {chalkboard-buttons="true"}
 
 ::: {.panel-tabset}
+
+### Descarga
+
+Realizar la descarga de Quarto desde este [[link](https://quarto.org/docs/get-started/)]{style="text-decoration: underline;"}
+
+Luego seguir la siguiente ruta para abrir un .qmd
+
+```
+File > New > Quarto documentation
+```
 
 ### Código
     ---
@@ -322,8 +332,11 @@ Soporta varios lenguajes como R, Python y Julia y _environments_ como Observable
 
 
 ### Salida
-![](https://quarto.org/images/hello-knitr.png){width=50%}
+![](https://quarto.org/images/hello-knitr.png){width=40%}
 
 :::
 
+::: footer
+Imagen realizada por Tom Mock
+:::
 # Demo Análisis exploratorio de datos y Curación 💻{.center .center-x background-color="#1c5253"}

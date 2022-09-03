@@ -9,7 +9,6 @@ $font-family-sans-serif: Lato, sans-serif !default;
 // colors
 $body-bg: #fff !default;
 $body-color: #000 !default;
-$link-color: #88188a !default;
 $presentation-heading-color:$body-bg !default;
 $selection-bg: rgba(0, 0, 0, 0.99);
 
@@ -42,3 +41,13 @@ $selection-bg: rgba(0, 0, 0, 0.99);
   top: unset !important;
   color: $body-color !important;
 }
+
+// link colors
+
+$link-color: #88188a !default;
+$link-color-hover: lighten($link-color, 10%) !default;
+
+// code blocks
+$code-block-bg: $body-bg !default;
+$code-block-border-color: lighten($body-color, 60%) !default;
+$code-block-font-size: 0.8em !default;
