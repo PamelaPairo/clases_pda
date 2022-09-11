@@ -13,6 +13,12 @@ format:
     toc-location: left
 ---
 
+## Algunos tips
+
+Para agregar un bloque de código `Ctrl+ Alt+ I`
+
+Para agregar el _pipe_ (` |> `) `Ctrl+ Shift+ M`
+
 ## Detección del Fraude
 
 A lo largo de las clases se trabajará con un dataset extraído de [Kaggle](https://www.kaggle.com/datasets/ealaxi/banksim1?select=bs140513_032310.csv)
