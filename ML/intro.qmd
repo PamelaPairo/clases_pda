@@ -80,6 +80,31 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 :::
 :::
 
+## En la clase de hoy...
+
+[**En la primera parte:**]{style="color: #ae260e;"}
+
+. . .
+
+- ¿Qué es la Ciencia de Datos?
+- Tipos de Aprendizaje
+- Regresión vs Clasificación
+- Análisis exploratorio de datos y Curación
+
+. . .
+
+[**Recreo**]{style="color: #ae260e;"} `r emo::ji("coffee")`🧉
+
+. . .
+
+[**En la segunda parte:**]{style="color: #ae260e;"}
+
+. . .
+
+- Intro a Quarto
+- Ejercitación
+
+
 ## ¿Qué es la Ciencia de Datos? {chalkboard-buttons="true"}
 
 ![](http://anabelforte.com/wp-content/uploads/2020/06/3patas.png){fig-align="center"}
