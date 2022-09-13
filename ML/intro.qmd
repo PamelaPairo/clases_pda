@@ -384,4 +384,34 @@ File > New > Quarto documentation
 ::: footer
 Imagen realizada por Tom Mock
 :::
+
 # Demo Análisis exploratorio de datos y Curación 💻{.center .center-x background-color="#1c5253"}
+
+## Comunidades y Recursos útiles
+
+::: columns
+::: {.column width="50%"}
+
+![](img/comunidades_latin.png)
+:::
+
+::: {.column width="50%"}
+
+![[10-14 de octubre LatinR, VIRTUAL](https://latin-r.com/) Talleres y presentaciones orales.](img/latinr.jpg){width=60%}
+
+:::
+:::
+
+## Referencias
+
+- [Artículo acerca del Sobreajuste](https://towardsdatascience.com/what-are-overfitting-and-underfitting-in-machine-learning-a96b30864690) en Towards to Data Science
+
+- [Hands-on Machine Learning with R](https://bradleyboehmke.github.io/HOML/DT.html) de Bradley Boehmke y Brandon Greenwell.
+
+- [Tidy Modeling with R](https://www.tmwr.org/index.html) de Max Kuhn y Julia Silge
+
+- [Introducción a Machine Learning con Tidymodels](https://ml-tidy-wibds.netlify.app/material/), workshop dictado en el marco de Women in Bioinformatics & Data Science LA 2021
+
+- [Supervised Machine Learning course](https://supervised-ml-course.netlify.app/) de Julia Silge
+
+- [R para Ciencia de Datos](https://es.r4ds.hadley.nz/)
