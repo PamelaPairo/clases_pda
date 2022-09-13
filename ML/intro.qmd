@@ -285,6 +285,26 @@ Analisis de sentimientos de noticias financieras (negativo/positivo)
 Imagen extraída de [aquí](https://www.raconteur.net/the-role-of-a-data-scientist-and-why-we-need-them/)
 :::
 
+##
+
+```{R}
+#| echo: false
+library(countdown)
+countdown(minutes = 10, 
+          right = "20%",
+          bottom= "35%",
+          padding = "50px",
+          margin = "4%",
+          font_size = "7em",
+          color_border      = "#d33682", #solarized$magenta,
+  color_text                = "#d33682", #solarized$magenta,
+  color_running_text        = "#073642", #solarized$base02,
+  color_finished_background = "#dc322f", #solarized$red,
+  color_finished_text       = "#fdf6e3"  #solarized$base3
+          )
+```
+
+
 ## {background-image="img/computadora.jpg" background-size="cover"}
 
 <h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: left; position: absolute; top: 25%; width: 56%;">
