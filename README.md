@@ -10,4 +10,6 @@
 
 ### Clase 2
 
-- TP 2: [Aprendizaje Supervisado](https://pamelapairo.github.io/clases_pda/ML/02_aprendizaje_supervisado.html)
+- Teórica: [Aprendizaje Supervisado](https://pamelapairo.github.io/clases_pda/ML/02_supervisado.html)
+
+- TP 2: [TP Aprendizaje Supervisado](https://pamelapairo.github.io/clases_pda/ML/02_aprendizaje_supervisado.html)
