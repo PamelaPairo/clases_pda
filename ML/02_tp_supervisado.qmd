@@ -23,9 +23,11 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
 library(tidyverse)
+library(discrim)
 library(tidymodels)
 library(workflows)
 ```
+
 
 ```{r}
 data <- read_csv('data/df_fraude.csv')
@@ -63,10 +65,11 @@ glimpse(data)
 ## Conociendo `tidymodels`
 
 ```{r}
-df <- data %>%
-        select ("gender", "amount", "fraud", "category", "age")
-head(df)
+df <- data |> 
+      select ("gender", "amount", "fraud", "category", "age") |>                filter(age!="'U'" & category != c("'es_transportation'",       "'es_food'", "'es_health'"))
+
 ```
+
 
 ¿Qué tipo de variable es cada _feature_?
 
@@ -87,7 +90,7 @@ glimpse (df)
 ## División del dataset: Entrenamiento y testeo
 
 ```{r}
-set.seed(123)#setear la semilla
+set.seed(456)#setear la semilla
 # Create data split for train and test
 df_split <- initial_split(df,
                           prop = 0.8)
@@ -121,7 +124,7 @@ Al igual que `tidyverse`, `tidymodels` está compuesto por un conjunto de paquet
 ## Preprocesamiento de datos usando `recipe`
 
 ```{r}
-recipe_df <-  recipe (fraud ~ ., data= df_train) |>  
+recipe_df <-  recipe (fraud ~ age+category+ amount, data= df_train) |>  
               step_scale(all_numeric_predictors(), -all_outcomes()) |> 
               step_dummy(all_nominal_predictors()) |> 
               prep()
@@ -142,3 +145,63 @@ Se puede entrenar cualquier modelo (que este incluído en `tidymodels`) siguiend
 3- Con `set_mode()` se especifica el tipo de modelo a entrenarse (regresión o clasificación)
 
 4- Usar la función `fit ()` para entrenar el modelo y, dentro de eso, debe proporcionar la notación de la fórmula y el conjunto de datos
+
+```{r}
+##Con los hiperparámetros por default
+
+#Naive Bayes
+set.seed(234)
+model_NB <- naive_Bayes(smoothness = .8) |> 
+            set_mode("classification") |>  
+            set_engine("naivebayes")
+#SVM
+set.seed(234)
+model_SVM <-
+  svm_rbf() |> 
+  set_mode("classification") |> 
+  set_engine("kernlab")
+
+#Arboles de decisión
+set.seed(234)
+model_TREE <- decision_tree() |> 
+  set_engine("rpart") |>  
+  set_mode("classification")
+
+#Random Forest
+set.seed(234)
+model_RF <- rand_forest() |>  
+  set_engine("ranger") |>  
+  set_mode("classification") |>  
+  set_args(trees = 500)
+```
+
+# Árboles de decisión
+
+
+## Uniendo todo en un _Workflow_
+
+```{r}
+wf_TREE <- workflow() %>% 
+          add_recipe(recipe_df) %>% 
+          add_model(model_TREE)
+wf_TREE
+```
+## Entreno en modelo
+
+```{r}
+TREE_fit <- model_TREE%>%
+  fit(fraud ~ ., data = df_train) 
+#imprimo el modelo
+TREE_fit
+```
+
+```{r}
+library(rpart.plot)  # for visualizing a decision tree
+library(vip)         # for variable importance plots
+
+TREE_fit %>%
+  extract_fit_engine() %>%
+  rpart.plot(roundint = FALSE)
+
+```
+
