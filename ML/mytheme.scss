@@ -12,6 +12,9 @@ $body-color: #000 !default;
 $presentation-heading-color:$body-bg !default;
 $selection-bg: rgba(0, 0, 0, 0.99);
 
+// Vertical spacing between blocks of text
+$blockMargin: 25px;
+
 .author {
     color: $body-bg;
   }

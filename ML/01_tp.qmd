@@ -1,9 +1,9 @@
 ---
-title: "Práctico 1"
+title: "Análisis Exploratorio"
 author: "Pamela E. Pairo"
 lang: es
 description: |
-  Análisis Exploratorio
+  Trabajo Práctico n°1
 format:
   html:
     theme: flatly
@@ -29,11 +29,11 @@ knitr::opts_chunk$set(warning = FALSE)
 knitr::opts_chunk$set(message = FALSE)
 
 library(tidyverse)
-library(tidymodels)
+library(tidymodels) 
 ```
 
 ```{r}
-data <- read_csv('data/df_fraude.csv')
+data <- read_csv('data/df_fraude.csv')#cargo base de datos
 glimpse(data)
 ```
 
@@ -181,6 +181,6 @@ data %>%
 
 - Para predecir si una transacción es o no fraudulenta. ¿Todas las variables son importantes?
 
-- Codificar el resto de las variables categóricas
+- Codificar el resto de {las variables categóricas
 
 - Graficar la distribución de la variables `amount`
