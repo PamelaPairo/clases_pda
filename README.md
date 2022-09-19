@@ -12,4 +12,4 @@
 
 - Teórica: [Aprendizaje Supervisado](https://pamelapairo.github.io/clases_pda/ML/02_supervisado.html)
 
-- TP 2: [TP Aprendizaje Supervisado](https://pamelapairo.github.io/clases_pda/ML/02_tp_supervisado.html)
+- TP 2: [Aprendizaje supervisado con Tidymodels](https://pamelapairo.github.io/clases_pda/ML/02_tp_supervisado.html)
