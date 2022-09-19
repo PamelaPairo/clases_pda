@@ -104,7 +104,7 @@ Decrecimiento de entropía (incertidumbre) luego de la partición
 ::: {style="text-align: center;"}
 $\LARGE IG(X)= H(Y)- H(Y|X)$
 
-**Elijo el atributo que me de mayor ganancia de información**
+> [**Elijo el atributo que me de mayor ganancia de información**]{style="font-size: 55px;"}
 :::
 
 ## Aprendizaje en Árboles de decisión {chalkboard-buttons="true"}
@@ -126,6 +126,51 @@ $\LARGE IG(X)= H(Y)- H(Y|X)$
 
 -   Usar, por ejemplo, ganancia de información y realizar el paso anterior de manera recursiva
 :::
+
+## ¿Hasta cuando dejo de "partir" un nodo?
+
+> [[**Hiperparámetro**]{style="color: #88188a;"}: Valores no aprendidos por el algoritmo desde los datos y por ende deben ser seteados antes de entrenar el algoritmo.]{style="font-size: 50px; padding:15px"}
+
+## Sobreajuste
+
+- El error de entrenamiento es siempre cero 
+
+- Poca capacidad de generalización.
+
+![](https://raw.githubusercontent.com/PamelaPairo/maestria_DM/main/aprendizaje_automatico/images/overfitting.png){fig-align="center"}
+
+> [El objetivo de un modelo de Machine Learning es que generalice bien frente a nuevos datos o datos no vistos por el modelo (set de testeo)]{style="font-size: 55px; padding:15px"}
+
+::: footer
+Imagen extraída de [aquí](https://bookdown.org/content/2031/arboles-de-decision-parte-i.html)
+:::
+
+## 
+
+[**Ventajas `r emo::ji("bulb")`**]{style="color: #88188a; font-size: 55px"}
+
+- Fácil de entender
+- Util en exploración de datos:identificar importancia de variables a partir de cientos de variables.
+- El tipo de datos no es una restricción
+- Es un método no paramétrico (i.e., no hay suposición acerca del espacio de distribución y la estructura del clasificador)
+
+. . .
+
+[**Desventajas `r emo::ji("bulb")`**]{style="color: #88188a; font-size: 55px"}
+
+- Sobreajuste
+- Pérdida de información al categorizar variables continuas
+- Inestables debido a que pequeñas variaciones en el dataset pueden generar modelos muy diferentes.
+
+## Ensamble learning: Motivación
+
+Se basan en la idea de que el trabajo en conjunto debería dar mejores resultados.
+
+Habitualmente, un modelo "ensemble" es más preciso que los modelos que lo constituyen. Intuitivamente, esto se debe a que "dos aprenden mejor que uno".
+
+. . .
+
+> Con los métodos de ensemble se pueden combinar múltiples modelos en uno nuevo y así lograr un equilibro entre [**sesgo y varianza**]{style="color: #88188a;"}, y por ende conseguir mejores predicciones que cualquiera de los modelos individuales originales
 
 ## 
 
