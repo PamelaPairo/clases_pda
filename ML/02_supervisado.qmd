@@ -17,7 +17,7 @@ format:
     chalkboard:
       theme: whiteboard
       boardmarker-width: 5
-      buttons: false
+      buttons: true
     echo: true
 editor: visual
 ---
@@ -30,7 +30,7 @@ editor: visual
 
 -   Árboles de decisión
 -   Ensambles: Bagging y Boosting
--   SVM
+-   Naive Nayes
 
 . . .
 
@@ -42,8 +42,16 @@ editor: visual
 
 . . .
 
--   Naive Bayes
+-   Support Vector Machine (SVM)
 -   Ejercitación
+
+## {background-color="#C5E1A5"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+
+[Árboles de decisión 🌲]{style="font-size: 100px;"}
+
+</h3>
 
 ## Árboles de decisión {chalkboard-buttons="true"}
 
@@ -107,7 +115,7 @@ $\LARGE IG(X)= H(Y)- H(Y|X)$
 > [**Elijo el atributo que me de mayor ganancia de información**]{style="font-size: 55px;"}
 :::
 
-## Aprendizaje en Árboles de decisión {chalkboard-buttons="true"}
+## Aprendizaje en Árboles de decisión
 
 ::: columns
 ::: {.column width="50%"}
@@ -131,6 +139,14 @@ $\LARGE IG(X)= H(Y)- H(Y|X)$
 
 > [[**Hiperparámetro**]{style="color: #88188a;"}: Valores no aprendidos por el algoritmo desde los datos y por ende deben ser seteados antes de entrenar el algoritmo.]{style="font-size: 50px; padding:15px"}
 
+### En árboles de decisión:
+
+ `n_min` : n mínimo para dividir los nodos
+
+ `tree_depth`: límite a la profundidad del árbol
+
+ `cost_complexity`: costo o penalización a los errores de árboles más complejos. Es una forma de poda.
+
 ## Sobreajuste
 
 - El error de entrenamiento es siempre cero 
@@ -144,6 +160,10 @@ $\LARGE IG(X)= H(Y)- H(Y|X)$
 ::: footer
 Imagen extraída de [aquí](https://bookdown.org/content/2031/arboles-de-decision-parte-i.html)
 :::
+
+## Sesgo y varianza
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/sesgo.png){fig-align="center"}
 
 ## 
 
@@ -162,6 +182,14 @@ Imagen extraída de [aquí](https://bookdown.org/content/2031/arboles-de-decisio
 - Pérdida de información al categorizar variables continuas
 - Inestables debido a que pequeñas variaciones en el dataset pueden generar modelos muy diferentes.
 
+## {background-color="#C5E1A5"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+
+[Ensamble Learning 🌲🌲🌲]{style="font-size: 100px;"}
+
+</h3>
+
 ## Ensamble learning: Motivación
 
 Se basan en la idea de que el trabajo en conjunto debería dar mejores resultados.
@@ -172,7 +200,98 @@ Habitualmente, un modelo "ensemble" es más preciso que los modelos que lo const
 
 > Con los métodos de ensemble se pueden combinar múltiples modelos en uno nuevo y así lograr un equilibro entre [**sesgo y varianza**]{style="color: #88188a;"}, y por ende conseguir mejores predicciones que cualquiera de los modelos individuales originales
 
-## 
+## Ensemble learning: Bagging
+
+Los [**árboles de decisión**]{style="color: #88188a;"} son algoritmos inestables debido a que pequeñas variaciones en el dataset pueden generar modelos muy diferentes.
+
+. . .
+
+> [**Bagging (Bootstrap Aggregation)**]{style="color: #88188a;"} es un método para hacer aprendizaje por _ensemble_. Consiste en realizar K subsets del dataset aleatoriamente y con reemplazo, resultando en un ensamble de K modelos. La asignación de la clase se realiza por mayoria simple en casos de clasificación.
+
+## Ensemble learning: Bagging
+
+![](https://raw.githubusercontent.com/PamelaPairo/maestria_DM/main/aprendizaje_automatico/images/bagging.png){fig-align="center"}
+
+:::footer
+Imagen de Hendrik Blockeel
+:::
+
+## Random Forest
+
+- Es una modificación a Bagging para Árboles de Decisión.
+
+- En cada árbol se consideran sólo M atributos elegidos aleatoriamente.
+
+- El algoritmo es sencillo, fácil de implementar, fácil de usar y requiere de poco ajuste de parámetros.
+
+- Es menos interpretable que los árboles de decisión.
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/random_forest.png){fig-align="center"}
+
+## Ensamble learning: Boosting
+
+![](https://raw.githubusercontent.com/PamelaPairo/maestria_DM/main/aprendizaje_automatico/images/boosting.png){fig-align="center"}
+
+:::footer
+
+Imagen extraída de [aquí](https://datascience.eu/machine-learning/gradient-boosting-what-you-need-to-know/)
+
+:::
+
+## Bagging vs Boosting
+
+![](https://raw.githubusercontent.com/PamelaPairo/maestria_DM/main/aprendizaje_automatico/images/bag_vs_boost.jpeg){fig-align="center"}
+
+:::footer
+
+Imagen extraída de [aquí](https://towardsdatascience.com/ensemble-learning-bagging-boosting-3098079e5422)
+:::
+
+## {background-color="#C5E1A5"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+
+[Naive Bayes ✨]{style="font-size: 100px;"}
+
+</h3>
+
+## Teorema de Bayes {.center-x}
+
+$\LARGE P(A|B)= \frac{P(B|A) * P(A)}{P(B)}$
+
+> El teorema establece que se puede encontrar la probabilidad de **A** (e.g. una clase objetivo) dada la ocurrencia de B (e.g. un conjunto de features). Es decir, B es la evidencia y A es la hipótesis.
+
+Dada nuestras variables predictoras, ¿cuál es la probabilidad de cada clase?
+
+$\ P(Clase|Predictores)= \LARGE \frac{P(Predictores|Clase) * P(Clase)}{P(Predictores)}$
+
+$\LARGE = \frac{Prior * Likelihood}{Evidencia}$
+
+$\ Predictores= \LARGE (x_1, x_2, x_3...x_n)$
+
+## ¿Porqué Naive?
+
+La principal asunción es que [**los atributos son independientes entre sí.**]{style="color: #88188a;"}
+
+Una segunda asunción, es que [**todos los atributos tienen el mismo efecto en la salida del algoritmo.**]{style="color: #88188a;"}
+
+### Entonces...
+
+
+$\ P(y|x_1, x_2..x_n)= \LARGE \frac{P(x_1|y) * P(x_n|y)...P(x_1|y)* P(y)}{P(x_1)* P(x_2)...P(x_N)}$
+
+
+## Tipos de algoritmos
+
+[**Bernoulli Naive Bayes**]{style="color: #88188a;"}: Para casos donde los atributos son variables binarias (e.g. si una palabra ocurre o no en un documento).
+
+
+[**Multinomial Naive Bayes**]{style="color: #88188a;"}: Para casos donde los atributos representan frecuencias (e.g. la cantidad de veces que una palabra ocurre en un documento).
+
+
+[**Gaussian Naive Bayes**]{style="color: #88188a;"}: Para casos donde los atributos toman valores continuos, se asume que los valores son muestras de una distribución gaussiana (esto se usa para calcular las probabilidades condicionales en el algoritmo).
+
+##
 
 ```{R}
 #| echo: false

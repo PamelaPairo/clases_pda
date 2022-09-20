@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Pamela E. Pairo">
-<meta name="description" content="Aprendizaje Supervisado">
+<meta name="description" content="Trabajo Práctico n°2">
 
-<title>Práctico 2</title>
+<title>Aprendizaje Supervisado</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#árboles-de-decisión" id="toc-árboles-de-decisión" class="nav-link" data-scroll-target="#árboles-de-decisión">Árboles de decisión</a>
   <ul class="collapse">
   <li><a href="#uniendo-todo-en-un-workflow" id="toc-uniendo-todo-en-un-workflow" class="nav-link" data-scroll-target="#uniendo-todo-en-un-workflow">Uniendo todo en un <em>Workflow</em></a></li>
-  <li><a href="#entreno-en-modelo" id="toc-entreno-en-modelo" class="nav-link" data-scroll-target="#entreno-en-modelo">Entreno en modelo</a></li>
+  <li><a href="#entreno-el-modelo" id="toc-entreno-el-modelo" class="nav-link" data-scroll-target="#entreno-el-modelo">Entreno el modelo</a>
+  <ul class="collapse">
+  <li><a href="#fronteras-de-decisión" id="toc-fronteras-de-decisión" class="nav-link" data-scroll-target="#fronteras-de-decisión">Fronteras de decisión</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -128,12 +131,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Práctico 2</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Código</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Enseñar el código</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Esconder el código</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">Ver el código</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Aprendizaje Supervisado</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Código</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Enseñar el código</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Esconder el código</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">Ver el código</a></li></ul></div></div>
 </div>
 
 <div>
   <div class="description">
-    <p>Aprendizaje Supervisado</p>
+    <p>Trabajo Práctico n°2</p>
   </div>
 </div>
 
@@ -220,7 +223,8 @@ $ fraud       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <details open="">
 <summary>Código</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span> (<span class="st">"gender"</span>, <span class="st">"amount"</span>, <span class="st">"fraud"</span>, <span class="st">"category"</span>, <span class="st">"age"</span>) <span class="sc">|&gt;</span>                <span class="fu">filter</span>(age<span class="sc">!=</span><span class="st">"'U'"</span> <span class="sc">&amp;</span> category <span class="sc">!=</span> <span class="fu">c</span>(<span class="st">"'es_transportation'"</span>,       <span class="st">"'es_food'"</span>, <span class="st">"'es_health'"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span> (<span class="st">"gender"</span>, <span class="st">"amount"</span>, <span class="st">"fraud"</span>, <span class="st">"category"</span>, <span class="st">"age"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age<span class="sc">!=</span><span class="st">"'U'"</span> <span class="sc">&amp;</span> category <span class="sc">!=</span> <span class="fu">c</span>(<span class="st">"'es_transportation'"</span>, <span class="st">"'es_food'"</span>, <span class="st">"'es_health'"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>¿Qué tipo de variable es cada <em>feature</em>?</p>
@@ -263,6 +267,11 @@ $ age      &lt;fct&gt; '2', '2', '2', '4', '4', '3', '2', '3', '3', '5', '4', '2
 </section>
 <section id="división-del-dataset-entrenamiento-y-testeo" class="level2">
 <h2 class="anchored" data-anchor-id="división-del-dataset-entrenamiento-y-testeo">División del dataset: Entrenamiento y testeo</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/split_data.png" class="fragment img-fluid figure-img" data-lenght="700" width="500"></p>
+</figure>
+</div>
 <div class="cell">
 <details open="">
 <summary>Código</summary>
@@ -310,7 +319,7 @@ $ age      &lt;fct&gt; '2', '2', '2', '4', '4', '3', '2', '3', '3', '5', '4', '2
 <div class="cell">
 <details open="">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>recipe_df <span class="ot">&lt;-</span>  <span class="fu">recipe</span> (fraud <span class="sc">~</span> age<span class="sc">+</span>category<span class="sc">+</span> amount, <span class="at">data=</span> df_train) <span class="sc">|&gt;</span>  </span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>recipe_df <span class="ot">&lt;-</span>  <span class="fu">recipe</span> (fraud <span class="sc">~</span> ., <span class="at">data=</span> df_train) <span class="sc">|&gt;</span>  </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">step_scale</span>(<span class="fu">all_numeric_predictors</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">|&gt;</span> </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span> </span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">prep</span>()</span>
@@ -390,8 +399,8 @@ Computational engine: rpart </code></pre>
 </div>
 </div>
 </section>
-<section id="entreno-en-modelo" class="level2">
-<h2 class="anchored" data-anchor-id="entreno-en-modelo">Entreno en modelo</h2>
+<section id="entreno-el-modelo" class="level2">
+<h2 class="anchored" data-anchor-id="entreno-el-modelo">Entreno el modelo</h2>
 <div class="cell">
 <details open="">
 <summary>Código</summary>
@@ -419,22 +428,48 @@ node), split, n, loss, yval, (yprob)
      7) amount&gt;=2.729189 80   6 1 (0.075000000 0.925000000) *</code></pre>
 </div>
 </div>
+<p>Se puede crear una visualización del árbol de decisión utilizando otra función auxiliar.</p>
 <div class="cell">
 <details open="">
 <summary>Código</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)  <span class="co"># for visualizing a decision tree</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)         <span class="co"># for variable importance plots</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>TREE_fit <span class="sc">%&gt;%</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart.plot</span>(<span class="at">roundint =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)<span class="co"># para la visualzación del árbol de decisión</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>TREE_fit <span class="sc">|&gt;</span> </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart.plot</span>(<span class="at">roundint =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="02_tp_supervisado_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<section id="fronteras-de-decisión" class="level3">
+<h3 class="anchored" data-anchor-id="fronteras-de-decisión">Fronteras de decisión</h3>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parttree)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df_train, <span class="fu">aes</span>(<span class="at">x =</span> category_X.es_health., <span class="at">y =</span> amount)) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col =</span> fraud)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>))<span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit a decision tree using the same variables as the above plot</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">=</span> <span class="fu">rpart</span>(fraud <span class="sc">~</span> ., <span class="at">data =</span> df_train)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualise the tree partitions by adding it via geom_parttree()</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span>  </span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_parttree</span>(<span class="at">data =</span> tree, <span class="fu">aes</span>(<span class="at">fill=</span>fraud), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">"Los puntos representan datos observados. Las áreas sombreadas representan las predicciones del árbol de decisión."</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="02_tp_supervisado_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <!-- -->
 
+</section>
 </section>
 </section>
 
@@ -588,212 +623,236 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Correr el código</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb21" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Práctico 2"</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Pamela E. Pairo"</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> es</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> |</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">  Aprendizaje Supervisado</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: flatly</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Detección del Fraude</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>A lo largo de las clases se trabajará con un dataset extraído de <span class="co">[</span><span class="ot">Kaggle</span><span class="co">](https://www.kaggle.com/datasets/ealaxi/banksim1?select=bs140513_032310.csv)</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE}</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de paquetes necesarios</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">message =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(discrim)</span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(workflows)</span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/df_fraude.csv'</span>)</span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a><span class="fu">### Descripción de las variables</span></span>
-<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Step`</span>: representa el día en que la transacción sucede. En total son 180 *steps*, por lo que la base de datos es por 6 meses.</span>
-<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Customer`</span>: representa el ID de la persona que inicia la transacción. Está formada con la letra C seguida por una secuencia unica de 10 numeros.</span>
-<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Age`</span>: esta variable se divide en intervalos de edad, comenzando de 0 a 6 y la letra U que significa *Unknown*. La edad es *Unknow* solo para las transacciones que tienen el mismo género que *Enterprise*. La codificación de los números es:</span>
-<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>0: menor a 18 años</span>
-<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>1: entre 19 y 25 años</span>
-<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>2: entre 26 y 35 años</span>
-<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>3: entre 36 y 45 años</span>
-<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>4: entre 46 y 55 años</span>
-<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>5: entre 56 y 65 años</span>
-<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>6: mayor a 65 años</span>
-<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-55"><a href="#cb21-55" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Gender`</span>: esta variable se codifica como F para Mujer, M para Hombre, E para Empresa y U para *Unknown*.</span>
-<span id="cb21-56"><a href="#cb21-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-57"><a href="#cb21-57" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Merchant`</span>: esta variable representa la identificación única de la parte que recibe la transacción. Similar a la identificación del cliente, la secuencia está formada por la letra M, seguida de una serie de 9 números. Hay un total de 50 comerciantes únicos en el conjunto de datos.</span>
-<span id="cb21-58"><a href="#cb21-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-59"><a href="#cb21-59" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Category`</span>: hay 15 categorías únicas que etiquetan el tipo general de transacción: transporte, comida, salud, bienestar y belleza, moda, bares y restaurantes, hiper, deportes y juguetes, tecnología, hogar, servicios de hotel, otros servicios, contenidos, viajes, ocio.</span>
-<span id="cb21-60"><a href="#cb21-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-61"><a href="#cb21-61" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Amount`</span>: representa el valor de la transacción. Solo hay 52 valores iguales a 0 y ningún valor negativo.</span>
-<span id="cb21-62"><a href="#cb21-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-63"><a href="#cb21-63" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Fraud`</span>: una columna indicadora codificada con 0 si la transacción fue limpia y con 1 si la transacción fue fraudulenta.</span>
-<span id="cb21-64"><a href="#cb21-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-65"><a href="#cb21-65" aria-hidden="true" tabindex="-1"></a><span class="in">`zipcodeOri`</span> y <span class="in">`zipMerchant`</span>: contienen un valor constante de 28007, que es un código postal en Ansonville, Carolina del Norte, Estados Unidos.</span>
-<span id="cb21-66"><a href="#cb21-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-67"><a href="#cb21-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conociendo `tidymodels`</span></span>
-<span id="cb21-68"><a href="#cb21-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-71"><a href="#cb21-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-72"><a href="#cb21-72" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
-<span id="cb21-73"><a href="#cb21-73" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span> (<span class="st">"gender"</span>, <span class="st">"amount"</span>, <span class="st">"fraud"</span>, <span class="st">"category"</span>, <span class="st">"age"</span>) <span class="sc">|&gt;</span>                <span class="fu">filter</span>(age<span class="sc">!=</span><span class="st">"'U'"</span> <span class="sc">&amp;</span> category <span class="sc">!=</span> <span class="fu">c</span>(<span class="st">"'es_transportation'"</span>,       <span class="st">"'es_food'"</span>, <span class="st">"'es_health'"</span>))</span>
-<span id="cb21-74"><a href="#cb21-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-75"><a href="#cb21-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-76"><a href="#cb21-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-77"><a href="#cb21-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-78"><a href="#cb21-78" aria-hidden="true" tabindex="-1"></a>¿Qué tipo de variable es cada _feature_?</span>
-<span id="cb21-79"><a href="#cb21-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-82"><a href="#cb21-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-83"><a href="#cb21-83" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span>
-<span id="cb21-84"><a href="#cb21-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-85"><a href="#cb21-85" aria-hidden="true" tabindex="-1"></a>Cambiemos el tipo de variable según corresponda</span>
-<span id="cb21-86"><a href="#cb21-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-89"><a href="#cb21-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-90"><a href="#cb21-90" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>fraud <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>fraud)</span>
-<span id="cb21-91"><a href="#cb21-91" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>age)</span>
-<span id="cb21-92"><a href="#cb21-92" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>gender)</span>
-<span id="cb21-93"><a href="#cb21-93" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>category <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>category)</span>
-<span id="cb21-94"><a href="#cb21-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-95"><a href="#cb21-95" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span> (df)</span>
-<span id="cb21-96"><a href="#cb21-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-97"><a href="#cb21-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-98"><a href="#cb21-98" aria-hidden="true" tabindex="-1"></a><span class="fu">## División del dataset: Entrenamiento y testeo</span></span>
-<span id="cb21-99"><a href="#cb21-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-102"><a href="#cb21-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-103"><a href="#cb21-103" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)<span class="co">#setear la semilla</span></span>
-<span id="cb21-104"><a href="#cb21-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data split for train and test</span></span>
-<span id="cb21-105"><a href="#cb21-105" aria-hidden="true" tabindex="-1"></a>df_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(df,</span>
-<span id="cb21-106"><a href="#cb21-106" aria-hidden="true" tabindex="-1"></a>                          <span class="at">prop =</span> <span class="fl">0.8</span>)</span>
-<span id="cb21-107"><a href="#cb21-107" aria-hidden="true" tabindex="-1"></a><span class="co"># Create training data</span></span>
-<span id="cb21-108"><a href="#cb21-108" aria-hidden="true" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> df_split <span class="sc">%&gt;%</span></span>
-<span id="cb21-109"><a href="#cb21-109" aria-hidden="true" tabindex="-1"></a>              <span class="fu">training</span>()</span>
-<span id="cb21-110"><a href="#cb21-110" aria-hidden="true" tabindex="-1"></a><span class="co"># Create testing data</span></span>
-<span id="cb21-111"><a href="#cb21-111" aria-hidden="true" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> df_split <span class="sc">%&gt;%</span></span>
-<span id="cb21-112"><a href="#cb21-112" aria-hidden="true" tabindex="-1"></a>              <span class="fu">testing</span>()</span>
-<span id="cb21-113"><a href="#cb21-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of rows in train and test dataset</span></span>
-<span id="cb21-114"><a href="#cb21-114" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"Total del dataset de entrenamiento: "</span>, <span class="fu">nrow</span>(df_train))</span>
-<span id="cb21-115"><a href="#cb21-115" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"Total del dataset de testeo: "</span>, <span class="fu">nrow</span>(df_test))</span>
-<span id="cb21-116"><a href="#cb21-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-117"><a href="#cb21-117" aria-hidden="true" tabindex="-1"></a><span class="fu">## Entrenando modelos con `Tidymodels`</span></span>
-<span id="cb21-118"><a href="#cb21-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-119"><a href="#cb21-119" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="kw">&lt;i</span> <span class="er">class</span><span class="ot">=</span><span class="st">'fas fa-code-branch pr2'</span><span class="kw">&gt;&lt;/i&gt;</span><span class="at"> Si no tenés instalado </span><span class="in">`tidymodels`</span><span class="at"> podés hacerlo corriendo el siguiente código</span></span>
-<span id="cb21-120"><a href="#cb21-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-121"><a href="#cb21-121" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb21-122"><a href="#cb21-122" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidymodels"</span>)</span>
-<span id="cb21-123"><a href="#cb21-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-124"><a href="#cb21-124" aria-hidden="true" tabindex="-1"></a>Al igual que <span class="in">`tidyverse`</span>, <span class="in">`tidymodels`</span> está compuesto por un conjunto de paquetes como los siguientes:</span>
-<span id="cb21-125"><a href="#cb21-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-126"><a href="#cb21-126" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`rsample`</span>: para realizar la división del dataset en entrenamiento, validación y testeo.</span>
-<span id="cb21-127"><a href="#cb21-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-128"><a href="#cb21-128" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`recipes`</span>: para el preprocesamiento</span>
-<span id="cb21-129"><a href="#cb21-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-130"><a href="#cb21-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`parnship`</span>: para especificar el modelo</span>
-<span id="cb21-131"><a href="#cb21-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-132"><a href="#cb21-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`yardstick`</span>: para evaluar el modelo</span>
-<span id="cb21-133"><a href="#cb21-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-134"><a href="#cb21-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preprocesamiento de datos usando `recipe`</span></span>
-<span id="cb21-135"><a href="#cb21-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-138"><a href="#cb21-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-139"><a href="#cb21-139" aria-hidden="true" tabindex="-1"></a>recipe_df <span class="ot">&lt;-</span>  <span class="fu">recipe</span> (fraud <span class="sc">~</span> age<span class="sc">+</span>category<span class="sc">+</span> amount, <span class="at">data=</span> df_train) <span class="sc">|&gt;</span>  </span>
-<span id="cb21-140"><a href="#cb21-140" aria-hidden="true" tabindex="-1"></a>              <span class="fu">step_scale</span>(<span class="fu">all_numeric_predictors</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb21-141"><a href="#cb21-141" aria-hidden="true" tabindex="-1"></a>              <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb21-142"><a href="#cb21-142" aria-hidden="true" tabindex="-1"></a>              <span class="fu">prep</span>()</span>
-<span id="cb21-143"><a href="#cb21-143" aria-hidden="true" tabindex="-1"></a>              </span>
-<span id="cb21-144"><a href="#cb21-144" aria-hidden="true" tabindex="-1"></a><span class="co"># Bake</span></span>
-<span id="cb21-145"><a href="#cb21-145" aria-hidden="true" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipe_df, <span class="at">new_data=</span>df_train)</span>
-<span id="cb21-146"><a href="#cb21-146" aria-hidden="true" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipe_df, <span class="at">new_data=</span>df_test)</span>
-<span id="cb21-147"><a href="#cb21-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-148"><a href="#cb21-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-149"><a href="#cb21-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## Especificando el modelo</span></span>
-<span id="cb21-150"><a href="#cb21-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-151"><a href="#cb21-151" aria-hidden="true" tabindex="-1"></a>Se puede entrenar cualquier modelo (que este incluído en <span class="in">`tidymodels`</span>) siguiendo los pasos que se muestran a continuación.</span>
-<span id="cb21-152"><a href="#cb21-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-153"><a href="#cb21-153" aria-hidden="true" tabindex="-1"></a>1- Especificar el modelo (eg. Regresión logística, Random Forest, SVM, etc)</span>
-<span id="cb21-154"><a href="#cb21-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-155"><a href="#cb21-155" aria-hidden="true" tabindex="-1"></a>2- Con <span class="in">`set_engine()`</span> se especifíca la familia de modelos</span>
-<span id="cb21-156"><a href="#cb21-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-157"><a href="#cb21-157" aria-hidden="true" tabindex="-1"></a>3- Con <span class="in">`set_mode()`</span> se especifica el tipo de modelo a entrenarse (regresión o clasificación)</span>
-<span id="cb21-158"><a href="#cb21-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-159"><a href="#cb21-159" aria-hidden="true" tabindex="-1"></a>4- Usar la función <span class="in">`fit ()`</span> para entrenar el modelo y, dentro de eso, debe proporcionar la notación de la fórmula y el conjunto de datos</span>
-<span id="cb21-160"><a href="#cb21-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-163"><a href="#cb21-163" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-164"><a href="#cb21-164" aria-hidden="true" tabindex="-1"></a><span class="do">##Con los hiperparámetros por default</span></span>
-<span id="cb21-165"><a href="#cb21-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-166"><a href="#cb21-166" aria-hidden="true" tabindex="-1"></a><span class="co">#Naive Bayes</span></span>
-<span id="cb21-167"><a href="#cb21-167" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">234</span>)</span>
-<span id="cb21-168"><a href="#cb21-168" aria-hidden="true" tabindex="-1"></a>model_NB <span class="ot">&lt;-</span> <span class="fu">naive_Bayes</span>(<span class="at">smoothness =</span> .<span class="dv">8</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb21-169"><a href="#cb21-169" aria-hidden="true" tabindex="-1"></a>            <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb21-170"><a href="#cb21-170" aria-hidden="true" tabindex="-1"></a>            <span class="fu">set_engine</span>(<span class="st">"naivebayes"</span>)</span>
-<span id="cb21-171"><a href="#cb21-171" aria-hidden="true" tabindex="-1"></a><span class="co">#SVM</span></span>
-<span id="cb21-172"><a href="#cb21-172" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">234</span>)</span>
-<span id="cb21-173"><a href="#cb21-173" aria-hidden="true" tabindex="-1"></a>model_SVM <span class="ot">&lt;-</span></span>
-<span id="cb21-174"><a href="#cb21-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">svm_rbf</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb21-175"><a href="#cb21-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb21-176"><a href="#cb21-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>)</span>
-<span id="cb21-177"><a href="#cb21-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-178"><a href="#cb21-178" aria-hidden="true" tabindex="-1"></a><span class="co">#Arboles de decisión</span></span>
-<span id="cb21-179"><a href="#cb21-179" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">234</span>)</span>
-<span id="cb21-180"><a href="#cb21-180" aria-hidden="true" tabindex="-1"></a>model_TREE <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb21-181"><a href="#cb21-181" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb21-182"><a href="#cb21-182" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
-<span id="cb21-183"><a href="#cb21-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-184"><a href="#cb21-184" aria-hidden="true" tabindex="-1"></a><span class="co">#Random Forest</span></span>
-<span id="cb21-185"><a href="#cb21-185" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">234</span>)</span>
-<span id="cb21-186"><a href="#cb21-186" aria-hidden="true" tabindex="-1"></a>model_RF <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>() <span class="sc">|&gt;</span>  </span>
-<span id="cb21-187"><a href="#cb21-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb21-188"><a href="#cb21-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb21-189"><a href="#cb21-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_args</span>(<span class="at">trees =</span> <span class="dv">500</span>)</span>
-<span id="cb21-190"><a href="#cb21-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-191"><a href="#cb21-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-192"><a href="#cb21-192" aria-hidden="true" tabindex="-1"></a><span class="fu"># Árboles de decisión</span></span>
-<span id="cb21-193"><a href="#cb21-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-194"><a href="#cb21-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-195"><a href="#cb21-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Uniendo todo en un _Workflow_</span></span>
-<span id="cb21-196"><a href="#cb21-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-199"><a href="#cb21-199" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-200"><a href="#cb21-200" aria-hidden="true" tabindex="-1"></a>wf_TREE <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb21-201"><a href="#cb21-201" aria-hidden="true" tabindex="-1"></a>          <span class="fu">add_recipe</span>(recipe_df) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-202"><a href="#cb21-202" aria-hidden="true" tabindex="-1"></a>          <span class="fu">add_model</span>(model_TREE)</span>
-<span id="cb21-203"><a href="#cb21-203" aria-hidden="true" tabindex="-1"></a>wf_TREE</span>
-<span id="cb21-204"><a href="#cb21-204" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-205"><a href="#cb21-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## Entreno en modelo</span></span>
-<span id="cb21-206"><a href="#cb21-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-209"><a href="#cb21-209" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-210"><a href="#cb21-210" aria-hidden="true" tabindex="-1"></a>TREE_fit <span class="ot">&lt;-</span> model_TREE<span class="sc">%&gt;%</span></span>
-<span id="cb21-211"><a href="#cb21-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(fraud <span class="sc">~</span> ., <span class="at">data =</span> df_train) </span>
-<span id="cb21-212"><a href="#cb21-212" aria-hidden="true" tabindex="-1"></a><span class="co">#imprimo el modelo</span></span>
-<span id="cb21-213"><a href="#cb21-213" aria-hidden="true" tabindex="-1"></a>TREE_fit</span>
-<span id="cb21-214"><a href="#cb21-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb21-215"><a href="#cb21-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-218"><a href="#cb21-218" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb21-219"><a href="#cb21-219" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)  <span class="co"># for visualizing a decision tree</span></span>
-<span id="cb21-220"><a href="#cb21-220" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)         <span class="co"># for variable importance plots</span></span>
-<span id="cb21-221"><a href="#cb21-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-222"><a href="#cb21-222" aria-hidden="true" tabindex="-1"></a>TREE_fit <span class="sc">%&gt;%</span></span>
-<span id="cb21-223"><a href="#cb21-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb21-224"><a href="#cb21-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart.plot</span>(<span class="at">roundint =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb21-225"><a href="#cb21-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-226"><a href="#cb21-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb22" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Aprendizaje Supervisado"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Pamela E. Pairo"</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> es</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> |</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">  Trabajo Práctico n°2</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: flatly</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Detección del Fraude</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>A lo largo de las clases se trabajará con un dataset extraído de <span class="co">[</span><span class="ot">Kaggle</span><span class="co">](https://www.kaggle.com/datasets/ealaxi/banksim1?select=bs140513_032310.csv)</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE}</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de paquetes necesarios</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">message =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(discrim)</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(workflows)</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'data/df_fraude.csv'</span>)</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a><span class="fu">### Descripción de las variables</span></span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Step`</span>: representa el día en que la transacción sucede. En total son 180 *steps*, por lo que la base de datos es por 6 meses.</span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Customer`</span>: representa el ID de la persona que inicia la transacción. Está formada con la letra C seguida por una secuencia unica de 10 numeros.</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Age`</span>: esta variable se divide en intervalos de edad, comenzando de 0 a 6 y la letra U que significa *Unknown*. La edad es *Unknow* solo para las transacciones que tienen el mismo género que *Enterprise*. La codificación de los números es:</span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>0: menor a 18 años</span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>1: entre 19 y 25 años</span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>2: entre 26 y 35 años</span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>3: entre 36 y 45 años</span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>4: entre 46 y 55 años</span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>5: entre 56 y 65 años</span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>6: mayor a 65 años</span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Gender`</span>: esta variable se codifica como F para Mujer, M para Hombre, E para Empresa y U para *Unknown*.</span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Merchant`</span>: esta variable representa la identificación única de la parte que recibe la transacción. Similar a la identificación del cliente, la secuencia está formada por la letra M, seguida de una serie de 9 números. Hay un total de 50 comerciantes únicos en el conjunto de datos.</span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Category`</span>: hay 15 categorías únicas que etiquetan el tipo general de transacción: transporte, comida, salud, bienestar y belleza, moda, bares y restaurantes, hiper, deportes y juguetes, tecnología, hogar, servicios de hotel, otros servicios, contenidos, viajes, ocio.</span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Amount`</span>: representa el valor de la transacción. Solo hay 52 valores iguales a 0 y ningún valor negativo.</span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`Fraud`</span>: una columna indicadora codificada con 0 si la transacción fue limpia y con 1 si la transacción fue fraudulenta.</span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a><span class="in">`zipcodeOri`</span> y <span class="in">`zipMerchant`</span>: contienen un valor constante de 28007, que es un código postal en Ansonville, Carolina del Norte, Estados Unidos.</span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conociendo `tidymodels`</span></span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> </span>
+<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a>      <span class="fu">select</span> (<span class="st">"gender"</span>, <span class="st">"amount"</span>, <span class="st">"fraud"</span>, <span class="st">"category"</span>, <span class="st">"age"</span>)<span class="sc">|&gt;</span></span>
+<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age<span class="sc">!=</span><span class="st">"'U'"</span> <span class="sc">&amp;</span> category <span class="sc">!=</span> <span class="fu">c</span>(<span class="st">"'es_transportation'"</span>, <span class="st">"'es_food'"</span>, <span class="st">"'es_health'"</span>))</span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a>¿Qué tipo de variable es cada _feature_?</span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a>Cambiemos el tipo de variable según corresponda</span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>fraud <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>fraud)</span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>age)</span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>gender <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>gender)</span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>category <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(df<span class="sc">$</span>category)</span>
+<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span> (df)</span>
+<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a><span class="fu">## División del dataset: Entrenamiento y testeo</span></span>
+<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a><span class="al">![](img/split_data.png)</span>{.fragment width="500" lenght="700" fig-align="center"}</span>
+<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)<span class="co">#setear la semilla</span></span>
+<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data split for train and test</span></span>
+<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a>df_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(df,</span>
+<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a>                          <span class="at">prop =</span> <span class="fl">0.8</span>)</span>
+<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a><span class="co"># Create training data</span></span>
+<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> df_split <span class="sc">%&gt;%</span></span>
+<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a>              <span class="fu">training</span>()</span>
+<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Create testing data</span></span>
+<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> df_split <span class="sc">%&gt;%</span></span>
+<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a>              <span class="fu">testing</span>()</span>
+<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of rows in train and test dataset</span></span>
+<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"Total del dataset de entrenamiento: "</span>, <span class="fu">nrow</span>(df_train))</span>
+<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a><span class="fu">paste0</span>(<span class="st">"Total del dataset de testeo: "</span>, <span class="fu">nrow</span>(df_test))</span>
+<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a><span class="fu">## Entrenando modelos con `Tidymodels`</span></span>
+<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="kw">&lt;i</span> <span class="er">class</span><span class="ot">=</span><span class="st">'fas fa-code-branch pr2'</span><span class="kw">&gt;&lt;/i&gt;</span><span class="at"> Si no tenés instalado </span><span class="in">`tidymodels`</span><span class="at"> podés hacerlo corriendo el siguiente código</span></span>
+<span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidymodels"</span>)</span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a>Al igual que <span class="in">`tidyverse`</span>, <span class="in">`tidymodels`</span> está compuesto por un conjunto de paquetes como los siguientes:</span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`rsample`</span>: para realizar la división del dataset en entrenamiento, validación y testeo.</span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`recipes`</span>: para el preprocesamiento</span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`parnship`</span>: para especificar el modelo</span>
+<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`yardstick`</span>: para evaluar el modelo</span>
+<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Preprocesamiento de datos usando `recipe`</span></span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a>recipe_df <span class="ot">&lt;-</span>  <span class="fu">recipe</span> (fraud <span class="sc">~</span> ., <span class="at">data=</span> df_train) <span class="sc">|&gt;</span>  </span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>              <span class="fu">step_scale</span>(<span class="fu">all_numeric_predictors</span>(), <span class="sc">-</span><span class="fu">all_outcomes</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a>              <span class="fu">step_dummy</span>(<span class="fu">all_nominal_predictors</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a>              <span class="fu">prep</span>()</span>
+<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a><span class="co"># Bake</span></span>
+<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a>df_train <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipe_df, <span class="at">new_data=</span>df_train)</span>
+<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a>df_test <span class="ot">&lt;-</span> <span class="fu">bake</span>(recipe_df, <span class="at">new_data=</span>df_test)</span>
+<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Especificando el modelo</span></span>
+<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a>Se puede entrenar cualquier modelo (que este incluído en <span class="in">`tidymodels`</span>) siguiendo los pasos que se muestran a continuación.</span>
+<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a>1- Especificar el modelo (eg. Regresión logística, Random Forest, SVM, etc)</span>
+<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a>2- Con <span class="in">`set_engine()`</span> se especifíca la familia de modelos</span>
+<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a>3- Con <span class="in">`set_mode()`</span> se especifica el tipo de modelo a entrenarse (regresión o clasificación)</span>
+<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a>4- Usar la función <span class="in">`fit ()`</span> para entrenar el modelo y, dentro de eso, debe proporcionar la notación de la fórmula y el conjunto de datos</span>
+<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a><span class="do">##Con los hiperparámetros por default</span></span>
+<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a><span class="co">#Naive Bayes</span></span>
+<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">234</span>)</span>
+<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a>model_NB <span class="ot">&lt;-</span> <span class="fu">naive_Bayes</span>(<span class="at">smoothness =</span> .<span class="dv">8</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a>            <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a>            <span class="fu">set_engine</span>(<span class="st">"naivebayes"</span>)</span>
+<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a><span class="co">#SVM</span></span>
+<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">234</span>)</span>
+<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a>model_SVM <span class="ot">&lt;-</span></span>
+<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">svm_rbf</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"kernlab"</span>)</span>
+<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a><span class="co">#Arboles de decisión</span></span>
+<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">234</span>)</span>
+<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a>model_TREE <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>)</span>
+<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a><span class="co">#Random Forest</span></span>
+<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">234</span>)</span>
+<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a>model_RF <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>() <span class="sc">|&gt;</span>  </span>
+<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_args</span>(<span class="at">trees =</span> <span class="dv">500</span>)</span>
+<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a><span class="fu"># Árboles de decisión</span></span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a><span class="fu">## Uniendo todo en un _Workflow_</span></span>
+<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a>wf_TREE <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a>          <span class="fu">add_recipe</span>(recipe_df) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a>          <span class="fu">add_model</span>(model_TREE)</span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a>wf_TREE</span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a><span class="fu">## Entreno el modelo</span></span>
+<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a>TREE_fit <span class="ot">&lt;-</span> model_TREE<span class="sc">%&gt;%</span></span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(fraud <span class="sc">~</span> ., <span class="at">data =</span> df_train) </span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a><span class="co">#imprimo el modelo</span></span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a>TREE_fit</span>
+<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a>Se puede crear una visualización del árbol de decisión utilizando otra función auxiliar.</span>
+<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)<span class="co"># para la visualzación del árbol de decisión</span></span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a>TREE_fit <span class="sc">|&gt;</span> </span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">extract_fit_engine</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rpart.plot</span>(<span class="at">roundint =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fronteras de decisión</span></span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parttree)</span>
+<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df_train, <span class="fu">aes</span>(<span class="at">x =</span> category_X.es_health., <span class="at">y =</span> amount)) <span class="sc">+</span></span>
+<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col =</span> fraud)) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>))<span class="sc">+</span></span>
+<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a><span class="do">## Fit a decision tree using the same variables as the above plot</span></span>
+<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">=</span> <span class="fu">rpart</span>(fraud <span class="sc">~</span> ., <span class="at">data =</span> df_train)</span>
+<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a><span class="do">## Visualise the tree partitions by adding it via geom_parttree()</span></span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span>  </span>
+<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_parttree</span>(<span class="at">data =</span> tree, <span class="fu">aes</span>(<span class="at">fill=</span>fraud), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">"Los puntos representan datos observados. Las áreas sombreadas representan las predicciones del árbol de decisión."</span>)</span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
