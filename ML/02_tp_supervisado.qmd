@@ -28,7 +28,6 @@ library(tidymodels)
 library(workflows)
 ```
 
-
 ```{r}
 data <- read_csv('data/df_fraude.csv')
 glimpse(data)
@@ -70,12 +69,12 @@ df <- data |>
   filter(age!="'U'" & category != c("'es_transportation'", "'es_food'", "'es_health'"))
 ```
 
-
-¿Qué tipo de variable es cada _feature_?
+¿Qué tipo de variable es cada *feature*?
 
 ```{r}
 glimpse(df)
 ```
+
 Cambiemos el tipo de variable según corresponda
 
 ```{r}
@@ -106,22 +105,26 @@ df_test <- df_split %>%
 paste0("Total del dataset de entrenamiento: ", nrow(df_train))
 paste0("Total del dataset de testeo: ", nrow(df_test))
 ```
+
 ## Entrenando modelos con `Tidymodels`
 
 > <i class='fas fa-code-branch pr2'></i> Si no tenés instalado `tidymodels` podés hacerlo corriendo el siguiente código
 
-```r
+``` r
 install.packages("tidymodels")
 ```
+
 Al igual que `tidyverse`, `tidymodels` está compuesto por un conjunto de paquetes como los siguientes:
 
-- `rsample`: para realizar la división del dataset en entrenamiento, validación y testeo.
+-   `rsample`: para realizar la división del dataset en entrenamiento, validación y testeo.
 
-- `recipes`: para el preprocesamiento
+-   `recipes`: para el preprocesamiento
 
-- `parnship`: para especificar el modelo
+-   `parnship`: para especificar el modelo
 
-- `yardstick`: para evaluar el modelo
+-   `yardstick`: para evaluar el modelo
+
+Mayores especificaciones y ejemplos de uso de `tidymodels`, en su [página](https://www.tidymodels.org/packages/)
 
 ## Preprocesamiento de datos usando `recipe`
 
@@ -174,13 +177,12 @@ set.seed(234)
 model_RF <- rand_forest() |>  
   set_engine("ranger") |>  
   set_mode("classification") |>  
-  set_args(trees = 500)
+  set_args(trees = 100)
 ```
 
 # Árboles de decisión
 
-
-## Uniendo todo en un _Workflow_
+## Uniendo todo en un *Workflow*
 
 ```{r}
 wf_TREE <- workflow() %>% 
@@ -188,6 +190,7 @@ wf_TREE <- workflow() %>%
           add_model(model_TREE)
 wf_TREE
 ```
+
 ## Entreno el modelo
 
 ```{r}
@@ -208,8 +211,16 @@ TREE_fit |>
 
 ```
 
-
 ### Fronteras de decisión
+
+Se necesita descargar el paquete `parttree` que no está disponible en CRAN. Ejecutar el siguiente código en la consola.
+
+``` r
+# install.packages("remotes")
+remotes::install_github("grantmcdermott/parttree")
+```
+
+Para más detalles ver [aquí](https://github.com/grantmcdermott/parttree)
 
 ```{r}
 library(parttree)
@@ -217,7 +228,7 @@ library(ggplot2)
 library(rpart)
 
 p = ggplot(data = df_train, aes(x = category_X.es_health., y = amount)) +
-    geom_point(aes(col = fraud)) + scale_x_continuous(limits = c(0, 3))+
+    geom_point(aes(col = fraud)) + scale_x_continuous(limits = c(0, 6))+
     theme_minimal()
 
 ## Fit a decision tree using the same variables as the above plot
@@ -228,3 +239,5 @@ p +
   geom_parttree(data = tree, aes(fill=fraud), alpha = 0.1) +
   labs(caption = "Los puntos representan datos observados. Las áreas sombreadas representan las predicciones del árbol de decisión.")
 ```
+
+Si tuviese árboles más profundos ¿Cómo se modificaría el gráfico anterior?
