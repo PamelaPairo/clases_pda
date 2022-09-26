@@ -51,32 +51,30 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 # Hoja de ruta 🚀 {background-color="#C5E1A5"}
 
 ::: {.fragment .semi-fade-out}
-- **Clase 1**: ¿Qué es la ciencia de datos? Conceptos importantes. Clasificación vs. Regresión. Análisis exploratorio y curación. Ingeniería de features.Entrenamiento, evaluación y testeo. Ejercitación
-
-:::
-
-
-::: {.fragment .fade-in}
-::: {.fragment .semi-fade-out}
-- **Clase 2**: Árboles de decisión. Ensambles. Sobreajuste. Trade off Sesgo-Varianza. SVM. Naïve Bayes. Hiperparámetros. Ejercitación
-:::
+-   **Clase 1**: ¿Qué es la ciencia de datos? Conceptos importantes. Clasificación vs. Regresión. Análisis exploratorio y curación. Ingeniería de features.Entrenamiento, evaluación y testeo. Ejercitación
 :::
 
 ::: {.fragment .fade-in}
 ::: {.fragment .semi-fade-out}
-- **Clase 3**: Validación cruzada. Métricas. Selección de modelos. Ejercitación
+-   **Clase 2**: Árboles de decisión. Ensambles. Sobreajuste. Trade off Sesgo-Varianza. SVM. Naïve Bayes. Hiperparámetros. Ejercitación
 :::
 :::
 
 ::: {.fragment .fade-in}
 ::: {.fragment .semi-fade-out}
-- **Clase 4**: Desbalanceo de clases. Problemas multiclase. Ejercitación
+-   **Clase 3**: Validación cruzada. Métricas. Selección de modelos. Ejercitación
 :::
 :::
 
 ::: {.fragment .fade-in}
 ::: {.fragment .semi-fade-out}
-- **Clase 5**: Clustering. K-means. PCA. Embeddings. Ejercitación
+-   **Clase 4**: Desbalanceo de clases. Problemas multiclase. Ejercitación
+:::
+:::
+
+::: {.fragment .fade-in}
+::: {.fragment .semi-fade-out}
+-   **Clase 5**: Clustering. K-means. PCA. Embeddings. Ejercitación
 :::
 :::
 
@@ -86,10 +84,10 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 
 . . .
 
-- ¿Qué es la Ciencia de Datos?
-- Tipos de Aprendizaje
-- Regresión vs Clasificación
-- Análisis exploratorio de datos y Curación
+-   ¿Qué es la Ciencia de Datos?
+-   Tipos de Aprendizaje
+-   Regresión vs Clasificación
+-   Análisis exploratorio de datos y Curación
 
 . . .
 
@@ -101,9 +99,8 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 
 . . .
 
-- Intro a Quarto
-- Ejercitación
-
+-   Intro a Quarto
+-   Ejercitación
 
 ## ¿Qué es la Ciencia de Datos? {chalkboard-buttons="true"}
 
@@ -119,7 +116,7 @@ Actualmente trabajo en la Dirección de Arquitectura de los Sistemas (SDG SIT) -
 :::
 
 ::: {.column width="50%"}
-::: {.incremental}
+::: incremental
 -   [**IA (Inteligencia Artificial)**]{style="color: #88188a;"}: una máquina que es capaz de imitar el razonamiento humano.
 
 -   [**ML (Machine Learning)**]{style="color: #88188a;"}: un subconjunto de Inteligencia Artificial donde las personas "entrenan" a las máquinas para reconocer patrones basados en datos y hacer sus **predicciones**.
@@ -140,7 +137,6 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 ## Ejemplos en negocios `r emo::ji("dollar")`
 
 ::: {layout="[[1,1], [1,1]]"}
-
 ![Detectar la probabilidad de que la transacción sea un fraude (Fraud Detection Models)](img/cards.png)
 
 ![Product Recommender](img/netflix.jpg)
@@ -148,11 +144,9 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 ![Probabilidad de que un usuario cliquee un anuncio (Click Prediction Models)](img/logos.jpg)
 :::
 
+## Tipos de Aprendizaje
 
-## Tipos de Aprendizaje 
-
-::: {.incremental}
-
+::: incremental
 -   [**Aprendizaje supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + salida esperada
 
 -   [**Aprendizaje no supervisado**]{style="color: #88188a;"}: Datos de entrenamiento (sin salida esperada)
@@ -224,57 +218,44 @@ Analisis de sentimientos de noticias financieras (negativo/positivo)
 
 ## Entrenamiento, validación y testeo
 
-* [__Set de entrenamiento__]{style="color: #1c5253;"} son los datos utilizados para el modelado. 
+-   [**Set de entrenamiento**]{style="color: #1c5253;"} son los datos utilizados para el modelado.
 
-* [__Set de validación__]{style="color: #1c5253;"}  ajuste/elección de hiperparámetros
+-   [**Set de validación**]{style="color: #1c5253;"} ajuste/elección de hiperparámetros
 
-* [__Set de testeo__]{style="color: #1c5253;"} son los datos utilizados para medir el desempeño del modelo, entre un conjunto de candidatos. 
+-   [**Set de testeo**]{style="color: #1c5253;"} son los datos utilizados para medir el desempeño del modelo, entre un conjunto de candidatos.
 
 ![](img/split_data.png){.fragment width="500" lenght="700" fig-align="center"}
 
-# Análisis exploratorio de datos y Curación 📈 📊 🔨{.center .center-x background-color="#1c5253"}
+# Análisis exploratorio de datos y Curación 📈 📊 🔨 {.center .center-x background-color="#1c5253"}
 
 ## Análisis exploratorio de datos 🔎
 
-::: {.incremental}
+::: incremental
+-   Distribución de las variables
 
-- Distribución de las variables
+-   Outliers o datos atípicos
 
+-   Presencia de valores faltantes
 
-- Outliers o datos atípicos
+-   Desbalance de las clases o grupos en estudio
 
-
-- Presencia de valores faltantes
-
-
-- Desbalance de las clases o grupos en estudio
-
-
-- Análisis de la correlación entre variables
-
+-   Análisis de la correlación entre variables
 :::
 
 ## Curación de datos `r emo::ji("hammer")`
 
-::: {.incremental}
+::: incremental
+-   Imputación de datos ruidosos, faltantes o erróneos.
 
-- Imputación de datos ruidosos, faltantes o erróneos.
+-   Codificación de variables categóricas.
 
+-   Transformación de variables.
 
-- Codificación de variables categóricas.
+-   Ingeniería de outliers.
 
+-   Escalado de Features
 
-- Transformación de variables.
-
-
-- Ingeniería de outliers.
-
-
-- Escalado de Features
-
-
-- Discretización de variables continuas (ej. edad)
-
+-   Discretización de variables continuas (ej. edad)
 :::
 
 ## Distribución del tiempo {chalkboard-buttons="true"}
@@ -285,7 +266,7 @@ Analisis de sentimientos de noticias financieras (negativo/positivo)
 Imagen extraída de [aquí](https://www.raconteur.net/the-role-of-a-data-scientist-and-why-we-need-them/)
 :::
 
-##
+## 
 
 ```{R}
 #| echo: false
@@ -304,14 +285,14 @@ countdown(minutes = 10,
           )
 ```
 
-
-## {background-image="img/computadora.jpg" background-size="cover"}
+##  {background-image="img/computadora.jpg" background-size="cover"}
 
 <h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: left; position: absolute; top: 25%; width: 56%;">
 
 [¡Manos a R!]{style="font-size: 100px;"}
- 
- Pero antes veamos con qué tipo de archivos vamos a trabajar...
+
+Pero antes veamos con qué tipo de archivos vamos a trabajar...
+
 </h3>
 
 ::: footer
@@ -324,29 +305,27 @@ Foto de <a href="https://unsplash.com/@emilep?utm_source=unsplash&utm_medium=ref
 
 . . .
 
-Un archivo .qmd y .Rmd permiten unificar bloques de códigos o _chunks_ con texto plano o con formato simple de leer usando [[markdown](https://markdown.es/sintaxis-markdown/)]{style="text-decoration: underline;"}. Al poder intercalar cálculos y gráficos con su análisis o explicación, se unifica el flujo de trabajo. Esto es muy importante si buscamos que nuestro trabajo sea **reproducible**, pero además ahorra tiempo.
+Un archivo .qmd y .Rmd permiten unificar bloques de códigos o *chunks* con texto plano o con formato simple de leer usando [[markdown](https://markdown.es/sintaxis-markdown/)]{style="text-decoration: underline;"}. Al poder intercalar cálculos y gráficos con su análisis o explicación, se unifica el flujo de trabajo. Esto es muy importante si buscamos que nuestro trabajo sea **reproducible**, pero además ahorra tiempo.
 
 . . .
 
 También...
 
-Soporta varios lenguajes como R, Python y Julia y _environments_ como Observable, VS Code y Jupyter Lab.
+Soporta varios lenguajes como R, Python y Julia y *environments* como Observable, VS Code y Jupyter Lab.
 
 ## Archivo .qmd {chalkboard-buttons="true"}
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Descarga
 
 Realizar la descarga de Quarto desde este [[link](https://quarto.org/docs/get-started/)]{style="text-decoration: underline;"}
 
 Luego seguir la siguiente ruta para abrir un .qmd
 
-```
-File > New > Quarto documentation
-```
+    File > New > Quarto documentation
 
 ### Código
+
     ---
     title: "ggplot2 demo"
     author: "Norah Jones"
@@ -374,44 +353,39 @@ File > New > Quarto documentation
     )
     ```
 
-
-
 ### Salida
-![](https://quarto.org/images/hello-knitr.png){width=40%}
 
+![](https://quarto.org/images/hello-knitr.png){width="40%"}
 :::
 
 ::: footer
 Imagen realizada por Tom Mock
 :::
 
-# Demo Análisis exploratorio de datos y Curación 💻{.center .center-x background-color="#1c5253"}
+# Demo Análisis exploratorio de datos y Curación 💻 {.center .center-x background-color="#1c5253"}
 
 ## Comunidades y Recursos útiles
 
 ::: columns
 ::: {.column width="50%"}
-
 ![](img/comunidades_latin.png)
 :::
 
 ::: {.column width="50%"}
-
-![[10-14 de octubre LatinR, VIRTUAL](https://latin-r.com/) Talleres y presentaciones orales.](img/latinr.jpg){width=60%}
-
+![[10-14 de octubre LatinR, VIRTUAL](https://latin-r.com/) Talleres y presentaciones orales.](img/latinr.jpg){width="60%"}
 :::
 :::
 
 ## Referencias
 
-- [Artículo acerca del Sobreajuste](https://towardsdatascience.com/what-are-overfitting-and-underfitting-in-machine-learning-a96b30864690) en Towards to Data Science
+-   [Artículo acerca del Sobreajuste](https://towardsdatascience.com/what-are-overfitting-and-underfitting-in-machine-learning-a96b30864690) en Towards to Data Science
 
-- [Hands-on Machine Learning with R](https://bradleyboehmke.github.io/HOML/DT.html) de Bradley Boehmke y Brandon Greenwell.
+-   [Hands-on Machine Learning with R](https://bradleyboehmke.github.io/HOML/DT.html) de Bradley Boehmke y Brandon Greenwell.
 
-- [Tidy Modeling with R](https://www.tmwr.org/index.html) de Max Kuhn y Julia Silge
+-   [Tidy Modeling with R](https://www.tmwr.org/index.html) de Max Kuhn y Julia Silge
 
-- [Introducción a Machine Learning con Tidymodels](https://ml-tidy-wibds.netlify.app/material/), workshop dictado en el marco de Women in Bioinformatics & Data Science LA 2021
+-   [Introducción a Machine Learning con Tidymodels](https://ml-tidy-wibds.netlify.app/material/), workshop dictado en el marco de Women in Bioinformatics & Data Science LA 2021
 
-- [Supervised Machine Learning course](https://supervised-ml-course.netlify.app/) de Julia Silge
+-   [Supervised Machine Learning course](https://supervised-ml-course.netlify.app/) de Julia Silge
 
-- [R para Ciencia de Datos](https://es.r4ds.hadley.nz/)
+-   [R para Ciencia de Datos](https://es.r4ds.hadley.nz/)

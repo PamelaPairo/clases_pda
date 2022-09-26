@@ -93,7 +93,41 @@ $\ P(y|x_1, x_2..x_n)= \LARGE \frac{P(x_1|y) * P(x_n|y)...P(x_1|y)* P(y)}{P(x_1)
 
 </h3>
 
-## 
+## Máquinas de soporte vectorial
+
+El algoritmo de **SVM** encuentra el hiperplano que devuelve el **mayor margen** entre sí mismo y los vectores de soporte
+
+::: columns
+::: {.column width="50%"}
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/example_svm.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/example_svm.png){fig-align="center"}
+:::
+:::
+
+## Máquinas de soporte vectorial
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/svm.png){fig-align="center"}
+
+:::footer
+Imagen extraída de [este link](https://www.javatpoint.com/machine-learning-support-vector-machine-algorithm)
+:::
+
+## SVM para datos NO linealmente separables
+
+Se debe proyectar a una dimensión donde los datos si sean linealmente separables
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/svm_kernel.png){fig-align="center"}
+
+[**Tipos de kernels: **]{style="color: #1c5253;"} lineal, polinomial, RBF.
+
+:::footer
+Imagen extraída de [aquí](https://medium.com/analytics-vidhya/how-to-classify-non-linear-data-to-linear-data-bb2df1a6b781)
+:::
+
+##
 
 ```{R}
 #| echo: false
