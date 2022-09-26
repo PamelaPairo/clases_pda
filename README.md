@@ -13,3 +13,7 @@
 - Teórica: [Aprendizaje Supervisado](https://pamelapairo.github.io/clases_pda/ML/02_supervisado.html)
 
 - TP 2: [Aprendizaje supervisado con Tidymodels](https://pamelapairo.github.io/clases_pda/ML/02_tp_supervisado.html)
+
+### Clase 3
+
+- Teórica: [Métricas y Validación Cruzada](https://pamelapairo.github.io/clases_pda/ML/03_metricas_crossval.html)
