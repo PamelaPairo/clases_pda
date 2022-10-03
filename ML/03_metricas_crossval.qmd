@@ -95,7 +95,7 @@ $\ P(y|x_1, x_2..x_n)= \LARGE \frac{P(x_1|y) * P(x_n|y)...P(x_1|y)* P(y)}{P(x_1)
 
 ## Máquinas de soporte vectorial
 
-El algoritmo de **SVM** encuentra el hiperplano que devuelve el **mayor margen** entre sí mismo y los vectores de soporte
+El algoritmo de **SVM** encuentra el hiperplano (frontera de decisión) que devuelve el **mayor margen** entre sí mismo y los vectores de soporte
 
 ::: columns
 ::: {.column width="50%"}
