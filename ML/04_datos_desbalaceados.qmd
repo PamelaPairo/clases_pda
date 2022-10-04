@@ -51,9 +51,35 @@ editor: visual
 
 </h3>
 
-## LatinR 2022
+## LatinR 2022 (virtual)
+
+### Tutoriales (10 y 11 de octubre)
+
+- Comunicando seus resultados: Criando apresentações com Quarto.
+
+- Introducción a RMarkdown, creando reportes con R y Python en RStudio.
+
+- Herramientas y atajos para programar eficientemente con RStudio.
+
+- Introduction to Text Analysis with R.
+
+- Conquistando errores en R.
+
+- Creating Shiny Apps with Rhino: the new framework Shiny apps.
+
+Visitar [la página del evento](https://latin-r.com/) para mayor información
 
 ## GitHub
+
+GitHub es un servicio basado en la nube que aloja un sistema de control de versiones (VCS) llamado [Git]{style="text-decoration: underline;"}.
+
+### ¿Qué es el control de versiones?
+
+El [control de versiones]{style="text-decoration: underline;"} es un sistema que ayuda a rastrear y gestionar los cambios realizados en un archivo o conjunto de archivos.
+
+Todo el material de las clases de aprendizaje automático, se encuentra en el siguiente repositorio
+
+[https://github.com/PamelaPairo/clases_pda](https://github.com/PamelaPairo/clases_pda)
 
 ## {background-color="#C5E1A5"}
 
@@ -126,3 +152,52 @@ En su lugar, es mejor utilizar métricas que tengan más en cuenta los datos de 
 - [**Recall o Sensibilidad**]{style="color: #88188a;"}: el número de verdaderos positivos (TP) dividido por el número de valores positivos en los datos de la prueba (TP+ FN). Se la denomina también Tasa de verdaderos positivos. Valores bajos indican una gran cantidad de falsos negativos.
 
 - [**F1**]{style="color: #88188a;"}: el promedio ponderado de [**Precision**]{style="color: #88188a;"} y [**Recall**]{style="color: #88188a;"}
+
+## Cambiar el algoritmo
+
+
+> Es una buena práctica probar varios algoritmos en nuestro problema de clasificación con desbalanceo de datos.
+
+## Sobremuestrear la clase minoritaria
+
+> El sobremuestreo se puede definir como agregar más copias de la clase minoritaria. 
+Puede ser una buena opción cuando no se tiene una gran cantidad de datos con los que trabajar.
+
+## Submuestrear la clase mayoritaria
+
+> El submuestreo se puede definir como eliminar algunas observaciones de la clase mayoritaria. 
+Puede ser una buena opción cuando se tiene una cantidad grande de datos (ej. millones de datos). 
+
+[**Desventaja**]{style="color: #88188a;"} : se está eliminando información que puede ser valiosa. Esto podría dar lugar a un ajuste inadecuado y una mala generalización del conjunto de testeo.
+
+## Generación de muestras sintéticas
+
+SMOTE or Synthetic Minority Oversampling Technique
+
+SMOTE usa un algoritmo de vecinos más cercanos (KNN) para generar datos nuevos y sintéticos que podemos usar para entrenar nuestro modelo.
+
+Se genera un conjunto aleatorio de observaciones de la clases minoritaria para cambiar el sesgo de aprendizaje del clasificador hacia la clase minoritaria.
+
+## Tener en cuenta
+
+- En `R`, necesitamos instalar el siguiente paquete
+
+```r
+install.packages("themis")
+library(tidymodels)
+library(themis)
+```
+
+- Hacer el split de los datos **ANTES** de probar técnicas de sobremuestreo submuestreo.
+
+Si se hace lo contrario, puede ocurrir que los mismos datos estén presentes tanto en el conjunto de entrenamiento como en el conjunto de testeo (_data leakage_), causando el _overfitting_ y la baja generalización del modelo.
+
+## Referencias
+
+- [Artículo de Towards to Data Science](https://towardsdatascience.com/methods-for-dealing-with-imbalanced-data-5b761be45a18)
+
+- [Tratamiento de clases desbalanceadas](https://machinelearningparatodos.com/tratamiento-de-clases-desbalanceadas/)
+
+- [Practical Guide to deal with Imbalanced Classification Problems in R](https://www.analyticsvidhya.com/blog/2016/03/practical-guide-deal-imbalanced-classification-problems/)
+
+- [Themis](https://themis.tidymodels.org/)
