@@ -158,6 +158,15 @@ En su lugar, es mejor utilizar métricas que tengan más en cuenta los datos de 
 
 > Es una buena práctica probar varios algoritmos en nuestro problema de clasificación con desbalanceo de datos.
 
+Los vistos en clase:
+
+- Árboles de decisión
+- Ensambles (Bagging y Boosting)
+- SVM
+- Naive Bayes
+
+**Existen muchisimos más!!!**
+
 ## Sobremuestrear la clase minoritaria
 
 > El sobremuestreo se puede definir como agregar más copias de la clase minoritaria. 
