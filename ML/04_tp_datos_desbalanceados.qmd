@@ -103,7 +103,7 @@ set.seed(456)#setear la semilla
 # Create data split for train and test
 df_split <- initial_split(df,
                           prop = 0.75,
-                          strata = fraud)# para conservar la proporción de clases
+                          strata=fraud)# muestreo estratificado
 # Create training data
 df_train <- df_split |> 
               training()
@@ -111,17 +111,17 @@ df_train <- df_split |>
 df_test <- df_split |> 
               testing()
 # Number of rows in train and test dataset
-paste0("Total del dataset de entrenamiento: ", nrow(df_train))
+paste0("Total del dataset de holdout: ", nrow(df_train))
 paste0("Total del dataset de testeo: ", nrow(df_test))
 ```
 
-## Sin aplicar ninguna técnica para el desbalanceo de datos
+# Sin aplicar ninguna técnica para el desbalanceo de datos
 
 
 ```{r}
 recipe_df <-  recipe (fraud ~ ., data= df_train) |>  
               step_scale(all_numeric_predictors(), -all_outcomes()) |> 
-              step_dummy(all_nominal_predictors()) |> 
+              step_dummy(all_nominal_predictors()) |>
               prep()
               
 # Bake
@@ -148,8 +148,7 @@ Con `tune`, se especifica qué hiperparámetros van a ser tuneados.
 #Random Forest
 
 model_rf <- rand_forest(
-  mtry = tune(),
-  trees = 100,
+  trees = tune(),
   min_n = tune()
 ) |> 
   set_mode("classification") |> 
@@ -170,18 +169,19 @@ wf_rf
 
 ![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/cross.png){fig-align="center"}
 
+## Validación cruzada
+
 ```{r}
 set.seed(1234)
-fold_df <- vfold_cv(df_train, v=3)
+fold_df <- vfold_cv(df_train, v=5, strata=fraud)
 ```
 
-Necesitamos un conjunto de posibles valores de parámetros para probar el árbol de decisión.
+Necesitamos un conjunto de posibles valores de los hiparámetros
 
 ```{r}
-
-rf_grid <- grid_regular(mtry(c(1, 20)), 
+rf_grid <- grid_regular(trees(), 
              min_n(),
-             levels = 3)
+             levels = 5)
 rf_grid
 ```
 
@@ -224,7 +224,7 @@ wf_rf <- wf_rf |>
 wf_rf
 ```
 
-# Evaluación en test
+## Evaluación en test
 
 A continuación, se ajusta el flujo de trabajo del modelo final a los datos de entrenamiento y se evalúa el rendimiento en los datos de testeo.
 
@@ -239,7 +239,6 @@ df_fit
 
 
 ```{r}
-
 test_performance <- df_fit |>  collect_metrics()
 test_performance
 ```
@@ -250,7 +249,7 @@ test_performance
 collect_predictions(df_fit) |> 
   conf_mat(fraud, .pred_class)
 ```
-## Considerando el desbalance de clases
+# Considerando el desbalance de clases
 
 El paquete `themis` ofrece las siguientes técnicas para tratar con datos desbalanceados. Todos aplicables para problemas multiclase menos `step_rose()`
 
@@ -261,4 +260,128 @@ El paquete `themis` ofrece las siguientes técnicas para tratar con datos desbal
 - `step_downsample()`
 
 - `step_rose()`: Generation of synthetic data by Randomly Over Sampling Examples
+
+```{r}
+recipe_over <-  recipe (fraud ~ ., data= df_train) |>  
+              step_scale(all_numeric_predictors(), -all_outcomes()) |> 
+              step_dummy(all_nominal_predictors()) |>
+              step_smote(fraud) |> 
+              prep()
+
+# Bake
+df_train <- bake(recipe_over, new_data=df_train)
+df_test <- bake(recipe_over, new_data=df_test)
+           
+```
+
+El nuevo dataset de entrenamiento
+
+```{r}
+recipe_over %>%
+  bake(new_data = NULL) %>%
+  count(fraud, name = "training")
+```
+
+```{r}
+training <-bake(recipe_over, new_data=NULL)
+
+over <- ggplot(training, aes(fraud))
+over + geom_bar()
+```
+
+## Uniendo todo en un *Workflow*
+
+```{r}
+wf_over <- workflow() |>  
+          add_recipe(recipe_over) |> 
+          add_model(model_rf)
+```
+
+
+```{r}
+set.seed(123)
+fold_over <- vfold_cv(df_train, v=5, strata = fraud)
+```
+
+## Validación cruzada
+
+```{r}
+doParallel::registerDoParallel() #paralelizamos los cálculos
+
+tune_rf_over <- tune_grid(
+  model_rf,
+  fraud~ .,
+  resamples = fold_over, 
+  grid = rf_grid, 
+  metrics = metric_set(accuracy, sensitivity, precision)
+)
+```
+
+Las métricas provienen del rendimiento de la validación cruzada a través de los diferentes valores de los parámetros.
+
+```{r}
+collect_metrics(tune_rf_over)
+```
+
+```{r}
+autoplot(tune_rf_over)
+```
+
+## Selección del mejor modelo
+
+```{r}
+param_final_over <- tune_rf_over |> 
+  select_best(metric = "precision")
+param_final_over
+```
+
+```{r}
+wf_final <- wf_over |> 
+  finalize_workflow(param_final_over)
+```
+
+## Evaluación en test
+
+```{r}
+final_res <- wf_final |> 
+              fit(df_train)
+final_res
+```
+
+```{r}
+fraud_pred <- predict(final_res, new_data = df_test) |> 
+  bind_cols(predict(final_res, df_test, type = "prob")) |> 
+  bind_cols(df_test |>  select(fraud))
+```
+
+
+```{r}
+
+fraud_pred |>  conf_mat(truth = fraud, .pred_class)
+```
+
+## Importancia de las variables
+
+```{r}
+best_precision <- select_best(tune_rf_over, "precision")
+
+final_rf <- finalize_model(
+  model_rf,
+  best_precision
+)
+
+final_rf
+```
+
+
+```{r}
+library(vip)
+
+final_rf %>%
+  set_engine("ranger", importance = "permutation") %>%
+  fit(fraud ~ .,
+    data = juice(recipe_over) 
+  ) %>%
+  vip(geom = "point")
+```
 
