@@ -17,3 +17,11 @@
 ### Clase 3
 
 - Teórica: [Métricas y Validación Cruzada](https://pamelapairo.github.io/clases_pda/ML/03_metricas_crossval.html)
+
+- Práctica: [Validación cruzada](https://pamelapairo.github.io/clases_pda/ML/03_tp_metricas_crossval.html)
+
+## Clase 4
+
+- Teórica: [Datos desbalanceados](https://pamelapairo.github.io/clases_pda/ML/04_datos_desbalanceados.html)
+
+- Práctica: [Integración](https://pamelapairo.github.io/clases_pda/ML/04_tp_datos_desbalanceados.html)
