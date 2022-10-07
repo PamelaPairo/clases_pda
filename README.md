@@ -20,7 +20,7 @@
 
 - Práctica: [Validación cruzada](https://pamelapairo.github.io/clases_pda/ML/03_tp_metricas_crossval.html)
 
-## Clase 4
+### Clase 4
 
 - Teórica: [Datos desbalanceados](https://pamelapairo.github.io/clases_pda/ML/04_datos_desbalanceados.html)
 
