@@ -29,3 +29,5 @@
 ### Clase 5
 
 - Teórica : [Aprendizaje No Supervisado](https://pamelapairo.github.io/clases_pda/ML/05_aprendizaje_no_supervisado.html)
+
+- Práctica: [Kmeans, PCA y TSNE](https://pamelapairo.github.io/clases_pda/ML/05_tp_no_supervisado.html)
