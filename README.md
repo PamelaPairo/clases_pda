@@ -25,3 +25,7 @@
 - Teórica: [Datos desbalanceados](https://pamelapairo.github.io/clases_pda/ML/04_datos_desbalanceados.html)
 
 - Práctica: [Integración](https://pamelapairo.github.io/clases_pda/ML/04_tp_datos_desbalanceados.html)
+
+### Clase 5
+
+- Teórica : [Aprendizaje No Supervisado](https://pamelapairo.github.io/clases_pda/ML/05_aprendizaje_no_supervisado.html)

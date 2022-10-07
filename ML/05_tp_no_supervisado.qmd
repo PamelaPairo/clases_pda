@@ -1,0 +1,387 @@
+---
+title: "Desbalanceo de datos"
+author: "Pamela E. Pairo"
+lang: es
+description: |
+  Trabajo Práctico n°4
+format:
+  html:
+    theme: flatly
+    code-fold: show
+    code-tools: true
+    toc: true
+    toc-location: left
+---
+
+## Detección del Fraude
+
+Carga de las librerias necesarias
+
+```{r, message=FALSE}
+# Carga de paquetes necesarios
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+library(tidyverse)
+library(discrim)
+library(tidymodels)
+library(workflows)
+library(themis)
+library(ranger)
+```
+
+```{r}
+data <- read_csv('data/df_fraude.csv')
+glimpse(data)
+```
+
+### Descripción de las variables
+
+-   `Step`: representa el día en que la transacción sucede. En total son 180 *steps*, por lo que la base de datos es por 6 meses.
+
+-   `Customer`: representa el ID de la persona que inicia la transacción. Está formada con la letra C seguida por una secuencia unica de 10 numeros.
+
+-   `Age`: esta variable se divide en intervalos de edad, comenzando de 0 a 6 y la letra U que significa *Unknown*. La edad es *Unknow* solo para las transacciones que tienen el mismo género que *Enterprise*. La codificación de los números es:
+
+    -   0: menor a 18 años
+    -   1: entre 19 y 25 años
+    -   2: entre 26 y 35 años
+    -   3: entre 36 y 45 años
+    -   4: entre 46 y 55 años
+    -   5: entre 56 y 65 años
+    -   6: mayor a 65 años
+
+-   `Gender`: esta variable se codifica como F para Mujer, M para Hombre, E para Empresa y U para *Unknown*.
+
+-   `Merchant`: esta variable representa la identificación única de la parte que recibe la transacción. Similar a la identificación del cliente, la secuencia está formada por la letra M, seguida de una serie de 9 números. Hay un total de 50 comerciantes únicos en el conjunto de datos.
+
+-   `Category`: hay 15 categorías únicas que etiquetan el tipo general de transacción: transporte, comida, salud, bienestar y belleza, moda, bares y restaurantes, hiper, deportes y juguetes, tecnología, hogar, servicios de hotel, otros servicios, contenidos, viajes, ocio.
+
+-   `Amount`: representa el valor de la transacción. Solo hay 52 valores iguales a 0 y ningún valor negativo.
+
+-   `Fraud`: una columna indicadora codificada con 0 si la transacción fue limpia y con 1 si la transacción fue fraudulenta.
+
+`zipcodeOri` y `zipMerchant`: contienen un valor constante de 28007, que es un código postal en Ansonville, Carolina del Norte, Estados Unidos.
+
+## EDA
+
+```{r}
+df <- data |> 
+      select ("gender", "amount", "fraud", "category", "age")|>
+  filter(age!="'U'" & category != c("'es_transportation'", "'es_food'", "'es_health'"))
+```
+
+
+```{r}
+df$fraud <- as.factor(df$fraud)
+df$age <- as.factor(df$age)
+df$gender <- as.factor(df$gender)
+df$category <- as.factor(df$category)
+
+glimpse (df)
+```
+
+Para una correcta interpretación de nuestros resultados vamos a especificar que `1` es nuestra clase positiva (cliente realiza una transacción fraudulenta)
+
+```{r}
+df$fraud <- relevel(df$fraud, ref = "1")
+levels(df$fraud)
+```
+Visualizando el desbalance de clases 
+
+```{r}
+g <- ggplot(df, aes(fraud))
+g + geom_bar()
+```
+
+## División del dataset: Entrenamiento y testeo
+
+![](img/split_data.png){.fragment width="500" lenght="700" fig-align="center"}
+
+```{r}
+set.seed(456)#setear la semilla
+# Create data split for train and test
+df_split <- initial_split(df,
+                          prop = 0.75,
+                          strata=fraud)# muestreo estratificado
+# Create training data
+df_train <- df_split |> 
+              training()
+# Create testing data
+df_test <- df_split |> 
+              testing()
+# Number of rows in train and test dataset
+paste0("Total del dataset de holdout: ", nrow(df_train))
+paste0("Total del dataset de testeo: ", nrow(df_test))
+```
+
+# Sin aplicar ninguna técnica para el desbalanceo de datos
+
+
+```{r}
+recipe_df <-  recipe (fraud ~ ., data= df_train) |>  
+              step_scale(all_numeric_predictors(), -all_outcomes()) |> 
+              step_dummy(all_nominal_predictors()) |>
+              prep()
+              
+# Bake
+df_train <- bake(recipe_df, new_data=df_train)
+df_test <- bake(recipe_df, new_data=df_test)
+```
+
+
+## Especificando el modelo
+
+Se puede entrenar cualquier modelo (que este incluído en `tidymodels`) siguiendo los pasos que se muestran a continuación.
+
+1- Especificar el modelo (eg. Regresión logística, Random Forest, SVM, etc)
+
+2- Con `set_engine()` se especifíca la familia de modelos
+
+3- Con `set_mode()` se especifica el tipo de modelo a entrenarse (regresión o clasificación)
+
+4- Usar la función `fit ()` para entrenar el modelo y, dentro de eso, debe proporcionar la notación de la fórmula y el conjunto de datos
+
+Con `tune`, se especifica qué hiperparámetros van a ser tuneados.
+
+```{r}
+#Random Forest
+
+model_rf <- rand_forest(
+  trees = tune(),
+  min_n = tune()
+) |> 
+  set_mode("classification") |> 
+  set_engine("ranger")
+```
+
+
+## Uniendo todo en un *Workflow*
+
+```{r}
+wf_rf <- workflow() |>  
+          add_recipe(recipe_df) |> 
+          add_model(model_rf)
+wf_rf
+```
+
+## Cross-validation
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/cross.png){fig-align="center"}
+
+## Validación cruzada
+
+```{r}
+set.seed(1234)
+fold_df <- vfold_cv(df_train, v=5, strata=fraud)
+```
+
+Necesitamos un conjunto de posibles valores de los hiparámetros
+
+```{r}
+rf_grid <- grid_regular(trees(), 
+             min_n(),
+             levels = 5)
+rf_grid
+```
+
+
+
+```{r}
+doParallel::registerDoParallel() #paralelizamos los cálculos
+
+tune_rf <- tune_grid(
+  model_rf,
+  fraud~ .,
+  resamples = fold_df, 
+  grid = rf_grid, 
+  metrics = metric_set(accuracy, sensitivity, precision)
+)
+```
+
+Las métricas provienen del rendimiento de la validación cruzada a través de los diferentes valores de los parámetros.
+
+```{r}
+collect_metrics(tune_rf)
+```
+
+```{r}
+autoplot(tune_rf)
+```
+
+## Selección del mejor modelo
+
+```{r}
+param_final <- tune_rf |> 
+  select_best(metric = "precision")
+param_final
+```
+
+
+```{r}
+wf_rf <- wf_rf |> 
+  finalize_workflow(param_final)
+wf_rf
+```
+
+## Evaluación en test
+
+A continuación, se ajusta el flujo de trabajo del modelo final a los datos de entrenamiento y se evalúa el rendimiento en los datos de testeo.
+
+La función ´last_fit()´ ajuta el flujo de trabajo a los datos de entrenamiento y generará predicciones sobre los datos de prueba según lo define nuestro objeto churn_split.
+
+```{r}
+df_fit <- wf_rf |> 
+  # fit on the training set and evaluate on test set
+  last_fit(df_split, metrics = metric_set(precision))
+df_fit
+```
+
+
+```{r}
+test_performance <- df_fit |>  collect_metrics()
+test_performance
+```
+
+## Matriz de confusion
+
+```{r}
+collect_predictions(df_fit) |> 
+  conf_mat(fraud, .pred_class)
+```
+# Considerando el desbalance de clases
+
+El paquete `themis` ofrece las siguientes técnicas para tratar con datos desbalanceados. Todos aplicables para problemas multiclase menos `step_rose()`
+
+- `step_upsample()`: Random minority over-sampling with replacement
+
+- `step_smote()`: Synthetic Minority Over-sampling Technique
+
+- `step_downsample()`
+
+- `step_rose()`: Generation of synthetic data by Randomly Over Sampling Examples
+
+```{r}
+recipe_over <-  recipe (fraud ~ ., data= df_train) |>  
+              step_scale(all_numeric_predictors(), -all_outcomes()) |> 
+              step_dummy(all_nominal_predictors()) |>
+              step_smote(fraud) |> 
+              prep()
+
+# Bake
+df_train <- bake(recipe_over, new_data=df_train)
+df_test <- bake(recipe_over, new_data=df_test)
+           
+```
+
+El nuevo dataset de entrenamiento
+
+```{r}
+recipe_over %>%
+  bake(new_data = NULL) %>%
+  count(fraud, name = "training")
+```
+
+```{r}
+training <-bake(recipe_over, new_data=NULL)
+
+over <- ggplot(training, aes(fraud))
+over + geom_bar()
+```
+
+## Uniendo todo en un *Workflow*
+
+```{r}
+wf_over <- workflow() |>  
+          add_recipe(recipe_over) |> 
+          add_model(model_rf)
+```
+
+
+```{r}
+set.seed(123)
+fold_over <- vfold_cv(df_train, v=5, strata = fraud)
+```
+
+## Validación cruzada
+
+```{r}
+doParallel::registerDoParallel() #paralelizamos los cálculos
+
+tune_rf_over <- tune_grid(
+  model_rf,
+  fraud~ .,
+  resamples = fold_over, 
+  grid = rf_grid, 
+  metrics = metric_set(accuracy, sensitivity, precision)
+)
+```
+
+Las métricas provienen del rendimiento de la validación cruzada a través de los diferentes valores de los parámetros.
+
+```{r}
+collect_metrics(tune_rf_over)
+```
+
+```{r}
+autoplot(tune_rf_over)
+```
+
+## Selección del mejor modelo
+
+```{r}
+param_final_over <- tune_rf_over |> 
+  select_best(metric = "precision")
+param_final_over
+```
+
+```{r}
+wf_final <- wf_over |> 
+  finalize_workflow(param_final_over)
+```
+
+## Evaluación en test
+
+```{r}
+final_res <- wf_final |> 
+              fit(df_train)
+final_res
+```
+
+```{r}
+fraud_pred <- predict(final_res, new_data = df_test) |> 
+  bind_cols(predict(final_res, df_test, type = "prob")) |> 
+  bind_cols(df_test |>  select(fraud))
+```
+
+
+```{r}
+
+fraud_pred |>  conf_mat(truth = fraud, .pred_class)
+```
+
+## Importancia de las variables
+
+```{r}
+best_precision <- select_best(tune_rf_over, "precision")
+
+final_rf <- finalize_model(
+  model_rf,
+  best_precision
+)
+
+final_rf
+```
+
+
+```{r}
+library(vip)
+
+final_rf %>%
+  set_engine("ranger", importance = "permutation") %>%
+  fit(fraud ~ .,
+    data = juice(recipe_over) 
+  ) %>%
+  vip(geom = "point")
+```
+
