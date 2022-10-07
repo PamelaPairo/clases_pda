@@ -13,7 +13,7 @@ format:
     width: 1600
     height: 1000
     logo: "img/logo.jpg"
-    footer: "[Aprendizaje Supervisado- PDA](https://github.com/PamelaPairo/clases_pda)"
+    footer: "[Aprendizaje No Supervisado- PDA](https://github.com/PamelaPairo/clases_pda)"
     chalkboard:
       theme: whiteboard
       boardmarker-width: 5
@@ -35,6 +35,7 @@ editor: visual
 - PCA
 
 - T-SNE
+
 . . .
 
 [**Recreo**]{style="color: #ae260e;"} `r emo::ji("coffee")`🧉
@@ -57,7 +58,7 @@ editor: visual
 
 ## ¿De qué se trata?
 
-<h3 style="color:black;padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+<h3 style="color:black;padding:5px;line-height:2em; text-align: center; position: absolute; top: 45%; width: 100%;">
 
 En el aprendizaje no supervisado, no se proporcionan etiquetas y el algoritmo de aprendizaje se centra únicamente en detectar la estructura en los datos de entrada.
 
@@ -77,3 +78,106 @@ En el aprendizaje no supervisado, no se proporcionan etiquetas y el algoritmo de
 :::footer
 Imagenes extraidas de [aqui](https://programmerclick.com/article/90051499108/)
 :::
+
+## ¿Para qué?
+
+- Para conocer el dataset
+
+- Refinamiento de clases
+
+- Detección de outliers
+
+> Los resultados dependen de las variables explicatorias utilizadas por lo que cobra importancia [**el análisis exploratorio de datos y la curación.**]{style="color: #88188a;"}
+Resulta importante el aporte de un/una experto/a de dominio para explicar los posibles agrupamientos y la elección de las variables relevantes.
+Se itera varias veces
+
+## Posibles aplicaciones
+
+::: {.incremental}
+
+- [**Marketing**]{style="color: #88188a;"}: encontrar grupos de clientes con un comportamiento similar dada una gran base de datos de clientes que contienen sus propiedades y registros de compras anteriores.
+
+- [**Biología**]{style="color: #88188a;"}: definición de especies de plantas y animales dadas sus características.
+
+- [**Seguro**]{style="color: #88188a;"}: identificar fraudes.
+
+- [**Detección de comunidades**]{style="color: #88188a;"}
+
+:::
+
+## Clustering
+
+Se agrupan los datos de acuerdo a las variables seleccionadas y alguna medida de distancia.
+
+[**Pre-procesamiento de datos**]{style="color: #88188a;"}: ¿Conviene o no estandarizar los datos? ¿Cómo proceder con los datos faltantes? 
+<h3 style="color:black;padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+
+¿Qué medida de distancia elegir?
+
+</h3>
+
+## Medidas de similitud-disimilitud entre objetos
+
+- El primer paso consiste en medir distancias (medida de disimilitud) o similitud entre objetos en un espacio multidimensional.
+
+- La distancia o disimilitud de un objeto consigo mismo vale 0, así como la medida de similitud vale 1
+
+- Distintas medidas de distancia según si se tienen variables continuas o discretas.
+
+## Medidas de similitud-disimilitud entre objetos
+
+[**Métricas para variables continuas:**]{style="color: #88188a;"}
+
+- Distancia euclídea
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/euclidea.png){fig-align="center" width="50%"}
+
+- Distancia de Manhattan o city block
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/manhattan.png){fig-align="center" width="35%"}
+
+## Medidas de similitud-disimilitud entre objetos
+
+[**Métricas para variables cualitativas:**]{style="color: #88188a;"}
+
+- Chi-cuadrado
+
+- Coeficiente de Jaccard(para v-dicotómicas: presencia-ausencia), similitud
+
+---
+## Métodos de agrupamiento (clustering) no jerárquico
+
+[**Kmeans**]{style="color: #88188a;"}
+
+La cantidad de grupos **_k_** se decide **a priori**
+
+1- Se eligen kpuntos arbitrariamente (semillas), y se los considera como centroides de los k clusters
+
+2- Se asignan los objetos al centroides más cercano, 
+formando kclusters
+
+3- Se calculan los centroides de estos clustersarbitrarios
+
+4- Se realiza una nueva partición de los objetos, asignándolos al centroide más cercano
+
+5- El proceso se repite hasta que no hay pasajes de individuos de un cluster a otro
+
+## Kmeans
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/kmeans.png){fig-align="center" width="35%"}
+
+
+## Método del codo
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/codo.png){fig-align="center"}
+
+## Comentarios 
+
+- Ojo con clusters conteniendo sólo uno o dos objetos ¿Posibles outliers? Extraer y repetir el análisis
+
+- Hay muchas decisiones subjetivas: variables, medida de di(similitud), método de agrupamiento… que impactan fuertemente en los resultados.
+
+- Existen muchas técnicas más Mean Shift, GMM, Clustering jerárquico, etc.
+
+
+

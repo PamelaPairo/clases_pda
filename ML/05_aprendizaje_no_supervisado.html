@@ -335,8 +335,10 @@
 <li><p>¿Qué es el Aprendizaje No Supervisado?</p></li>
 <li><p>Kmeans</p></li>
 <li><p>PCA</p></li>
-<li><p>T-SNE . . .</p></li>
+<li><p>T-SNE</p></li>
 </ul>
+</div>
+<div class="fragment">
 <p><span style="color: #ae260e;"><strong>Recreo</strong></span> ☕🧉</p>
 </div>
 <div class="fragment">
@@ -356,7 +358,7 @@
 </section>
 <section id="de-qué-se-trata" class="slide level2">
 <h2>¿De qué se trata?</h2>
-<h3 style="color:black;padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+<h3 style="color:black;padding:5px;line-height:2em; text-align: center; position: absolute; top: 45%; width: 100%;">
 <p>En el aprendizaje no supervisado, no se proporcionan etiquetas y el algoritmo de aprendizaje se centra únicamente en detectar la estructura en los datos de entrada.</p>
 </h3>
 <ul>
@@ -379,9 +381,101 @@
 <div class="footer">
 <p>Imagenes extraidas de <a href="https://programmerclick.com/article/90051499108/">aqui</a></p>
 </div>
-<p><img src="img/logo.jpg" class="slide-logo"></p>
-<div class="footer footer-default">
-<p><a href="https://github.com/PamelaPairo/clases_pda">Aprendizaje Supervisado- PDA</a></p>
+</section>
+<section id="para-qué" class="slide level2">
+<h2>¿Para qué?</h2>
+<ul>
+<li><p>Para conocer el dataset</p></li>
+<li><p>Refinamiento de clases</p></li>
+<li><p>Detección de outliers</p></li>
+</ul>
+<blockquote>
+<p>Los resultados dependen de las variables explicatorias utilizadas por lo que cobra importancia <span style="color: #88188a;"><strong>el análisis exploratorio de datos y la curación.</strong></span> Resulta importante el aporte de un/una experto/a de dominio para explicar los posibles agrupamientos y la elección de las variables relevantes. Se itera varias veces</p>
+</blockquote>
+</section>
+<section id="posibles-aplicaciones" class="slide level2">
+<h2>Posibles aplicaciones</h2>
+<div>
+<ul>
+<li class="fragment"><p><span style="color: #88188a;"><strong>Marketing</strong></span>: encontrar grupos de clientes con un comportamiento similar dada una gran base de datos de clientes que contienen sus propiedades y registros de compras anteriores.</p></li>
+<li class="fragment"><p><span style="color: #88188a;"><strong>Biología</strong></span>: definición de especies de plantas y animales dadas sus características.</p></li>
+<li class="fragment"><p><span style="color: #88188a;"><strong>Seguro</strong></span>: identificar fraudes.</p></li>
+<li class="fragment"><p><span style="color: #88188a;"><strong>Detección de comunidades</strong></span></p></li>
+</ul>
+</div>
+</section>
+<section id="clustering" class="slide level2">
+<h2>Clustering</h2>
+<p>Se agrupan los datos de acuerdo a las variables seleccionadas y alguna medida de distancia.</p>
+<span style="color: #88188a;"><strong>Pre-procesamiento de datos</strong></span>: ¿Conviene o no estandarizar los datos? ¿Cómo proceder con los datos faltantes?
+<h3 style="color:black;padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+<p>¿Qué medida de distancia elegir?</p>
+</h3>
+</section>
+<section id="medidas-de-similitud-disimilitud-entre-objetos" class="slide level2">
+<h2>Medidas de similitud-disimilitud entre objetos</h2>
+<ul>
+<li><p>El primer paso consiste en medir distancias (medida de disimilitud) o similitud entre objetos en un espacio multidimensional.</p></li>
+<li><p>La distancia o disimilitud de un objeto consigo mismo vale 0, así como la medida de similitud vale 1</p></li>
+<li><p>Distintas medidas de distancia según si se tienen variables continuas o discretas.</p></li>
+</ul>
+</section>
+<section id="medidas-de-similitud-disimilitud-entre-objetos-1" class="slide level2">
+<h2>Medidas de similitud-disimilitud entre objetos</h2>
+<p><span style="color: #88188a;"><strong>Métricas para variables continuas:</strong></span></p>
+<ul>
+<li>Distancia euclídea</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/euclidea.png" style="width:50.0%"></p>
+</figure>
+</div>
+<ul>
+<li>Distancia de Manhattan o city block</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/manhattan.png" style="width:35.0%"></p>
+</figure>
+</div>
+</section>
+<section id="medidas-de-similitud-disimilitud-entre-objetos-2" class="slide level2">
+<h2>Medidas de similitud-disimilitud entre objetos</h2>
+<p><span style="color: #88188a;"><strong>Métricas para variables cualitativas:</strong></span></p>
+<ul>
+<li><p>Chi-cuadrado</p></li>
+<li><p>Coeficiente de Jaccard(para v-dicotómicas: presencia-ausencia), similitud</p></li>
+</ul>
+</section>
+<section id="métodos-de-agrupamiento-clustering-no-jerárquico" class="slide level2">
+<h2>Métodos de agrupamiento (clustering) no jerárquico</h2>
+<p><span style="color: #88188a;"><strong>Kmeans</strong></span></p>
+<p>La cantidad de grupos <strong><em>k</em></strong> se decide <strong>a priori</strong></p>
+<p>1- Se eligen kpuntos arbitrariamente (semillas), y se los considera como centroides de los k clusters</p>
+<p>2- Se asignan los objetos al centroides más cercano, formando kclusters</p>
+<p>3- Se calculan los centroides de estos clustersarbitrarios</p>
+<p>4- Se realiza una nueva partición de los objetos, asignándolos al centroide más cercano</p>
+<p>5- El proceso se repite hasta que no hay pasajes de individuos de un cluster a otro</p>
+</section>
+<section id="kmeans" class="slide level2">
+<h2>Kmeans</h2>
+
+<img data-src="https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/kmeans.png" style="width:35.0%" class="r-stretch quarto-figure-center"></section>
+<section id="método-del-codo" class="slide level2">
+<h2>Método del codo</h2>
+
+<img data-src="https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/codo.png" class="r-stretch quarto-figure-center"></section>
+<section id="comentarios" class="slide level2">
+<h2>Comentarios</h2>
+<ul>
+<li><p>Ojo con clusters conteniendo sólo uno o dos objetos ¿Posibles outliers? Extraer y repetir el análisis</p></li>
+<li><p>Hay muchas decisiones subjetivas: variables, medida de di(similitud), método de agrupamiento… que impactan fuertemente en los resultados.</p></li>
+<li><p>Existen muchas técnicas más Mean Shift, GMM, Clustering jerárquico, etc.</p></li>
+</ul>
+
+<img src="img/logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
+<p><a href="https://github.com/PamelaPairo/clases_pda">Aprendizaje No Supervisado- PDA</a></p>
 </div>
 </section>
     </div>
