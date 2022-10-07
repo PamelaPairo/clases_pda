@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Pamela E. Pairo">
+<meta name="description" content="Trabajo Práctico n°5">
+
+<title>Aprendizaje No Supervisado</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="05_tp_no_supervisado_files/libs/clipboard/clipboard.min.js"></script>
+<script src="05_tp_no_supervisado_files/libs/quarto-html/quarto.js"></script>
+<script src="05_tp_no_supervisado_files/libs/quarto-html/popper.min.js"></script>
+<script src="05_tp_no_supervisado_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="05_tp_no_supervisado_files/libs/quarto-html/anchor.min.js"></script>
+<link href="05_tp_no_supervisado_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="05_tp_no_supervisado_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="05_tp_no_supervisado_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="05_tp_no_supervisado_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="05_tp_no_supervisado_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Indice de contenidos</h2>
+   
+  <ul>
+  <li><a href="#carga-de-las-librerias-necesarias" id="toc-carga-de-las-librerias-necesarias" class="nav-link active" data-scroll-target="#carga-de-las-librerias-necesarias">Carga de las librerias necesarias</a></li>
+  <li><a href="#k-means" id="toc-k-means" class="nav-link" data-scroll-target="#k-means">K-means</a></li>
+  <li><a href="#porcentaje-de-explicación-de-cada-variable" id="toc-porcentaje-de-explicación-de-cada-variable" class="nav-link" data-scroll-target="#porcentaje-de-explicación-de-cada-variable">Porcentaje de explicación de cada variable</a></li>
+  <li><a href="#t-sne" id="toc-t-sne" class="nav-link" data-scroll-target="#t-sne">T-SNE</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">Aprendizaje No Supervisado</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Código</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Enseñar el código</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Esconder el código</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">Ver el código</a></li></ul></div></div>
+</div>
+
+<div>
+  <div class="description">
+    <p>Trabajo Práctico n°5</p>
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Pamela E. Pairo </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="carga-de-las-librerias-necesarias" class="level2">
+<h2 class="anchored" data-anchor-id="carga-de-las-librerias-necesarias">Carga de las librerias necesarias</h2>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de paquetes necesarios</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">message =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rtsne)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/penguins.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Arte realizado por Allison Horst</figcaption><p></p>
+</figure>
+</div>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguins)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 344
+Columns: 8
+$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel~
+$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse~
+$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, ~
+$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, ~
+$ flipper_length_mm &lt;int&gt; 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186~
+$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, ~
+$ sex               &lt;fct&gt; male, female, female, NA, female, male, female, male~
+$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007~</code></pre>
+</div>
+</div>
+<p>Se eliminan datos faltantes y unicamente trabajamos con variables numéricas</p>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(penguins) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">select</span>(<span class="sc">!</span><span class="fu">where</span>(is.factor) <span class="sc">&amp;</span> <span class="sc">-</span>year)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>#Escalamos</p>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">scale</span>(df)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>     bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+[1,]     -0.8946955     0.7795590        -1.4246077  -0.5676206
+[2,]     -0.8215515     0.1194043        -1.0678666  -0.5055254
+[3,]     -0.6752636     0.4240910        -0.4257325  -1.1885721
+[4,]     -1.3335592     1.0842457        -0.5684290  -0.9401915
+[5,]     -0.8581235     1.7444004        -0.7824736  -0.6918109
+[6,]     -0.9312674     0.3225288        -1.4246077  -0.7228585</code></pre>
+</div>
+</div>
+</section>
+<section id="k-means" class="level1">
+<h1>K-means</h1>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>k2 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(k2, <span class="at">data =</span> df, <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">"point"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="05_tp_no_supervisado_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>k3 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>k4 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">4</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>k5 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">5</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plots to compare</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k2, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 2"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k3, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 3"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k4, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 4"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k5, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 5"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, p3, p4, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="05_tp_no_supervisado_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>#Método del codo</p>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(df, kmeans, <span class="at">method =</span> <span class="st">"wss"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="05_tp_no_supervisado_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>#PCA</p>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>res.pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(df, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(res.pca, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">"black"</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>,  <span class="st">"#FC4E07"</span>),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">legend.title =</span> <span class="st">" "</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>               <span class="co"># xlab="PC 1 (68%)",</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>               <span class="co"># ylab= "PC 2 (20%)",</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> <span class="st">"var"</span><span class="co"># Variables color</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="05_tp_no_supervisado_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eigenvalues</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>eig.val <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(res.pca)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>eig.val</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      eigenvalue variance.percent cumulative.variance.percent
+Dim.1  2.7453557        68.633893                    68.63389
+Dim.2  0.7781172        19.452929                    88.08682
+Dim.3  0.3686425         9.216063                    97.30289
+Dim.4  0.1078846         2.697115                   100.00000</code></pre>
+</div>
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por variables</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>res.var <span class="ot">&lt;-</span> <span class="fu">get_pca_var</span>(res.pca)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>coord          <span class="co"># Coordenadas</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       Dim.1       Dim.2      Dim.3       Dim.4
+bill_length_mm     0.7518288 -0.52943763 -0.3900969  0.04768208
+bill_depth_mm     -0.6611860 -0.70230869  0.2585287 -0.05252186
+flipper_length_mm  0.9557480 -0.00510580  0.1433474 -0.25684871
+body_mass_g        0.9107624 -0.06744932  0.3592789  0.19204478</code></pre>
+</div>
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>contrib        <span class="co"># Contribución a los CP</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     Dim.1        Dim.2     Dim.3     Dim.4
+bill_length_mm    20.58919 36.023392267 41.279994  2.107420
+bill_depth_mm     15.92387 63.388588337 18.130600  2.556942
+flipper_length_mm 33.27271  0.003350291  5.574092 61.149849
+body_mass_g       30.21423  0.584669105 35.015313 34.185789</code></pre>
+</div>
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por individuos</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>res.ind <span class="ot">&lt;-</span> <span class="fu">get_pca_ind</span>(res.pca)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>res.ind<span class="sc">$</span>coord          <span class="co"># Coordenadas</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Dim.1        Dim.2         Dim.3         Dim.4
+1   -1.85080775 -0.032021188  0.2345486909  0.5276026405
+2   -1.31427621  0.442860308  0.0274287986  0.4011229839
+3   -1.37453656  0.160988208 -0.1894042308 -0.5278675182
+4   -1.88245548  0.012332676  0.6279277238 -0.4721826194
+5   -1.91709572 -0.816369578  0.6999979673 -0.1961213213
+6   -1.77035612  0.365672659 -0.0284176935  0.5046091971
+7   -0.81726635 -0.500489901  1.3329977168  0.3477362505
+8   -1.79625456  0.245025208 -0.6256126395  0.2148543040
+9   -1.95320955 -0.996782845  1.0390513696 -0.2102986773
+10  -1.56716475 -0.577213305  2.0462181173 -0.2632392177
+11  -1.74537462  0.609327320  0.3642973402  0.2748407872
+12  -1.57340590 -0.086705244  0.3617766445 -0.5063171693
+13  -0.80351099 -1.291612185  1.0882267789  0.1073577055
+14  -2.34664664  0.644221588  0.4600784002 -0.0487836551
+15  -1.00347632 -1.969458687  0.5790057319  0.0848489824
+16  -2.40462974  0.308504379 -0.0743322400  0.6619825638
+17  -2.11052215  0.136288045  0.2719528460  0.4373132999
+18  -1.85426682  0.108980057  0.8901226418 -0.0079832044
+19  -1.50274895  0.288693544  0.4249068281  0.4744843898
+20  -1.57876199  0.603025030 -0.0346456799  0.7335401547
+21  -1.92556944  0.296948106  0.8620567635  0.1120360623
+22  -1.76030148 -0.138052008 -0.0765899480  0.3187302879
+23  -1.70105351  0.187520109 -0.4060279632 -0.1043992343
+24  -2.71009618  0.200804129 -0.2386230821  0.5703321685
+25  -1.67980024 -0.285113266  0.2434438713  0.7495442050
+26  -1.87712476  0.781405068 -0.6628736226  0.5049411188
+27  -1.90794242  0.406083961  0.3877345782  0.8021845753
+28  -1.65434297  0.327793039 -0.2198309987 -0.1060055894
+29  -1.51612131 -0.325917771  0.2270851021  0.5006837036
+30  -1.44429333  0.986201137  0.1076831689 -0.4957351639
+31  -1.43845938 -1.057504434  1.2883698265 -0.2110736499
+32  -1.63220511 -0.547399614  0.8494696413  0.0571636547
+33  -1.73074654 -0.271985197 -0.3367260007  0.5367029598
+34  -2.40404126 -0.067243956  0.2098180855  0.1123077630
+35  -1.13593798 -0.357272164  0.9507259500  0.9998358509
+36  -2.29311991  0.592908880 -0.0354279319  0.0239574693
+37  -0.97038844 -0.117333415  0.3160153073 -0.0750948805
+38  -2.30543725  0.448728850  0.1620643447 -0.2893947801
+39  -0.57753282 -1.053001802  0.5936889816  0.2142128601
+40  -2.00765861  0.995772489 -0.3917172683 -0.1497462795
+41  -0.87893991 -0.211760524  0.9736811861  0.6478220174
+42  -1.92635691 -0.342366303 -0.1575477601  0.2645503331
+43  -1.78030611  0.656423107  0.3569166414 -0.2097033832
+44  -1.40728359 -1.436099791  0.8615592282  0.1420635971
+45  -1.57156392  0.339082129 -0.1399161262  0.1615801124
+46  -1.14482106 -0.277752604  0.6824064383  0.5467239718
+47  -1.86327936  0.766174671  0.4744032124 -0.2362490686
+48  -0.78555169 -0.710078489  0.6073372403 -0.3026086640
+49  -2.44421394  0.793656857  0.1216725687 -0.4977506607
+50  -1.26228294 -0.243401133  0.0744126360  0.0025401695
+51  -1.54668759  0.481045818 -0.0759254119  0.1981991304
+52  -1.21861452 -0.246782651  0.3188251363 -0.0739105768
+53  -2.25537120  1.187835401 -0.5754538190 -0.0244046756
+54  -1.52130317 -0.034484071  0.7162536749 -0.2700073383
+55  -2.01312742  1.124205455 -0.1287526525 -0.0753371398
+56  -1.13471032 -1.311309857  1.2085231789  0.0819963237
+57  -1.56855309  0.832514892  0.0003417092  0.2937351285
+58  -0.92603824 -0.082403253  0.2972212439  0.2254070574
+59  -2.24152255  0.995419699 -0.4050571172 -0.2350393242
+60  -0.91228776 -0.046922217  0.1217446567  0.1823077987
+61  -1.33979063  1.406046625  0.0588120840 -0.4365121826
+62  -1.23890449 -0.449372850  0.4611890222  0.4118046971
+63  -1.79822763  1.230977468 -0.2063810403 -0.3972457263
+64  -0.59113606 -0.684856020  0.8694741821  0.1022380398
+65  -2.10824758  0.471823699  0.9987140325 -0.2564704543
+66  -1.26743622  0.005458184  0.3610256808  0.1746706140
+67  -1.02455702  0.532356282 -0.0428355244 -0.3194445765
+68  -0.40387099 -0.892809232  0.0541056484  0.0869775008
+69  -1.57007578  0.849280321  0.5128895437 -0.0089648365
+70  -0.58578106 -0.410503089  0.3598729630  0.2240196025
+71  -0.93901632  0.539221604 -0.2560513534  0.1354295985
+72  -1.92444267 -0.121988916  0.7698985467  0.3618640365
+73  -1.45416027  1.353962631 -0.0328348115  0.1817598285
+74  -0.93610743 -0.552519199  0.3881291987 -0.0248140191
+75  -1.96643630  1.117241091  0.1694743628 -0.3157641942
+76  -0.04676245 -0.100749948  0.5010618596  0.5707177495
+77  -1.78914283  0.183726303  0.6759529377  0.1573201481
+78  -1.52349470  0.076284451  1.3886892308  0.0218168114
+79  -1.67928566  0.563259530  0.1259183947 -0.2954793695
+80  -1.59399953 -0.906737404  0.3940487809 -0.4144545244
+81  -1.84071429 -0.056624703  0.9248408635 -0.0775184586
+82  -1.85450198  0.270298948  0.4224361657 -0.1505538232
+83  -1.55273462 -0.168667765  0.7183869449  0.1646449713
+84  -1.61966391 -0.039973974  0.3210412963 -0.0968835006
+85  -1.26333259  0.634466437  0.6894129390 -0.8226926574
+86  -0.20009276 -0.071081663  0.6783033618 -0.3102528778
+87  -2.02404940  1.206182227  0.2979398933  0.0448258271
+88  -1.00410960  0.087148152  0.6447108443  0.8189169689
+89  -1.86798978  0.892538108  0.0429165827 -0.0972125706
+90  -0.26363097 -0.362838212  0.9370652569 -0.5505570421
+91  -1.57725010  0.119192004  0.4452733493 -0.0292674427
+92  -0.68379447 -0.146033200  0.7439224104  0.1744745931
+93  -2.52549408  1.759633555 -0.2979034978  0.1296262510
+94  -0.77845450 -0.438920719  0.1521113485  0.2930987950
+95  -1.59324173  0.739234595  0.7101852888 -0.1481513950
+96  -0.38559512 -0.867816090  1.3795161863 -0.0470010412
+97  -1.79831339  1.276523789 -0.6471354105  0.1079624009
+98  -1.51038554 -0.466136186  1.1874203592  0.2484550307
+99  -1.99942654  0.213497742 -0.0502268030 -0.7647017710
+100 -1.85461416 -0.160979735  0.1108608160  0.2146856427
+101 -0.84753540  0.621876828  0.2721620572 -0.3681450034
+102 -1.71612119 -0.476800653  0.8832175595  0.0049300665
+103 -1.98181139  0.819649206 -0.4381056680  0.2215780662
+104 -0.21321380 -0.707235836  0.8404936653  0.4636658039
+105 -0.73713078  0.953056256  0.2178180238 -0.2143245475
+106 -0.64390603 -1.477138679  0.6099461267  0.6295010871
+107 -1.47997132  0.353704279 -0.2542141337 -0.4441544284
+108 -0.73882875 -0.752155977  0.6986531235  0.0334577183
+109 -1.70065169 -0.913878523  0.8869397157 -0.0705400070
+110 -0.63185729 -0.302462056  0.2166172526  0.0547405175
+111 -1.83996343  0.787996719 -0.5810262917 -0.3553851119
+112 -1.60704883 -0.572022901  1.1568132823 -0.6524654709
+113 -1.73224118  1.063131075  0.1072259554 -0.1614051571
+114 -1.62547682 -0.174039542 -0.1996115181 -0.1661335636
+115 -1.95012212  0.947212562 -0.0889381171 -0.1980109751
+116 -1.66089324 -0.306383721  0.7395231637 -0.7288971366
+117 -1.82561803  0.565121675 -0.5669601871  0.7559737270
+118 -0.66984655 -0.224131558  0.3666887753 -0.4759927317
+119 -1.87908219  1.592468170 -0.3428787089 -0.1358142239
+120 -0.87568147 -0.349113369  0.6101163124 -0.2796850197
+121 -1.56549585  0.486614991 -0.1486727513 -0.2938798543
+122 -0.61898601 -0.191713305  0.5061042770  0.2420566408
+123 -1.60117547  0.688182712 -0.4456313075 -0.4113478823
+124  0.07007543 -0.333482711  0.1679817302 -0.7192985052
+125 -1.65820334  0.393914254 -0.0286598473 -0.2341046119
+126 -1.13240874 -0.656046873 -0.0414850488 -0.4810365284
+127 -1.67791347  0.320052588  0.4799420801 -0.3682608643
+128 -0.70732289  0.148162196  1.2152797831  0.0235326672
+129 -1.68580248  0.550848920 -0.0235799618  0.0196292954
+130 -0.96889705  0.215679471  0.0019408440  0.2849157095
+131 -1.87901045  0.887746427  0.1321736006 -0.4433182752
+132 -1.10768616 -0.747985958  0.8934327897 -0.4535709203
+133 -1.65354524  1.119509853 -0.1842555780  0.1731836407
+134 -0.80372460  0.173135030  0.5606556330  0.3020350344
+135 -1.18037174  0.522418725 -0.2957170796 -0.2369361207
+136 -1.36318095  0.433443533 -0.3670428704  0.1547801907
+137 -1.97293209  2.093593613 -0.0314709025 -0.2972116432
+138 -1.02022848  0.478350108 -0.1877817451  0.1878264472
+139 -1.67441448  1.000386577 -0.3306710695 -0.5242144954
+140 -1.76274759 -0.013201889  0.2401891828  0.2291631194
+141 -1.11052603 -0.053762966  0.7202223904  0.3993007573
+142 -2.06170909  0.388524079  0.3118400174  0.1185353836
+143 -1.55426484  0.694788615  0.4195188696 -0.4805490054
+144 -1.34322327  0.348282456  0.4596851259 -0.1277037895
+145 -1.57099920  0.957365011  0.3171208399  0.2041679601
+146 -0.61737432 -0.246563796  0.4299552085 -0.3267795712
+147  1.59117404  1.339779504 -0.7205922625  0.0308275431
+148  2.88770822 -0.463392656  0.6934225631 -0.3060897944
+149  1.54924029  0.695712959 -0.8850427051  0.0462521621
+150  2.61674768 -0.013702698  0.2534340219  0.4527493902
+151  2.23120123  0.562440824  0.1130443481  0.3954230162
+152  1.55654783  1.170252673 -0.6828199582  0.1091847653
+153  1.45418862  0.822092054 -0.1151707467  0.1164008579
+154  2.02250598  0.355114329  0.3121670588 -0.0618264167
+155  1.16774566  1.576545108 -0.4555626017 -0.0207666829
+156  1.81178533  0.310108711  0.2179171200  0.1195744474
+157  1.28425555  1.692852711  0.1592180247 -0.2062715704
+158  2.16669053 -0.252754592  0.4216022151  0.3557903375
+159  1.66593248  1.187995516 -0.3812202019 -0.0841614175
+160  2.50219411  0.392302933  0.3376839961  0.8468813299
+161  1.03663684  0.835580676 -0.6199386396 -0.2528618412
+162  2.51858703 -0.152859627  0.5371748561  0.5582784597
+163  0.91011113  1.702118893 -0.4480825845 -0.3007202344
+164  3.08342105  0.015883354  0.8388864851  0.6998075157
+165  1.45852041  0.775547140 -0.2644725717  0.2573438318
+166  2.45484334  0.200988978  0.1947156502 -0.0509557118
+167  2.81571895  0.328220467  0.0353330703  0.5311396631
+168  1.75071103  0.874803916  0.1128085798  0.0386093874
+169  1.37497705  0.778953950 -0.5262908551 -0.2483144766
+170  1.62097816  0.212758993  0.2896628621  0.0012087460
+171  1.85186685  1.682282766  0.0685622666  0.0938906464
+172  1.78036413  0.512973988  0.1985458161  0.0890466693
+173  2.31713622  0.314598466  0.3813802882  0.5416624068
+174  1.56962193  0.655483900 -0.6728220934  0.1256575977
+175  2.57639809 -0.040714967  0.1985145167  0.2241244338
+176  2.22988839  0.283276441  0.3289540534 -0.1769722776
+177  1.16893930  1.279489662 -0.0033741584  0.1188365262
+178  1.45559964  0.873359698  0.0147928370  0.5212607618
+179  3.78132786 -1.833256534 -0.0258819624  0.1460511406
+180  2.32998542  0.298197554 -0.0978128970 -0.0496154673
+181  2.13860379 -0.255172261  0.4924872208 -0.0084684557
+182  1.58894744  1.478199891  0.1631100299  0.1124863059
+183  1.46051827 -0.205812824  1.0515827242 -0.2489778405
+184  1.11001122  1.424019239 -0.5481469441  0.0010620172
+185  1.75708276 -0.035811681  0.0886218157  0.6814276265
+186  0.70882484  1.564250067 -0.6677439712 -0.3320169153
+187  2.70953392 -0.296135993  0.5913244578 -0.0133819415
+188  1.24579111  1.244833890 -0.6823109426 -0.1204411942
+189  1.89326505  0.202097084 -0.4746430092 -0.1198596936
+190  2.57861118 -0.338999019  0.3031969314  0.0770902199
+191  1.76188218  1.290683674  0.1195045709 -0.1366870367
+192  1.15359335  1.151518850 -0.7360510530 -0.2039846634
+193  2.59968109 -0.325993878  0.2434997707 -0.1992077599
+194  1.96323860  1.373248771 -0.0833675155  0.3149404180
+195  1.70036827  0.309745600  0.6026182125  0.1535393766
+196  1.62778949  0.847776675 -0.3227460838  0.2728355118
+197  2.52444636  0.632817129 -0.0684472657  0.1002165357
+198  1.15561226  0.974275453 -0.4339671948 -0.1099788610
+199  2.47581132  0.119764407 -0.1980614341 -0.4271943135
+200  1.90118425  0.770252207 -0.1130933531 -0.1003051800
+201  1.79994642  0.515092694  0.4401297534 -0.2797858886
+202  0.99849222  1.329426415 -0.4965257752 -0.0649136754
+203  1.88835719  0.626686480  0.2581519379 -0.2703387180
+204  0.92952027  1.138450967 -0.1860660009 -0.0206433132
+205  2.77420915 -0.086267496  0.2188997720  0.0115701093
+206  1.07495189  1.214725501 -0.7678663070 -0.0895873749
+207  2.21265079  0.561389660  0.3915978296 -0.0815927002
+208  1.47133831  1.108924544 -0.5451923857 -0.2766234174
+209  3.37310090 -0.688407016  0.0385954960 -0.2353219164
+210  1.82941345  0.946105214 -0.1873841622 -0.3594579144
+211  2.76979322 -0.643594275  0.8250330092 -0.3519995625
+212  2.89359449 -0.377169557  0.7871863003 -0.1828370074
+213  1.67973043  1.198120835  0.0996799220 -0.4763061406
+214  2.81873789  0.002511170  0.1019409507  0.0996873432
+215  1.73561588  0.410625055 -0.2514185243 -0.1702964958
+216  1.88260413  0.284914778  0.2989947532 -0.3509615080
+217  2.10022025  0.077865918  0.1610069744 -0.2305669204
+218  2.02492079  0.580042525  0.1938612993  0.0850513766
+219  1.59361853  0.558050111 -0.1354300065 -0.2411120638
+220  2.90060215 -0.197945352  0.8665239323 -0.2462810215
+221  1.49064929  0.773153357 -0.6290490910  0.1709888938
+222  2.77221720 -0.608477756  0.6162017727  0.4988790179
+223  1.73019615  1.170581578 -0.2340185843 -0.0834260452
+224  2.35174516  0.002135181  1.3447860563  0.1304537218
+225  1.70314667  0.472646757 -0.6832528005  0.0398752512
+226  2.69593017 -0.427301967 -0.0869771096  0.1377227652
+227  1.61009235  0.609297984 -0.3884149544  0.0592398136
+228  2.48290689 -0.265957097  0.2486540608 -0.1929936298
+229  1.58183786  1.204745974 -0.2493075258  0.0759896982
+230  2.60087097 -0.945175774  0.7084815794 -0.3270805626
+231  1.48032981  1.138557216  0.0474958411 -0.4562270160
+232  2.65419650  0.285908315 -0.4094769799  0.2780106280
+233  1.84237050  0.826661078 -0.4196672964  0.2195336702
+234  2.81770714 -0.962639577  0.4878270753 -0.4161032692
+235  1.93786066  0.412757326 -0.0472551704 -0.1419672247
+236  2.62103311 -0.998975100  0.3537790293 -0.4189010582
+237  1.48977332  0.855882331 -0.1684410837  0.0350762260
+238  2.60568495 -0.320430224  0.5711067459 -0.0046696635
+239  1.51684709  0.874451125  0.0994687308 -0.0466836574
+240  2.56972810 -0.259479459  0.0348774197 -0.3760216592
+241  1.83402033 -0.116013774 -0.1495605983 -0.0630582211
+242  2.08255655  0.645799941 -0.0509898864 -0.4030459952
+243  1.29493050  0.593620019 -0.7742395654  0.5315517448
+244  2.42548422 -0.620183066  0.1925115130 -0.3409196366
+245  1.99372507  0.312088832 -0.2213848194 -0.2438270427
+246  3.08482673 -1.383617592  0.0444321882 -0.1673371883
+247  1.70524809  0.242395779  0.0639410323 -0.0049990238
+248  2.85762576  0.180796817  0.3374002943 -0.2580576788
+249  1.90886181 -0.006140152  0.6264836759  0.3168768023
+250  1.01750383  1.197651475  0.2508191726 -0.0067575085
+251  2.68189920 -0.610861219 -0.1464156881  0.2932661060
+252  1.12446828  1.317757686 -0.2140677287  0.1133773287
+253  1.97243507  0.257964532  0.1564550443  0.7673463536
+254  2.09807352 -0.001280210 -0.3534155480  0.0693220555
+255  3.08167508 -0.303047935  0.7973045232 -0.0415943924
+256  1.15486951  0.801455824  0.1612473650 -0.2032615318
+257  2.87563954 -0.609027911  0.3702166088 -0.4114959739
+258  1.57869705  0.974323073 -0.5285275179 -0.4651233646
+259  3.47406039 -0.916078541  0.1396052453 -0.0374278894
+260  2.68395368 -0.316444724  0.8984882015  0.3343577683
+261  1.99471375  0.975303732 -0.3788552380  0.1606502207
+262  1.82989728  0.783331098 -0.2403959171 -0.0089412258
+263  2.74737054 -0.266155181  0.4186764336  0.2359006114
+264  1.71127837  0.724784436  0.2623689870  0.3295077340
+265  2.01550372 -0.336048004  0.1550973151  0.4381423727
+266 -0.79264401 -0.501542290 -0.8062583878 -0.0062538088
+267 -0.38878389 -1.572195030 -0.5101672847  0.0240108874
+268 -0.51425347 -1.568601864 -0.9620227413  0.0687292216
+269 -1.19358283 -0.704980769 -0.5530500200  0.1409106148
+270 -0.30385537 -1.973610309 -0.8742722620 -0.1115409095
+271 -0.32612329 -0.363644928 -0.2433824261 -0.0406463795
+272 -1.63346237 -0.549411050 -1.1139455954  0.5583407495
+273 -0.07872674 -1.175445948 -1.0373810725 -0.0006297613
+274 -0.46958722 -0.913933594 -0.0030816076  0.2038729372
+275 -0.41619261 -1.858427470 -0.6896954775 -0.2307712334
+276 -0.51813435 -0.500988172 -0.6023205535  0.1665647978
+277 -0.57748315 -2.069519772 -0.6624634474  0.0249984000
+278 -0.78113251 -0.329937015 -0.9656761301  0.5915165466
+279  0.36903318 -1.241981695 -0.8534002681  0.0207368075
+280 -0.71142808 -0.118544343 -0.8873213614  0.2088253544
+281 -0.05938772 -1.683810145 -0.3528310158 -0.1408836138
+282 -0.83364246 -1.750709135 -0.8613834468 -0.5000933107
+283 -0.13436891 -1.737704249 -2.2172951628  1.0660910539
+284 -1.05923283 -0.768005864 -0.7135853123  0.0095308617
+285  0.10843633 -1.005866008 -0.3466768971  0.5271908986
+286 -1.39569548  0.186068128 -0.5661058361  0.6199666386
+287 -0.65506095 -0.549414851 -1.2180550552  0.0624988628
+288 -1.41838566  0.445274046 -1.2247999947 -0.1450013045
+289 -0.51046647 -1.586880610 -0.7263048154  0.1428255201
+290 -0.78911158 -0.505739439 -0.9261968871 -0.3135488284
+291  0.09029907 -1.613699316 -0.6526884653  0.2434406241
+292 -0.30109211 -1.136508238 -1.1068198215 -0.4596292495
+293 -0.23259268 -1.307323174 -0.5656452964 -0.2444462768
+294 -0.68530416 -0.468715862 -0.6860012301  0.2002296062
+295  0.55633759 -2.147092418 -0.1017394952  0.0275801282
+296 -1.40443131  0.669214507 -0.7341167346  0.0117806806
+297  0.17510514 -2.598795682 -0.3443396896  0.0414247923
+298 -1.18954178  0.438937550 -0.7902405484  0.1550521818
+299  0.26065447 -1.420816810 -0.5141213461 -0.1379298839
+300 -0.47724750 -1.146494972 -0.9068340686 -0.0729155941
+301  0.07437918 -0.207434615 -0.7497268568  0.0095106324
+302 -0.42003843 -0.818465642 -0.5412600263  0.0772297297
+303  0.72454840 -2.368108863  0.4115531232 -0.1479321675
+304 -1.04213599  0.056120471 -1.7222515507 -0.4709727245
+305  0.60055080 -2.178740104 -0.2423467458  0.0179760573
+306  0.13855117 -1.472973148 -0.1201070964 -0.7473327167
+307 -0.83986050 -0.319074465 -0.8314957032  0.4061472696
+308 -0.47197665 -1.476013733 -0.9596038754 -0.1737607293
+309 -0.52861887 -0.029569151 -0.8159955706 -0.1828909571
+310 -0.14347748 -1.002719154 -1.1272153308  0.0144462275
+311  0.46146610 -1.309985546 -0.3319736816  0.2468508954
+312 -0.64451547 -0.886325923 -1.3363880341  0.1282846043
+313  0.43952294 -1.547465645  0.1924136431 -0.6128959039
+314 -0.91632821 -1.347938209 -1.4886552086  0.1589484725
+315 -0.03085276 -0.640236066 -1.0940259192 -0.0776195686
+316 -0.18730017 -0.056961746 -1.3292655863 -0.3596024860
+317  0.06860834 -1.530508189 -0.6617927370 -0.1408840935
+318 -0.62801848 -0.181067741 -0.7516718694  0.0380496043
+319  0.01925374 -1.747016796 -0.3210157618 -0.2552809023
+320 -1.31112619  0.196355231 -0.6605047901  0.1063314245
+321 -0.33042805 -1.488316538 -1.2338473749 -0.2432964631
+322 -0.84889245  0.190882856 -1.1351850817 -0.0609392940
+323 -0.13743695 -1.674225379 -0.1132893097 -0.3086851143
+324 -0.05167239 -1.304114447 -0.6574412070 -0.3212103440
+325 -1.07190401 -1.012421640 -0.3241191241 -0.2453800297
+326  0.21455182 -1.789600781 -0.5281980360 -0.4471776303
+327 -0.50512498  0.018552509 -1.0845239678  0.3916896436
+328 -0.45078325 -0.065350556 -0.7461057823 -0.0128701395
+329  0.55264285 -2.344084039 -0.8679387883 -0.3874968085
+330 -0.73880175 -0.247782081 -0.3155917618 -0.7326749681
+331 -0.36733696 -0.989590398 -0.8866617732  0.1955682607
+332  0.49161977 -1.482618100 -0.3294639827 -0.5500313212
+333 -0.21309615 -1.259658147 -0.7648157293 -0.1080707075</code></pre>
+</div>
+</div>
+</section>
+<section id="porcentaje-de-explicación-de-cada-variable" class="level1">
+<h1>Porcentaje de explicación de cada variable</h1>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(res.pca)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="05_tp_no_supervisado_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="t-sne" class="level1">
+<h1>T-SNE</h1>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tsne <span class="ot">&lt;-</span> <span class="fu">Rtsne</span>(df,<span class="at">dim =</span> <span class="dv">2</span>, <span class="at">perplexity=</span><span class="dv">10</span>, <span class="at">max_iter =</span> <span class="dv">500</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details open="">
+<summary>Código</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tsne<span class="sc">$</span>Y, <span class="at">t=</span><span class="st">'n'</span>, <span class="at">main=</span><span class="st">"tSNE"</span>, <span class="at">xlab=</span><span class="st">"tSNE dimension 1"</span>, <span class="at">ylab=</span><span class="st">"tSNE dimension 2"</span>, <span class="st">"cex.main"</span><span class="ot">=</span><span class="dv">2</span>, <span class="st">"cex.lab"</span><span class="ot">=</span><span class="fl">1.5</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(tsne<span class="sc">$</span>Y, <span class="at">labels=</span>penguins<span class="sc">$</span>species)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="05_tp_no_supervisado_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<!-- -->
+
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Correr el código</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb24" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Aprendizaje No Supervisado"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Pamela E. Pairo"</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> es</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> |</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">  Trabajo Práctico n°5</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: flatly</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: show</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Carga de las librerias necesarias</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE}</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de paquetes necesarios</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">message =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">warning =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rtsne)</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="al">![Arte realizado por Allison Horst](img/penguins.png)</span>{fig-align="center"}</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguins)</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>Se eliminan datos faltantes y unicamente trabajamos con variables numéricas</span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(penguins) <span class="sc">|&gt;</span> </span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>          <span class="fu">select</span>(<span class="sc">!</span><span class="fu">where</span>(is.factor) <span class="sc">&amp;</span> <span class="sc">-</span>year)</span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a>#Escalamos</span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">scale</span>(df)</span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> (df)</span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a><span class="fu"># K-means</span></span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a>k2 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">2</span>)</span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-66"><a href="#cb24-66" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(k2, <span class="at">data =</span> df, <span class="at">geom =</span> <span class="fu">c</span>(<span class="st">"point"</span>))</span>
+<span id="cb24-67"><a href="#cb24-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-68"><a href="#cb24-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-71"><a href="#cb24-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-72"><a href="#cb24-72" aria-hidden="true" tabindex="-1"></a>k3 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb24-73"><a href="#cb24-73" aria-hidden="true" tabindex="-1"></a>k4 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">4</span>)</span>
+<span id="cb24-74"><a href="#cb24-74" aria-hidden="true" tabindex="-1"></a>k5 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">5</span>)</span>
+<span id="cb24-75"><a href="#cb24-75" aria-hidden="true" tabindex="-1"></a><span class="co"># plots to compare</span></span>
+<span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k2, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 2"</span>)</span>
+<span id="cb24-77"><a href="#cb24-77" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k3, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 3"</span>)</span>
+<span id="cb24-78"><a href="#cb24-78" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k4, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 4"</span>)</span>
+<span id="cb24-79"><a href="#cb24-79" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">fviz_cluster</span>(k5, <span class="at">geom =</span> <span class="st">"point"</span>,  <span class="at">data =</span> df) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"k = 5"</span>)</span>
+<span id="cb24-80"><a href="#cb24-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-81"><a href="#cb24-81" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb24-82"><a href="#cb24-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-83"><a href="#cb24-83" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, p3, p4, <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb24-84"><a href="#cb24-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-85"><a href="#cb24-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a>#Método del codo</span>
+<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-90"><a href="#cb24-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-91"><a href="#cb24-91" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(df, kmeans, <span class="at">method =</span> <span class="st">"wss"</span>)</span>
+<span id="cb24-92"><a href="#cb24-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-93"><a href="#cb24-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-94"><a href="#cb24-94" aria-hidden="true" tabindex="-1"></a>#PCA</span>
+<span id="cb24-95"><a href="#cb24-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-98"><a href="#cb24-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-99"><a href="#cb24-99" aria-hidden="true" tabindex="-1"></a>res.pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(df, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-100"><a href="#cb24-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-101"><a href="#cb24-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-104"><a href="#cb24-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-105"><a href="#cb24-105" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(res.pca, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb24-106"><a href="#cb24-106" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">"black"</span>, </span>
+<span id="cb24-107"><a href="#cb24-107" aria-hidden="true" tabindex="-1"></a>                <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>,  <span class="st">"#FC4E07"</span>),</span>
+<span id="cb24-108"><a href="#cb24-108" aria-hidden="true" tabindex="-1"></a>                <span class="at">legend.title =</span> <span class="st">" "</span>,</span>
+<span id="cb24-109"><a href="#cb24-109" aria-hidden="true" tabindex="-1"></a>               <span class="co"># xlab="PC 1 (68%)",</span></span>
+<span id="cb24-110"><a href="#cb24-110" aria-hidden="true" tabindex="-1"></a>               <span class="co"># ylab= "PC 2 (20%)",</span></span>
+<span id="cb24-111"><a href="#cb24-111" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> <span class="st">"var"</span><span class="co"># Variables color</span></span>
+<span id="cb24-112"><a href="#cb24-112" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb24-113"><a href="#cb24-113" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-114"><a href="#cb24-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-115"><a href="#cb24-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-118"><a href="#cb24-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-119"><a href="#cb24-119" aria-hidden="true" tabindex="-1"></a><span class="co"># Eigenvalues</span></span>
+<span id="cb24-120"><a href="#cb24-120" aria-hidden="true" tabindex="-1"></a>eig.val <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(res.pca)</span>
+<span id="cb24-121"><a href="#cb24-121" aria-hidden="true" tabindex="-1"></a>eig.val</span>
+<span id="cb24-122"><a href="#cb24-122" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb24-123"><a href="#cb24-123" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por variables</span></span>
+<span id="cb24-124"><a href="#cb24-124" aria-hidden="true" tabindex="-1"></a>res.var <span class="ot">&lt;-</span> <span class="fu">get_pca_var</span>(res.pca)</span>
+<span id="cb24-125"><a href="#cb24-125" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>coord          <span class="co"># Coordenadas</span></span>
+<span id="cb24-126"><a href="#cb24-126" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>contrib        <span class="co"># Contribución a los CP</span></span>
+<span id="cb24-127"><a href="#cb24-127" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por individuos</span></span>
+<span id="cb24-128"><a href="#cb24-128" aria-hidden="true" tabindex="-1"></a>res.ind <span class="ot">&lt;-</span> <span class="fu">get_pca_ind</span>(res.pca)</span>
+<span id="cb24-129"><a href="#cb24-129" aria-hidden="true" tabindex="-1"></a>res.ind<span class="sc">$</span>coord          <span class="co"># Coordenadas</span></span>
+<span id="cb24-130"><a href="#cb24-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-131"><a href="#cb24-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-132"><a href="#cb24-132" aria-hidden="true" tabindex="-1"></a><span class="fu"># Porcentaje de explicación de cada variable</span></span>
+<span id="cb24-133"><a href="#cb24-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-136"><a href="#cb24-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-137"><a href="#cb24-137" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(res.pca)</span>
+<span id="cb24-138"><a href="#cb24-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-139"><a href="#cb24-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-140"><a href="#cb24-140" aria-hidden="true" tabindex="-1"></a><span class="fu"># T-SNE</span></span>
+<span id="cb24-141"><a href="#cb24-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-144"><a href="#cb24-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-145"><a href="#cb24-145" aria-hidden="true" tabindex="-1"></a>tsne <span class="ot">&lt;-</span> <span class="fu">Rtsne</span>(df,<span class="at">dim =</span> <span class="dv">2</span>, <span class="at">perplexity=</span><span class="dv">10</span>, <span class="at">max_iter =</span> <span class="dv">500</span>)</span>
+<span id="cb24-146"><a href="#cb24-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-147"><a href="#cb24-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-150"><a href="#cb24-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-151"><a href="#cb24-151" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tsne<span class="sc">$</span>Y, <span class="at">t=</span><span class="st">'n'</span>, <span class="at">main=</span><span class="st">"tSNE"</span>, <span class="at">xlab=</span><span class="st">"tSNE dimension 1"</span>, <span class="at">ylab=</span><span class="st">"tSNE dimension 2"</span>, <span class="st">"cex.main"</span><span class="ot">=</span><span class="dv">2</span>, <span class="st">"cex.lab"</span><span class="ot">=</span><span class="fl">1.5</span>)</span>
+<span id="cb24-152"><a href="#cb24-152" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(tsne<span class="sc">$</span>Y, <span class="at">labels=</span>penguins<span class="sc">$</span>species)</span>
+<span id="cb24-153"><a href="#cb24-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+</code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>

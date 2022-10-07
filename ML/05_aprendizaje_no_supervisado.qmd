@@ -58,7 +58,12 @@ editor: visual
 
 ## ¿De qué se trata?
 
-<h3 style="color:black;padding:5px;line-height:2em; text-align: center; position: absolute; top: 45%; width: 100%;">
+Los datos etiquetados son escasos y caros
+
+Los datos no etiquetados son abundantes y gratis
+
+
+<h3 style="color:black;padding:5px;line-height:2em; text-align: center; position: absolute; top: 60%; width: 100%;">
 
 En el aprendizaje no supervisado, no se proporcionan etiquetas y el algoritmo de aprendizaje se centra únicamente en detectar la estructura en los datos de entrada.
 
@@ -90,6 +95,16 @@ Imagenes extraidas de [aqui](https://programmerclick.com/article/90051499108/)
 > Los resultados dependen de las variables explicatorias utilizadas por lo que cobra importancia [**el análisis exploratorio de datos y la curación.**]{style="color: #88188a;"}
 Resulta importante el aporte de un/una experto/a de dominio para explicar los posibles agrupamientos y la elección de las variables relevantes.
 Se itera varias veces
+
+. . .
+
+### Selección de Características
+
+- Eliminar características que introducen ruido
+
+- Eliminar características redundantes
+
+- Quedarse con las características más determinantes 
 
 ## Posibles aplicaciones
 
@@ -217,3 +232,4 @@ Revelar patrones en los datos que pueden no ser detectados al analizar las varia
 - t-SNE se utiliza principalmente para comprender datos de alta dimensión y proyectarlos en espacios de baja dimensión (como 2D o 3D).
 
 - El objetivo de este algoritmo es encontrar una distribución de probabilidad similar en un espacio de baja dimensión.
+

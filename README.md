@@ -22,7 +22,7 @@
 
 ### Clase 4
 
-- Teórica: [Datos desbalanceados](https://pamelapairo.github.io/clases_pda/ML/04_datos_desbalanceados.html)
+- Teórica: [Datos desbalanceados](https://pamelapairo.github.io/clases_pda/ML/04_datos_desbalaceados.html)
 
 - Práctica: [Integración](https://pamelapairo.github.io/clases_pda/ML/04_tp_datos_desbalanceados.html)
 
