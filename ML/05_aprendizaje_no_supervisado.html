@@ -473,6 +473,45 @@
 <li><p>Hay muchas decisiones subjetivas: variables, medida de di(similitud), método de agrupamiento… que impactan fuertemente en los resultados.</p></li>
 <li><p>Existen muchas técnicas más Mean Shift, GMM, Clustering jerárquico, etc.</p></li>
 </ul>
+</section>
+<section id="reducción-de-dimensionalidad" class="slide level2">
+<h2>Reducción de dimensionalidad</h2>
+<p>Hoy vemos:</p>
+<ul>
+<li><p>Análisis de componentes principales (PCA)</p></li>
+<li><p>T-SNE</p></li>
+</ul>
+<p><strong>pero… hay muchas más!</strong></p>
+</section>
+<section id="pca" class="slide level2">
+<h2>PCA</h2>
+<blockquote>
+<p>Es una técnica de reducción de la dimensión de datos MV: a partir de p variables originales se busca encontrar un menor número de variables (componentes principales), independientes entre sí, que reflejen la estructura de los datos con la menor pérdida de información Revelar patrones en los datos que pueden no ser detectados al analizar las variables por separado</p>
+</blockquote>
+</section>
+<section id="pca-1" class="slide level2">
+<h2>PCA</h2>
+
+<img data-src="https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/pca_1.png" class="r-stretch quarto-figure-center"><ul>
+<li><p>Es posible extraer p CP, aunque es deseable que los primeros CP resuman la mayoría de la información de las variables originales</p></li>
+<li><p>Esto es posible si existe asociación entre las variables originales: es posible reducir la información contenidas en estas variables asociadas entre sí en un menor número de variables (reducción de la dimensión)</p></li>
+</ul>
+</section>
+<section id="algunas-consideraciones-para-pca" class="slide level2">
+<h2>Algunas consideraciones para PCA</h2>
+<ul>
+<li><p>No es una técnica de inferencia estadística (no se prueban hipótesis).</p></li>
+<li><p>Como usa medidas de asociación lineal, el ACP es más eficiente si las variables se relacionan linealmente</p></li>
+<li><p>Es sensible a outliers</p></li>
+</ul>
+</section>
+<section id="t-sne" class="slide level2">
+<h2>T-SNE</h2>
+<ul>
+<li><p>Técnica de reducción de dimensionalidad no lineal.</p></li>
+<li><p>t-SNE se utiliza principalmente para comprender datos de alta dimensión y proyectarlos en espacios de baja dimensión (como 2D o 3D).</p></li>
+<li><p>El objetivo de este algoritmo es encontrar una distribución de probabilidad similar en un espacio de baja dimensión.</p></li>
+</ul>
 
 <img src="img/logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://github.com/PamelaPairo/clases_pda">Aprendizaje No Supervisado- PDA</a></p>

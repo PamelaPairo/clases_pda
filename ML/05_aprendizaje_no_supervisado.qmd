@@ -179,5 +179,41 @@ formando kclusters
 
 - Existen muchas técnicas más Mean Shift, GMM, Clustering jerárquico, etc.
 
+## Reducción de dimensionalidad
 
+Hoy vemos:
 
+- Análisis de componentes principales (PCA)
+
+- T-SNE
+
+**pero... hay muchas más!**
+
+## PCA
+
+> Es una técnica de reducción de la dimensión de datos MV: a partir de p variables originales se busca encontrar un menor número de variables (componentes principales), independientes entre sí, que reflejen la estructura de los datos con la menor pérdida de información
+Revelar patrones en los datos que pueden no ser detectados al analizar las variables por separado
+
+## PCA
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/pca_1.png){fig-align="center"}
+
+- Es posible extraer p CP, aunque es deseable que los primeros CP resuman la mayoría de la información de las variables originales
+
+- Esto es posible si existe asociación entre las variables originales: es posible reducir la información contenidas en estas variables asociadas entre sí en un menor número de variables (reducción de la dimensión)
+
+## Algunas consideraciones para PCA
+
+- No es una técnica de inferencia estadística (no se prueban hipótesis).
+
+- Como usa medidas de asociación lineal, el ACP es más eficiente si las variables se relacionan linealmente
+
+- Es sensible a outliers
+
+## T-SNE
+
+- Técnica de reducción de dimensionalidad no lineal.
+
+- t-SNE se utiliza principalmente para comprender datos de alta dimensión y proyectarlos en espacios de baja dimensión (como 2D o 3D).
+
+- El objetivo de este algoritmo es encontrar una distribución de probabilidad similar en un espacio de baja dimensión.
