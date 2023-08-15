@@ -4,7 +4,7 @@ author:
 - Pamela E. Pairo
 - Posgrado Digital Accounting
 title-slide-attributes:
-    data-background-image: "C:/Users/pamel/Desktop/PDA/ML/img/portada.jpg"
+    data-background-image: "img/portada.jpg"
 format: 
   revealjs:
     theme: [mytheme.scss]
@@ -12,7 +12,7 @@ format:
     incremental: false
     width: 1600
     height: 1000
-    logo: "C:/Users/pamel/Desktop/PDA/ML/img/logo.jpg"
+    logo: "img/logo.jpg"
     footer: "[Introducción al Aprendizaje Automático- PDA](https://github.com/PamelaPairo/clases_pda)"
     chalkboard:
       theme: whiteboard
@@ -26,7 +26,7 @@ editor: visual
 
 . . .
 
-![](C:/Users/pamel/Desktop/PDA/ML/img/pairo.png){.fragment width="250" fig-align="center"}
+![](img/pairo.png){.fragment width="250" fig-align="center"}
 
 . . .
 
@@ -137,11 +137,11 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 ## Ejemplos en negocios `r emo::ji("dollar")`
 
 ::: {layout="[[1,1], [1,1]]"}
-![Detectar la probabilidad de que la transacción sea un fraude (Fraud Detection Models)](C:/Users/pamel/Desktop/PDA/ML/img/cards.png)
+![Detectar la probabilidad de que la transacción sea un fraude (Fraud Detection Models)](img/cards.png)
 
-![Product Recommender](C:/Users/pamel/Desktop/PDA/ML/img/netflix.jpg)
+![Product Recommender](img/netflix.jpg)
 
-![Probabilidad de que un usuario cliquee un anuncio (Click Prediction Models)](C:/Users/pamel/Desktop/PDA/ML/img/logos.jpg)
+![Probabilidad de que un usuario cliquee un anuncio (Click Prediction Models)](img/logos.jpg)
 :::
 
 
@@ -176,7 +176,7 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 
 ## Tipos de aprendizaje {chalkboard-buttons="true"}
 
-![](C:/Users/pamel/Desktop/PDA/ML/img/ml.png){fig-align="center"}
+![](img/ml.png){fig-align="center"}
 
 ## Conceptos Importantes `r emo::ji("bulb")`
 
@@ -192,7 +192,7 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 
 ## Ciclo de un proyecto en ciencia de datos
 
-![](C:/Users/pamel/Desktop/PDA/ML/img/ciclo_data.png){fig-align="center"}
+![](img/ciclo_data.png){fig-align="center"}
 
 ## Regresión vs. Clasificación
 
@@ -210,9 +210,9 @@ Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferenci
 :::
 
 ::: {.column width="50%"}
-![](C:/Users/pamel/Desktop/PDA/ML/img/regresion.png){.absolute top="0" right="30" width="500" height="450"}
+![](img/regresion.png){.absolute top="0" right="30" width="500" height="450"}
 
-![](C:/Users/pamel/Desktop/PDA/ML/img/clasification.png){.absolute bottom="0" right="30" width="500" height="450"}
+![](img/clasification.png){.absolute bottom="0" right="30" width="500" height="450"}
 :::
 :::
 
@@ -240,7 +240,7 @@ Analisis de sentimientos de noticias financieras (negativo/positivo)
 
 -   [**Set de testeo**]{style="color: #1c5253;"} son los datos utilizados para medir el desempeño del modelo, entre un conjunto de candidatos.
 
-![](C:/Users/pamel/Desktop/PDA/ML/img/split_data.png){.fragment width="500" lenght="700" fig-align="center"}
+![](img/split_data.png){.fragment width="500" lenght="700" fig-align="center"}
 
 # Análisis exploratorio de datos y Curación 📈 📊 🔨 {.center .center-x background-color="#1c5253"}
 
@@ -301,7 +301,7 @@ countdown(minutes = 10,
           )
 ```
 
-##  {background-image="C:/Users/pamel/Desktop/PDA/ML/img/computadora.jpg" background-size="cover"}
+##  {background-image="img/computadora.jpg" background-size="cover"}
 
 <h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: left; position: absolute; top: 25%; width: 56%;">
 
@@ -388,11 +388,11 @@ Imagen realizada por Tom Mock
 
 ::: columns
 ::: {.column width="50%"}
-![](C:/Users/pamel/Desktop/PDA/ML/img/comunidades_latin.png)
+![](img/comunidades_latin.png)
 :::
 
 ::: {.column width="50%"}
-![[18 al 20 de octubre de 2023, Presencial](https://latin-r.com/) Talleres y presentaciones orales.](C:/Users/pamel/Desktop/PDA/ML/img/latinr.jpg){width="60%"}
+![[18 al 20 de octubre de 2023, Presencial](https://latin-r.com/) Talleres y presentaciones orales.](img/latinr.jpg){width="60%"}
 :::
 :::
 

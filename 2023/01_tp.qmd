@@ -1,0 +1,196 @@
+---
+title: "Análisis Exploratorio"
+author: "Pamela E. Pairo"
+lang: es
+description: |
+  Trabajo Práctico n°1
+format:
+  html:
+    theme: flatly
+    code-fold: show
+    code-tools: true
+    toc: true
+    toc-location: left
+---
+
+## Algunos tips
+
+Para agregar un bloque de código `Ctrl+ Alt+ I`
+
+Para agregar el _pipe_ (` |> `) `Ctrl+ Shift+ M`
+
+## Detección del Fraude
+
+A lo largo de las clases se trabajará con un dataset extraído de [Kaggle](https://www.kaggle.com/datasets/ealaxi/banksim1?select=bs140513_032310.csv)
+
+```{r, message=FALSE}
+# Carga de paquetes necesarios
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+
+library(tidyverse)
+library(tidymodels) 
+```
+
+```{r}
+data <- read_csv('C:/Users/pamel/Desktop/PDA/ML/data/df_fraude.csv')#cargo base de datos
+glimpse(data)
+```
+
+### Descripción de las variables
+
+-   `Step`: representa el día en que la transacción sucede. En total son 180 *steps*, por lo que la base de datos es por 6 meses.
+
+-   `Customer`: representa el ID de la persona que inicia la transacción. Está formada con la letra C seguida por una secuencia unica de 10 numeros.
+
+-   `Age`: esta variable se divide en intervalos de edad, comenzando de 0 a 6 y la letra U que significa *Unknown*. La edad es *Unknow* solo para las transacciones que tienen el mismo género que *Enterprise*. La codificación de los números es:
+
+    -   0: menor a 18 años
+    -   1: entre 19 y 25 años
+    -   2: entre 26 y 35 años
+    -   3: entre 36 y 45 años
+    -   4: entre 46 y 55 años
+    -   5: entre 56 y 65 años
+    -   6: mayor a 65 años
+
+-   `Gender`: esta variable se codifica como F para Mujer, M para Hombre, E para Empresa y U para *Unknown*.
+
+-   `Merchant`: esta variable representa la identificación única de la parte que recibe la transacción. Similar a la identificación del cliente, la secuencia está formada por la letra M, seguida de una serie de 9 números. Hay un total de 50 comerciantes únicos en el conjunto de datos.
+
+-   `Category`: hay 15 categorías únicas que etiquetan el tipo general de transacción: transporte, comida, salud, bienestar y belleza, moda, bares y restaurantes, hiper, deportes y juguetes, tecnología, hogar, servicios de hotel, otros servicios, contenidos, viajes, ocio.
+
+-   `Amount`: representa el valor de la transacción. Solo hay 52 valores iguales a 0 y ningún valor negativo.
+
+-   `Fraud`: una columna indicadora codificada con 0 si la transacción fue limpia y con 1 si la transacción fue fraudulenta.
+
+`zipcodeOri` y `zipMerchant`: contienen un valor constante de 28007, que es un código postal en Ansonville, Carolina del Norte, Estados Unidos.
+
+## Boxplot
+
+```{r}
+boxplot(data$amount)
+```
+
+Según Fraud:
+
+```{r}
+boxplot(amount~fraud,
+data=data,
+xlab="Fraude",
+ylab="Cantidad",
+col="orange",
+border="brown"
+)
+```
+
+```{r}
+ggplot(data) + geom_bar(aes(y = category, fill =gender))
+
+```
+
+¿Cuántos datos corresponden a transacciones fraudulentes y no fraudulentas?
+
+```{r}
+ data %>%
+  group_by(fraud) %>%
+  summarise(cnt = n()) %>%
+  mutate(freq = round(cnt / sum(cnt), 2))
+```
+
+## Encodings o codificación de variables categóricas
+
+Los algoritmos de aprendizaje automático requieren **exclusivamente datos numéricos**. Por lo que, es necesario transformar nuestras variables categóricas a algún formato numérico.
+
+```{r}
+library(kableExtra)
+
+count(data, category) %>% arrange(n) %>% 
+  knitr::kable(format = "html")%>%
+  kable_styling() 
+```
+
+### Realizando one-hot encoding:
+
+```{r}
+count(data, gender) %>% arrange(n)
+```
+
+Vamos a categorizar a la variable `Age`
+
+```{r}
+library(caret)
+
+#define one-hot encoding function
+dummy <- dummyVars("fraud ~ gender", data=data)
+
+#perform one-hot encoding on data frame
+final_df <- data.frame(predict(dummy, newdata=data))
+
+#view final data frame
+head (final_df, 10) %>% 
+  knitr::kable(format = "html")%>%
+  kable_styling()
+```
+
+## Correlación entre variables
+
+```{r}
+numericals <- select_if(data, is.numeric)# selección de variables numéricas
+
+### Correlation Matrix
+cormat <- round(x = cor(numericals), digits = 2)
+
+# round use to just to get first two digits after decimal point.
+head(cormat)
+
+```
+
+```{r}
+library(ggcorrplot)
+
+ggcorrplot::ggcorrplot(cor(numericals))
+```
+
+## Visualizando valores faltantes
+
+En el caso de tener valores faltantes (NA), es importante analizar su distribución y así determinar la mejor forma de preprocesarlos.
+
+Puede ocurrir que un *feature* posea muchos datos faltantes por lo que quizas convenga eliminar esa caracterisca.
+
+Si hay datos faltantes corresponde hacer una **imputación**.
+
+**imputación**: estimar un valor que puede haber sido muestreado pero no se lo conoce.
+
+```{r}
+sum(is.na(data))# para saber cuantos na hay en la base de datos
+```
+
+Visualizando NA´s
+
+```{r}
+data %>%
+  is.na() %>%
+  reshape2::melt() %>%
+  ggplot(aes(Var2, Var1, fill=value)) + 
+    geom_raster() + 
+    coord_flip() +
+    scale_y_continuous(NULL, expand = c(0, 0)) +
+    scale_fill_grey(name = "", 
+                    labels = c("Present", 
+                               "Missing")) +
+    xlab("Observation") +
+    theme(axis.text.y  = element_text(size = 4))
+```
+
+## Preguntas
+
+- Para predecir si una transacción es o no fraudulenta. ¿Todas las variables son importantes?
+
+- Codificar el resto de las variables categóricas
+
+- Graficar la distribución de la variables `amount`
+
+```{r}
+sessionInfo()
+```
+
