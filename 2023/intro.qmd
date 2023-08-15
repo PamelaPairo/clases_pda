@@ -1,0 +1,411 @@
+---
+title: "Aprendizaje Automático"
+author: 
+- Pamela E. Pairo
+- Posgrado Digital Accounting
+title-slide-attributes:
+    data-background-image: "C:/Users/pamel/Desktop/PDA/ML/img/portada.jpg"
+format: 
+  revealjs:
+    theme: [mytheme.scss]
+    slide-number: c
+    incremental: false
+    width: 1600
+    height: 1000
+    logo: "C:/Users/pamel/Desktop/PDA/ML/img/logo.jpg"
+    footer: "[Introducción al Aprendizaje Automático- PDA](https://github.com/PamelaPairo/clases_pda)"
+    chalkboard:
+      theme: whiteboard
+      boardmarker-width: 5
+      buttons: false
+    echo: true
+editor: visual
+---
+
+# Sobre Mi {.center .center-x background-color="#1c5253"}
+
+. . .
+
+![](C:/Users/pamel/Desktop/PDA/ML/img/pairo.png){.fragment width="250" fig-align="center"}
+
+. . .
+
+Formación: Lic. y Dra en Cs Biológicas (Ecóloga de Comunidades)
+
+. . .
+
+Comencé el camino de la Ciencia de Datos en el 2020.
+
+. . .
+
+Trabajé en el Área de Desarrollos y Soluciones Ambientales de la Comisión Nacional de Actividades Espaciales (CONAE)
+
+. . .
+
+Actualmente trabajo en la División Sistemas de Información Geoespacial - AFIP
+
+. . .
+
+📧 pamepairo\@gmail.com
+
+# Hoja de ruta 🚀 {background-color="#C5E1A5"}
+
+::: {.fragment .semi-fade-out}
+-   **Clase 1**: ¿Qué es la ciencia de datos? Conceptos importantes. Clasificación vs. Regresión. Análisis exploratorio y curación. Ingeniería de features.Entrenamiento, evaluación y testeo. Ejercitación
+:::
+
+::: {.fragment .fade-in}
+::: {.fragment .semi-fade-out}
+-   **Clase 2**: Árboles de decisión. Ensambles. Sobreajuste. Trade off Sesgo-Varianza. Naïve Bayes. Hiperparámetros. Ejercitación
+:::
+:::
+
+::: {.fragment .fade-in}
+::: {.fragment .semi-fade-out}
+-   **Clase 3**: Validación cruzada. Métricas. Selección de modelos. Desbalanceo de clases. Problemas multiclase. Ejercitación
+:::
+:::
+
+::: {.fragment .fade-in}
+::: {.fragment .semi-fade-out}
+-   **Clase 4**: Series Temporales. Ejercitación
+:::
+:::
+
+::: {.fragment .fade-in}
+::: {.fragment .semi-fade-out}
+-   **Clase 5**: Clustering. K-means. PCA. Clustering en series temporales. Ejercitación
+:::
+:::
+
+## En la clase de hoy...
+
+[**En la primera parte:**]{style="color: #ae260e;"}
+
+. . .
+
+-   ¿Qué es la Ciencia de Datos?
+-   Tipos de Aprendizaje
+-   Regresión vs Clasificación
+-   Análisis exploratorio de datos y Curación
+
+. . .
+
+[**Recreo**]{style="color: #ae260e;"} `r emo::ji("coffee")`🧉
+
+. . .
+
+[**En la segunda parte:**]{style="color: #ae260e;"}
+
+. . .
+
+-   Intro a Quarto
+-   Ejercitación
+
+## ¿Qué es la Ciencia de Datos? {chalkboard-buttons="true"}
+
+![](http://anabelforte.com/wp-content/uploads/2020/06/3patas.png){fig-align="center"}
+
+> Conjunto de disciplinas que utiliza métodos científicos para obtener conocimientos a partir de los datos dándoles un mayor valor.
+
+## AI, ML y DL 🤔
+
+::: columns
+::: {.column width="50%"}
+![](https://hardzone.es/app/uploads-hardzone.es/2020/03/IA-1.jpg){.fragment width="850" fig-align="center"}
+:::
+
+::: {.column width="50%"}
+::: incremental
+-   [**IA (Inteligencia Artificial)**]{style="color: #88188a;"}: una máquina que es capaz de imitar el razonamiento humano.
+
+-   [**ML (Machine Learning)**]{style="color: #88188a;"}: un subconjunto de Inteligencia Artificial donde las personas "entrenan" a las máquinas para reconocer patrones basados en datos y hacer sus **predicciones**.
+
+-   [**DL (Deep Learning)**]{style="color: #88188a;"}: un subconjunto de ML en el que la máquina es capaz de razonar y sacar sus propias conclusiones, aprendiendo por sí misma
+:::
+:::
+:::
+
+::: footer
+Imagen extraída de [aquí](https://hardzone.es/tutoriales/rendimiento/diferencias-ia-deep-machine-learning/)
+:::
+
+## Machine learning
+
+![](https://redshiftzero.github.io/img/ml_applications.png){fig-align="center"}
+
+## Ejemplos en negocios `r emo::ji("dollar")`
+
+::: {layout="[[1,1], [1,1]]"}
+![Detectar la probabilidad de que la transacción sea un fraude (Fraud Detection Models)](C:/Users/pamel/Desktop/PDA/ML/img/cards.png)
+
+![Product Recommender](C:/Users/pamel/Desktop/PDA/ML/img/netflix.jpg)
+
+![Probabilidad de que un usuario cliquee un anuncio (Click Prediction Models)](C:/Users/pamel/Desktop/PDA/ML/img/logos.jpg)
+:::
+
+
+
+## Imágenes satelitales `r emo::ji("world")`
+
+::: columns
+::: {.column width="25%"}
+
+![](https://previews.123rf.com/images/madmaxer/madmaxer1606/madmaxer160600165/59208934-3d-ilustraci%C3%B3n-de-sat%C3%A9lite-de-navegaci%C3%B3n-sobre-el-fondo-blanco.jpg)
+:::
+::: {.column width="75%"}
+
+![](https://www.bcr.com.ar/sites/default/files/styles/free/public/mapa_caseros.png?itok=vYfFTRPj)
+
+:::
+:::
+
+## Tipos de Aprendizaje
+
+::: incremental
+-   [**Aprendizaje supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + salida esperada
+
+-   [**Aprendizaje no supervisado**]{style="color: #88188a;"}: Datos de entrenamiento (sin salida esperada)
+
+-   [**Aprendizaje semi-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento + pocas salida esperadas
+
+-   [**Aprendizaje auto-supervisado**]{style="color: #88188a;"}: Datos de entrenamiento auto generados (tareas pretexto)
+
+-   [**Aprendizaje por refuerzo**]{style="color: #88188a;"}: "Recompensas" por secuencias de acciones
+:::
+
+## Tipos de aprendizaje {chalkboard-buttons="true"}
+
+![](C:/Users/pamel/Desktop/PDA/ML/img/ml.png){fig-align="center"}
+
+## Conceptos Importantes `r emo::ji("bulb")`
+
+-   [**Muestra, punto, observación, instancia**]{style="color: #1c5253;"} se refiere a una unidad de análisis.
+
+-   [**Atributos, predictores, variables independientes o descriptores**]{style="color: #1c5253;"} son los datos de entrada para la ecuación de predicción.
+
+-   [**Salida, variable dependiente, variable respuesta, clase, o "target"**]{style="color: #1c5253;"} es la cantidad a ser predicha.
+
+-   [**Datos categóricos, también conocidos como nominales o atributos**]{style="color: #1c5253;"} toman valores específicos que no tienen escala. Ejemplo: bueno/malo, rojo/azul, etc.
+
+-   [**Datos continuos**]{style="color: #1c5253;"} son a base de escalas numéricas. El costo de un producto, la presión sanguínea, etc.
+
+## Ciclo de un proyecto en ciencia de datos
+
+![](C:/Users/pamel/Desktop/PDA/ML/img/ciclo_data.png){fig-align="center"}
+
+## Regresión vs. Clasificación
+
+::: columns
+::: {.column width="50%"}
+::: {style="font-size: 1.2em; text-align: left; margin-top: 100px"}
+::: incremental
+-   Si $y$ $\epsilon$ $R^n$: Entonces es un problema de **regresión**.
+
+::: {style="font-size: 1.1em; text-align: left; margin-top: 150px"}
+-   Si $y$ es categórica: Entonces es un problema de **clasificación**.
+:::
+:::
+:::
+:::
+
+::: {.column width="50%"}
+![](C:/Users/pamel/Desktop/PDA/ML/img/regresion.png){.absolute top="0" right="30" width="500" height="450"}
+
+![](C:/Users/pamel/Desktop/PDA/ML/img/clasification.png){.absolute bottom="0" right="30" width="500" height="450"}
+:::
+:::
+
+## Regresión vs. Clasificación: Ejemplos {.center .center-x}
+
+Eficiencia de combustible para automóviles
+
+. . .
+
+Predecir si clientes van a contratar un seguro
+
+. . .
+
+Predicción de precios de casas según variables geográficas
+
+. . .
+
+Analisis de sentimientos de noticias financieras (negativo/positivo)
+
+## Entrenamiento, validación y testeo
+
+-   [**Set de entrenamiento**]{style="color: #1c5253;"} son los datos utilizados para el modelado.
+
+-   [**Set de validación**]{style="color: #1c5253;"} ajuste/elección de hiperparámetros
+
+-   [**Set de testeo**]{style="color: #1c5253;"} son los datos utilizados para medir el desempeño del modelo, entre un conjunto de candidatos.
+
+![](C:/Users/pamel/Desktop/PDA/ML/img/split_data.png){.fragment width="500" lenght="700" fig-align="center"}
+
+# Análisis exploratorio de datos y Curación 📈 📊 🔨 {.center .center-x background-color="#1c5253"}
+
+## Análisis exploratorio de datos 🔎
+
+::: incremental
+-   Distribución de las variables
+
+-   Outliers o datos atípicos
+
+-   Presencia de valores faltantes
+
+-   Desbalance de las clases o grupos en estudio
+
+-   Análisis de la correlación entre variables
+:::
+
+## Curación de datos `r emo::ji("hammer")`
+
+::: incremental
+-   Imputación de datos ruidosos, faltantes o erróneos.
+
+-   Codificación de variables categóricas.
+
+-   Transformación de variables.
+
+-   Ingeniería de outliers.
+
+-   Escalado de Features
+
+-   Discretización de variables continuas (ej. edad)
+:::
+
+## Distribución del tiempo {chalkboard-buttons="true"}
+
+![](https://www.raconteur.net//wp-content/uploads/2016/10/What-data-scientists-spend-the-most-time-doing.jpg){fig-align="center"}
+
+::: footer
+Imagen extraída de [aquí](https://www.raconteur.net/the-role-of-a-data-scientist-and-why-we-need-them/)
+:::
+
+## 
+
+```{R}
+#| echo: false
+library(countdown)
+countdown(minutes = 10, 
+          right = "20%",
+          bottom= "35%",
+          padding = "50px",
+          margin = "4%",
+          font_size = "7em",
+          color_border      = "#d33682", #solarized$magenta,
+  color_text                = "#d33682", #solarized$magenta,
+  color_running_text        = "#073642", #solarized$base02,
+  color_finished_background = "#dc322f", #solarized$red,
+  color_finished_text       = "#fdf6e3"  #solarized$base3
+          )
+```
+
+##  {background-image="C:/Users/pamel/Desktop/PDA/ML/img/computadora.jpg" background-size="cover"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: left; position: absolute; top: 25%; width: 56%;">
+
+[¡Manos a R!]{style="font-size: 100px;"}
+
+Pero antes veamos con qué tipo de archivos vamos a trabajar...
+
+</h3>
+
+::: footer
+Foto de <a href="https://unsplash.com/@emilep?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Emile Perron</a> en <a href="https://unsplash.com/es?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+:::
+
+## <img src="https://raw.githubusercontent.com/quarto-dev/quarto-web/main/favicon.png" style="display: inline-block; margin: 0; margin-bottom: -2px; height: 45px;"/></img> Quarto, la próxima generación de RMarkdown
+
+> Quarto es una interfaz de línea de comandos (CLI) que presenta formatos de texto sin formato (`.qmd`, `.rmd`, `.md`) O formatos mixtos (`.ipynb`/Jupyter notebook) en informes estáticos en PDF/Word/HTML , libros, sitios web, presentaciones y más 🎉
+
+. . .
+
+Un archivo .qmd y .Rmd permiten unificar bloques de códigos o *chunks* con texto plano o con formato simple de leer usando [[markdown](https://markdown.es/sintaxis-markdown/)]{style="text-decoration: underline;"}. Al poder intercalar cálculos y gráficos con su análisis o explicación, se unifica el flujo de trabajo. Esto es muy importante si buscamos que nuestro trabajo sea **reproducible**, pero además ahorra tiempo.
+
+. . .
+
+También...
+
+Soporta varios lenguajes como R, Python y Julia y *environments* como Observable, VS Code y Jupyter Lab.
+
+## Archivo .qmd {chalkboard-buttons="true"}
+
+::: panel-tabset
+### Descarga
+
+Realizar la descarga de Quarto desde este [[link](https://quarto.org/docs/get-started/)]{style="text-decoration: underline;"}
+
+Luego seguir la siguiente ruta para abrir un .qmd
+
+```         
+File > New > Quarto documentation
+```
+
+### Código
+
+````         
+---
+title: "ggplot2 demo"
+author: "Norah Jones"
+date: "5/22/2021"
+format: 
+  html:
+    fig-width: 8
+    fig-height: 4
+    code-fold: true
+---
+
+## Air Quality
+
+@fig-airquality further explores the impact of temperature 
+  on ozone level.
+
+```{{r}}
+#| label: fig-airquality
+#| fig-cap: Temperature and ozone level.
+#| warning: false
+library(ggplot2)
+ggplot(airquality, aes(Temp, Ozone)) + 
+  geom_point() + 
+  geom_smooth(method = "loess"
+)
+```
+````
+
+### Salida
+
+![](https://quarto.org/images/hello-knitr.png){width="40%"}
+:::
+
+::: footer
+Imagen realizada por Tom Mock
+:::
+
+# Demo Análisis exploratorio de datos y Curación 💻 {.center .center-x background-color="#1c5253"}
+
+## Comunidades y Recursos útiles
+
+::: columns
+::: {.column width="50%"}
+![](C:/Users/pamel/Desktop/PDA/ML/img/comunidades_latin.png)
+:::
+
+::: {.column width="50%"}
+![[18 al 20 de octubre de 2023, Presencial](https://latin-r.com/) Talleres y presentaciones orales.](C:/Users/pamel/Desktop/PDA/ML/img/latinr.jpg){width="60%"}
+:::
+:::
+
+## Referencias
+
+-   [Artículo acerca del Sobreajuste](https://towardsdatascience.com/what-are-overfitting-and-underfitting-in-machine-learning-a96b30864690) en Towards to Data Science
+
+-   [Hands-on Machine Learning with R](https://bradleyboehmke.github.io/HOML/DT.html) de Bradley Boehmke y Brandon Greenwell.
+
+-   [Tidy Modeling with R](https://www.tmwr.org/index.html) de Max Kuhn y Julia Silge
+
+-   [Introducción a Machine Learning con Tidymodels](https://ml-tidy-wibds.netlify.app/material/), workshop dictado en el marco de Women in Bioinformatics & Data Science LA 2021
+
+-   [Supervised Machine Learning course](https://supervised-ml-course.netlify.app/) de Julia Silge
+
+-   [R para Ciencia de Datos](https://es.r4ds.hadley.nz/)

@@ -92,13 +92,13 @@ Imagenes extraidas de [aqui](https://programmerclick.com/article/90051499108/)
 
 - Detección de outliers
 
+- **Conocer las causas latentes de los fenómenos que se están observando**
+
 > Los resultados dependen de las variables explicatorias utilizadas por lo que cobra importancia [**el análisis exploratorio de datos y la curación.**]{style="color: #88188a;"}
 Resulta importante el aporte de un/una experto/a de dominio para explicar los posibles agrupamientos y la elección de las variables relevantes.
 Se itera varias veces
 
-. . .
-
-### Selección de Características
+## Selección de Características
 
 - Eliminar características que introducen ruido
 

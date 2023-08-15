@@ -37,6 +37,7 @@ Se eliminan datos faltantes y unicamente trabajamos con variables numéricas
 ```{r}
 df <- na.omit(penguins) |> 
           select(!where(is.factor) & -year)
+
 ```
 
 #Escalamos
@@ -71,24 +72,31 @@ library(gridExtra)
 grid.arrange(p1, p2, p3, p4, nrow = 2)
 ```
 
-#Método del codo
+# Método del codo
 
 ```{r}
 fviz_nbclust(df, kmeans, method = "wss")
 ```
 
-#PCA
+# PCA
 
 ```{r}
 res.pca <- prcomp(df, scale = TRUE)
+names (res.pca)
 ```
+
+`center`:contienen la media de las variables previa estandarización (en la escala original)
+
+`scale`: contienen desviación típica de las variables previa estandarización (en la escala original)
+
+`rotation`: contiene los loadings
 
 ```{r}
 fviz_pca_biplot(res.pca, repel = TRUE,
                 col.var = "black", 
                 palette = c("#00AFBB",  "#FC4E07"),
                 legend.title = " ",
-               # xlab="PC 1 (68%)",
+                # xlab="PC 1 (68%)",
                # ylab= "PC 2 (20%)",
                 label = "var"# Variables color
                 
@@ -116,6 +124,10 @@ fviz_eig(res.pca)
 ```
 
 # T-SNE
+
+``` r
+install.packages("Rtsne") # Install Rtsne package from CRAN
+``` 
 
 ```{r}
 tsne <- Rtsne(df,dim = 2, perplexity=10, max_iter = 500)
