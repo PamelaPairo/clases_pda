@@ -1,0 +1,295 @@
+---
+title: "Clase 3: Métricas y Validación Cruzada"
+author: 
+- Pamela E. Pairo
+- Posgrado Digital Accounting
+title-slide-attributes:
+    data-background-image: "img/portada.jpg"
+format: 
+  revealjs:
+    theme: [mytheme.scss]
+    slide-number: c
+    incremental: false
+    width: 1600
+    height: 1000
+    logo: "img/logo.jpg"
+    footer: "[Aprendizaje Supervisado- PDA](https://github.com/PamelaPairo/clases_pda)"
+    chalkboard:
+      theme: whiteboard
+      boardmarker-width: 5
+      buttons: true
+    echo: true
+editor: visual
+---
+
+## En la clase de hoy...
+
+[**En la primera parte:**]{style="color: #ae260e;"}
+
+. . .
+
+-   Naive Bayes
+-   Support Vector Machine
+-   Métricas
+
+. . .
+
+[**Recreo**]{style="color: #ae260e;"} `r emo::ji("coffee")`🧉
+
+. . .
+
+[**En la segunda parte:**]{style="color: #ae260e;"}
+
+. . .
+
+-   Cross Validation
+-   Práctica en R
+
+##  {background-color="#C5E1A5"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+
+[Naive Bayes ✨]{style="font-size: 100px;"}
+
+</h3>
+
+## Teorema de Bayes {.center-x}
+
+$\LARGE P(A|B)= \frac{P(B|A) * P(A)}{P(B)}$
+
+> El teorema establece que se puede encontrar la probabilidad de **A** (e.g. una clase objetivo) dada la ocurrencia de B (e.g. un conjunto de features). Es decir, B es la evidencia y A es la hipótesis.
+
+Dada nuestras variables predictoras, ¿cuál es la probabilidad de cada clase?
+
+$\ P(Clase|Predictores)= \LARGE \frac{P(Predictores|Clase) * P(Clase)}{P(Predictores)}$
+
+$\LARGE = \frac{Prior * Likelihood}{Evidencia}$
+
+$\ Predictores= \LARGE (x_1, x_2, x_3...x_n)$
+
+## ¿Porqué Naive?
+
+La principal asunción es que [**los atributos son independientes entre sí.**]{style="color: #88188a;"}
+
+Una segunda asunción, es que [**todos los atributos tienen el mismo efecto en la salida del algoritmo.**]{style="color: #88188a;"}
+
+### Entonces...
+
+$\ P(y|x_1, x_2..x_n)= \LARGE \frac{P(x_1|y) * P(x_n|y)...P(x_1|y)* P(y)}{P(x_1)* P(x_2)...P(x_N)}$
+
+## Tipos de algoritmos
+
+[**Bernoulli Naive Bayes**]{style="color: #88188a;"}: Para casos donde los atributos son variables binarias (e.g. si una palabra ocurre o no en un documento).
+
+[**Multinomial Naive Bayes**]{style="color: #88188a;"}: Para casos donde los atributos representan frecuencias (e.g. la cantidad de veces que una palabra ocurre en un documento).
+
+[**Gaussian Naive Bayes**]{style="color: #88188a;"}: Para casos donde los atributos toman valores continuos, se asume que los valores son muestras de una distribución gaussiana (esto se usa para calcular las probabilidades condicionales en el algoritmo).
+
+##  {background-color="#C5E1A5"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+
+[Support Vector Machine 🤖]{style="font-size: 100px;"}
+
+</h3>
+
+## Máquinas de soporte vectorial
+
+El algoritmo de **SVM** encuentra el hiperplano (frontera de decisión) que devuelve el **mayor margen** entre sí mismo y los vectores de soporte
+
+::: columns
+::: {.column width="50%"}
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/example_svm.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/example_svm.png){fig-align="center"}
+:::
+:::
+
+## Máquinas de soporte vectorial
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/svm.png){fig-align="center"}
+
+::: footer
+Imagen extraída de [este link](https://www.javatpoint.com/machine-learning-support-vector-machine-algorithm)
+:::
+
+## SVM para datos NO linealmente separables
+
+Se debe proyectar a una dimensión donde los datos si sean linealmente separables
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/svm_kernel.png){fig-align="center"}
+
+[**Tipos de kernels:**]{style="color: #1c5253;"} lineal, polinomial, RBF.
+
+::: footer
+Imagen extraída de [aquí](https://medium.com/analytics-vidhya/how-to-classify-non-linear-data-to-linear-data-bb2df1a6b781)
+:::
+
+##  {background-color="#C5E1A5"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+
+[Métricas 🔢]{style="font-size: 100px;"}
+
+</h3>
+
+## El conjunto de test
+
+Durante el proceso de aprendizaje, el modelo no debe acceder bajo ninguna circunstancia a los datos del conjunto de testeo, sino las estimaciones estarán sesgadas.
+
+El conjunto de validación se utiliza para ajustar los hiperparámetros y luego se hace la selección de modelos.
+
+Las métricas ayudan a capturar objetivos reales en forma cuantitativa (no todos los errores son iguales)
+
+![](img/split_data.png){fig-align="center"}
+
+## Matriz de Confusión
+
+Se quiere que los elementos diagonales tengan valores grandes y los no diagonales valores chicos
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/confusion_matrix.png){fig-align="center"}
+
+## Accuracy
+
+$\LARGE Accuracy = \frac{TP + TN}{TP+TN+FP+FN}$
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/matrix.png){fig-align="center"}
+
+No es adecuado cuando los datos están [**muy desbalanceados**]{style="text-decoration: underline;"} Le da mayor importancia a la clase mayoritaria.
+
+## Precision
+
+A mas precisión menos errores de tipo I (falsos positivos)
+
+$\LARGE Precision = \frac{TP}{TP+FP}$
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/matrix.png){fig-align="center"}
+
+## Recall (Sensitividad)
+
+Encuentra todos los positivos. Utilizar cuando se quiere minimizar los falsos negativos.
+
+$\LARGE Recall = \frac{TP}{TP+FN}$
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/matrix.png){fig-align="center"}
+
+## 
+
+::: columns
+::: {.column width="50%"}
+### F1 Score
+
+Medida armónica entre Precision y recall
+
+$\LARGE F1 = 2* \frac{precision * recall}{precision + recall}$
+:::
+
+::: {.column width="50%"}
+### Especificidad
+
+$\LARGE Especificidad = \frac{TN}{TN + FP}$
+:::
+:::
+
+## Curvas ROC
+
+Puedo comparar modelos
+
+AUC= área bajo la curva ROC, que también sirve para comparar modelos.
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/roc.png){fig-align="center"}
+
+## 
+
+```{R}
+#| echo: false
+library(countdown)
+countdown(minutes = 10, 
+          right = "20%",
+          bottom= "35%",
+          padding = "50px",
+          margin = "4%",
+          font_size = "7em",
+          color_border      = "#d33682", #solarized$magenta,
+  color_text                = "#d33682", #solarized$magenta,
+  color_running_text        = "#073642", #solarized$base02,
+  color_finished_background = "#dc322f", #solarized$red,
+  color_finished_text       = "#fdf6e3"  #solarized$base3
+          )
+```
+
+##  {background-image="img/computadora.jpg" background-size="cover"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: center; position: absolute; top: 25%; width: 56%;">
+
+[¡Manos a R!]{style="font-size: 100px;"}
+
+</h3>
+
+::: footer
+Foto de <a href="https://unsplash.com/@emilep?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Emile Perron</a> en <a href="https://unsplash.com/es?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+:::
+
+##  {background-color="#C5E1A5"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:5px;line-height:2em; text-align: center; position: absolute; top: 40%; width: 100%;">
+
+[Validación Cruzada 🎨]{style="font-size: 100px;"}
+
+</h3>
+
+## Conjunto de testeo
+
+Durante el proceso de aprendizaje, el modelo [**no debe acceder**]{style="color: #88188a;"} bajo ninguna circunstancia a los datos del conjunto de testeo, sino las estimaciones estarán sesgadas.
+
+![](img/split_data.png){fig-align="center"}
+
+. . .
+
+> El objetivo de un modelo de Machine Learning es que generalice bien frente a nuevos datos o datos no vistos por el modelo (set de testeo)
+
+## Conjunto de validación
+
+El conjunto de validación se utiliza para ajustar los hiperparámetros y luego se hace la selección de modelos.
+
+Importante para evitar el overfitting y obtener modelos estables.
+
+1- Selección de hiperparámetros
+
+2- Selección de modelos usando el conjunto de validación
+
+3- Encontrar la mejor configuración de hiperparámetros según la métrica elegida
+
+4- Evaluación final con el conjunto de testeo
+
+## Muestreo estratificado
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/estratificado.png){fig-align="center"}
+
+## Cross-validation
+
+![](https://raw.githubusercontent.com/PamelaPairo/Taller_IA/main/clases/images/cross.png){fig-align="center"}
+
+##  {background-image="img/computadora.jpg" background-size="cover"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: center; position: absolute; top: 25%; width: 56%;">
+
+[¡Manos a R!]{style="font-size: 100px;"}
+
+</h3>
+
+::: footer
+Foto de <a href="https://unsplash.com/@emilep?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Emile Perron</a> en <a href="https://unsplash.com/es?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+:::
+
+## Referencias
+
+-   [20 Popular Machine Learning Metrics. Part 1: Classification & Regression Evaluation Metrics](https://towardsdatascience.com/20-popular-machine-learning-metrics-part-1-classification-regression-evaluation-metrics-1ca3e282a2ce)
+
+-   [Aprendizaje Automático y las Métricas de Regresión](https://sitiobigdata.com/2018/08/27/machine-learning-metricas-regresion-mse/#)
+
+-   [3 best metrics to evaluate regresion models?](https://towardsdatascience.com/what-are-the-best-metrics-to-evaluate-your-regression-model-418ca481755b)
+
+-   [Curvas ROC-AUC](https://mlu-explain.github.io/roc-auc/)

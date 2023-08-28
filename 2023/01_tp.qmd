@@ -82,6 +82,7 @@ col="orange",
 border="brown"
 )
 ```
+¿Cuáles son las categorias con mayores transacciones?
 
 ```{r}
 ggplot(data) + geom_bar(aes(y = category, fill =gender))
