@@ -79,6 +79,14 @@ object_descriptions |>
 
 ## TF-IDF
 
+Esta medida numérica se utiliza para calificar la relevancia de una palabra dentro de un documento a partir de la frecuencia que aparece en el mismo. 
+
+Se tiene en cuenta lo siguiente:
+
+- Mientras mayor sea la frecuencia del término en el documento, mayor será su importancia. 
+
+- Mientras mayor sea la frecuencia en los documentos, menor será la importancia del término.
+
 ```{r}
 tfidf <- object_descriptions |> 
   count(news, word) |> 
@@ -86,10 +94,6 @@ tfidf <- object_descriptions |>
   select(c(word, tf_idf)) |> 
   arrange(desc(tf_idf)) |> 
   head(20)
-
-
-tfidf
-
 ```
 
 
@@ -116,9 +120,9 @@ model_recipe <- recipe(feeling ~ news, data = objects_training) %>%
 ```{r}
 #SVM
 set.seed(234)
-model_SVM <- svm_linear() %>%
-  set_mode("classification") %>%
-  set_engine("LiblineaR")
+model_SVM <- svm_linear() |> 
+  set_engine("LiblineaR") |> 
+    set_mode("classification")
 ```
 
 
@@ -138,21 +142,22 @@ svm_fit <- we_svm %>%
 ```
 
 ```{r}
-# Make predictions on the test data
-svm_predictions <- predict(svm_fit, objects_testing) %>%
-  bind_cols(objects_testing)
-
-
-```
-
-```{r}
-# Make predictions on the test data
+# Predicciones en test
 svm_predictions <- predict(svm_fit, objects_testing) %>%
   bind_cols(objects_testing)
 
 svm_predictions
 ```
+
+## Métricas
+
+![](https://pbs.twimg.com/media/FD2hTDOX0AIdRti.jpg){.fragment width="500" lenght="700" fig-align="center"}
+
+
+
 ```{r}
+# Matriz de confusión
+
 svm_predictions$feeling <- as.factor(svm_predictions$feeling)
 
 conf_matrix <- svm_predictions %>%
@@ -161,3 +166,28 @@ conf_matrix <- svm_predictions %>%
 conf_matrix
 ```
 
+```{r}
+#Precision
+
+svm_predictions %>%
+  precision(truth = feeling, estimate = .pred_class)
+```
+```{r}
+# Recall
+svm_predictions %>%
+  recall(truth = feeling, estimate = .pred_class)
+```
+```{r}
+metricas <- metric_set(accuracy, spec, recall, precision)
+
+metricas(svm_predictions, truth = feeling,
+                estimate = .pred_class)
+```
+
+## ¿Qué modelo es mejor?
+
+![](img/metrics.png){.fragment width="500" lenght="700" fig-align="center"}
+
+Si la prioridad es predecir correctamente a los positivos --> buscamos alta sensibilidad
+
+Si se quiere identificar correctamente a los negativos --> buscamos alta especificidad

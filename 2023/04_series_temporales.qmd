@@ -1,0 +1,136 @@
+---
+title: "Clase 4: Introducción a Series Temporales"
+author: 
+- Pamela E. Pairo
+- Posgrado Digital Accounting
+title-slide-attributes:
+    data-background-image: "img/portada.jpg"
+format: 
+  revealjs:
+    theme: [mytheme.scss]
+    slide-number: c
+    incremental: false
+    width: 1600
+    height: 1000
+    logo: "img/logo.jpg"
+    footer: "[Aprendizaje Supervisado- PDA](https://github.com/PamelaPairo/clases_pda)"
+    chalkboard:
+      theme: whiteboard
+      boardmarker-width: 5
+      buttons: true
+    echo: true
+editor: visual
+---
+
+## En la clase de hoy...
+
+[**En la primera parte:**]{style="color: #ae260e;"}
+
+. . .
+
+-   ¿Qué es una serie temporal?
+-   Descomposición de una serie temporal
+-   Ejercitación
+
+. . .
+
+[**Recreo**]{style="color: #ae260e;"} `r emo::ji("coffee")`🧉
+
+. . .
+
+[**En la segunda parte:**]{style="color: #ae260e;"}
+
+. . .
+
+-   ARIMA y SARIMA
+-   Ejercitación
+
+## ¿Qué es una serie temporal?
+
+> Secuencia de N observaciones (datos) ordenados y equidistantes cronologicamente sobre una característica de una unidad observable en diferentes momentos. Es decir la variable x es el tiempo
+
+![](https://support.minitab.com/es-mx/minitab/20/media/generated-content/images/time_scale_default_ticks.png){.fragment width="800" fig-align="center"}
+
+## Algunas aplicaciones
+
+::: incremental
+::: columns
+::: {.column width="33%"}
+
+**Economía**
+
+- Precio de un producto
+- Tasa de desempleo
+- Tasa de inflación
+- Precio del dólar
+- Precio de acciones
+:::
+
+::: {.column width="34%"}
+
+**Meteorología**
+
+- Temperatura máxima diaria
+- Velocidad del viento
+- Precipitaciones
+
+:::
+
+::: {.column width="33%"}
+
+**Marketing**
+
+- Gastos
+- Ventas
+- Demandas
+- Ofertas
+
+:::
+:::
+:::
+
+## Tipos de análisis
+
+![](img/st.png){.fragment width="80" fig-align="center"}
+
+::: incremental
+- Descriptivo: ¿Cúando hay baja/alta demanda de un producto?
+- Explicativo/Inferencial: ¿A qué se debe que el producto haya aumentado/decrecido sus ventas?
+- Predictivo (_Forecasting_): Se usa el comportamiento histórico de la serie para conocer el comportamiento futuro
+
+:::
+
+> Importante el conocimiento de dominio, plantear adecuadamente el objetivo y así decidir la periodicidad de la serie
+
+## Componentes de la serie temporal
+
+**Tendencia (_Trend_):** existe un aumento o disminución a largo plazo en los datos. No tiene por qué ser lineal.
+
+![](img/trend.png){.fragment width="100" fig-align="center"}
+
+
+## Componentes de la serie temporal
+
+**Estacionalidad (_Seasonality_):** ocurre cuando una serie de tiempo se ve afectada por factores estacionales como la época del año o el día de la semana. La estacionalidad es siempre de un período fijo y conocido.
+
+![](img/seas_trend.png){.fragment width="100" fig-align="center"}
+
+## Componentes de la serie temporal
+
+**Cíclico:** ocurre cuando la exhibición de datos sube y baja pero no con una frecuencia fija.
+
+![](img/cycle.png){.fragment width="100" fig-align="center"}
+
+> Si las fluctuaciones no son de una frecuencia fija, entonces son cíclicas; si la frecuencia no cambia y está asociada con algún aspecto del calendario, entonces el patrón es estacional.
+
+## Descomposición: Aditiva vs Multiplicativa
+
+- Aditivo: es lineal donde los cambios a lo largo del tiempo se realizan consistentemente en la misma cantidad. Una tendencia lineal es una línea recta. Una estacionalidad lineal tiene la misma frecuencia (ancho de ciclos) y amplitud (alto de ciclos).
+
+- Multiplicativo: es no lineal, como cuadrático o exponencial. Los cambios aumentan o disminuyen con el tiempo. Una tendencia no lineal es una línea curva. Una estacionalidad no lineal tiene una frecuencia y/o amplitud creciente o decreciente a lo largo del tiempo.
+
+![](img/admul.png){.fragment width="70" fig-align="center"}
+
+## Referencias
+
+

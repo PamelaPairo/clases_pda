@@ -29,7 +29,7 @@ library(workflows)
 ```
 
 ```{r}
-data <- read_csv('data/df_fraude.csv')
+data <- read_csv('C:/Users/pamel/Desktop/PDA/ML/data/df_fraude.csv')
 glimpse(data)
 ```
 
@@ -94,7 +94,7 @@ levels(df$fraud)
 set.seed(456)#setear la semilla
 # Create data split for train and test
 df_split <- initial_split(df,
-                          prop = 0.7,
+                          prop = 0.8,
                           strata = fraud)# para conservar la proporción de clases
 # Create training data
 df_train <- df_split %>%
@@ -126,7 +126,6 @@ Al igual que `tidyverse`, `tidymodels` está compuesto por un conjunto de paquet
 -   `yardstick`: para evaluar el modelo
 
 Mayores especificaciones y ejemplos de uso de `tidymodels`, en su [página](https://www.tidymodels.org/packages/)
-
 
 
 ## Preprocesamiento de datos usando `recipe`
@@ -162,47 +161,35 @@ set.seed(234)
 model_NB <- naive_Bayes(smoothness = .8) |> 
             set_mode("classification") |>  
             set_engine("naivebayes")
-#SVM
-set.seed(234)
-model_SVM <-
-  svm_rbf() |> 
-  set_mode("classification") |> 
-  set_engine("kernlab")
-
-#Arboles de decisión
-set.seed(234)
-model_TREE <- decision_tree() |> 
-  set_engine("rpart") |>  
-  set_mode("classification")
 
 #Random Forest
 set.seed(234)
 model_RF <- rand_forest() |>  
   set_engine("ranger") |>  
-  set_mode("classification") |>  
-  set_args(trees = 100)
+  set_mode("classification") 
 ```
 
 
-# Árboles de decisión con CV
+# Random Forest con CV
 
 Con `tune`, se especifica qué hiperparámetros van a ser tuneados.
 
 ```{r}
-#Arboles de decisión con validacion cruzada
+#Random forest con validacion cruzada
 set.seed(234)
-model_TREE <- decision_tree(tree_depth = tune(),  min_n = tune()) |>  
-  set_engine("rpart") |> 
+model_RF <- rand_forest(mtry = tune(), 
+                         min_n = tune(),
+                         trees = 100) |>   
   set_mode("classification")
 ```
 
 ## Uniendo todo en un *Workflow*
 
 ```{r}
-wf_TREE <- workflow() |>  
+wf_RF <- workflow() |>  
           add_recipe(recipe_df) |> 
-          add_model(model_TREE)
-wf_TREE
+          add_model(model_RF)
+wf_RF
 ```
 
 ## Cross-validation
@@ -218,7 +205,8 @@ fold_df$splits
 Necesitamos un conjunto de posibles valores de parámetros para probar el árbol de decisión.
 
 ```{r}
-param_grid <- grid_regular(tree_depth(), min_n(), levels = 5)
+param_grid <- grid_regular(mtry(range = c(10, 30)), 
+                           min_n(range = c(2, 8)))
 param_grid
 ```
 
@@ -228,7 +216,7 @@ param_grid
 doParallel::registerDoParallel() #paralelizamos los cálculos
 
 tune_DF <- tune_grid(
-  model_TREE,
+  model_RF,
   fraud~ .,
   resamples = fold_df, 
   grid = param_grid, 
@@ -256,9 +244,9 @@ param_final
 
 
 ```{r}
-wf_TREE <- wf_TREE |> 
+wf_RF <- wf_RF |> 
   finalize_workflow(param_final)
-wf_TREE
+wf_RF
 ```
 
 # Evaluación en test
@@ -268,7 +256,7 @@ A continuación, se ajusta el flujo de trabajo del modelo final a los datos de e
 La función ´last_fit()´ ajuta el flujo de trabajo a los datos de entrenamiento y generará predicciones sobre los datos de prueba según lo define nuestro objeto churn_split.
 
 ```{r}
-dt_fit <- wf_TREE |> 
+dt_fit <- wf_RF |> 
   # fit on the training set and evaluate on test set
   last_fit(df_split, metrics = metric_set(precision))
 dt_fit
@@ -289,15 +277,29 @@ collect_predictions(dt_fit) |>
 ```
 
 ```{r}
-final_tree <- extract_workflow(dt_fit)
-final_tree
+final_RF <- extract_workflow(dt_fit)
+final_RF
+```
+
+## ¿Cuáles fueron las variables más importantes?
+
+```{r}
+best_precision <- select_best(tune_DF, "precision")
+
+final_rf <- finalize_model(
+  model_RF,
+  best_precision
+)
 ```
 
 ```{r}
-library(rpart.plot)
-final_tree %>%
-  extract_fit_engine() %>%
-  rpart.plot(roundint = FALSE)
+library(vip)
 
+final_rf %>%
+  set_engine("ranger", importance = "permutation") %>%
+  fit(fraud ~ .,
+    data = juice(recipe_df) 
+  ) %>%
+  vip(geom = "point")
 ```
 

@@ -1,0 +1,95 @@
+---
+title: "Introducción a las Series Temporales"
+author: "Pamela E. Pairo"
+lang: es
+description: |
+  Trabajo Práctico n°4
+format:
+  html:
+    theme: flatly
+    code-fold: show
+    code-tools: true
+    toc: true
+    toc-location: left
+---
+
+```{r, message=FALSE}
+# Carga de paquetes necesarios
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+library(tidyverse)
+library(lubridate)
+library(forecast)
+library(xts)
+
+```
+
+```{r}
+data <- read_csv('yahoo_stock.csv')
+
+
+glimpse(data)
+```
+```{r}
+
+serie_tiempo<- ts(data$High, 
+         start = c(2015, 11, 23), 
+         end= c(2019, 11, 01), 
+         frequency= 365)
+
+# Graficar la serie de tiempo
+plot(serie_tiempo, main = "Serie de Tiempo Diaria", xlab = "Fecha", ylab = "")
+
+
+```
+```{r}
+# Resample the data to a weekly frequency
+weekly_data <- period.apply(data, endpoints(data, "weeks"), mean)
+```
+
+
+```{r}
+descomposicion <- decompose(serie_tiempo)
+
+# Componente de tendencia
+plot(descomposicion$trend, main = "Componente de Tendencia", ylab = "Tendencia")
+```
+
+
+```{r}
+plot(descomposicion$seasonal, main = "Componente estacional", ylab = "estacionalidad")
+
+```
+```{r}
+plot(descomposicion$random, main = "Componente de Residuales", ylab = "Residuales")
+```
+
+```{r}
+pacf(serie_tiempo, main = "Gráfico de ACF", lag.max = 30)
+```
+
+```{r}
+# Ajustar un modelo ARIMA automáticamente
+modelo_autoarima <- auto.arima(serie_tiempo)
+
+# Resumen del modelo ARIMA seleccionado automáticamente
+summary(modelo_autoarima)
+```
+```{r}
+
+# Número de pasos hacia el futuro para hacer la predicción
+n_pasos <- 50  # Reemplaza con el número de pasos que desees predecir
+
+# Ajustar un modelo ARIMA con los parámetros especificados
+modelo_arima <- arima(serie_tiempo, order = c(0, 1, 1))
+
+# Hacer la predicción
+
+prediccion <- forecast(modelo_arima, h = n_pasos, level = 0.95)
+
+# Imprimir la predicción con la banda de confianza
+# Crear un gráfico de las predicciones con banda de confianza
+plot(prediccion, main = "Predicción con Banda de Confianza")
+```
+
