@@ -64,14 +64,51 @@ plot(descomposicion$seasonal, main = "Componente estacional", ylab = "estacional
 ```{r}
 plot(descomposicion$random, main = "Componente de Residuales", ylab = "Residuales")
 ```
+## ACF y PACF
+
+**Autocorrelation Function (ACF)** = autocorrelación entre la serie de tiempo y una retrasada de si misma ---> Moving Average Model (MA)
+
+Proceso de promedio móvil (MA), un proceso en el que el valor actual de la serie se define como una combinación lineal de errores pasados. Suponemos que los errores se distribuyen independientemente con la distribución normal.
+
+**ACF define el orden MA(q)**
+
+**Partial Autocorrelation Function** = La autocorrelación parcial mide la correlación entre dos variables separadas por k periodos cuando no seconsidera la dependencia creada por los retardos intermedios existentes entre ambas.
+
+**Proceso autorregresivo (AR)** , se dice que una serie de tiempo es AR cuando el valor presente de la serie de tiempo se puede obtener utilizando valores anteriores de la misma serie de tiempo, es decir, el valor presente es el promedio ponderado de sus valores pasados.
+
+PACF define AR (p)
+
+```{r}
+acf(serie_tiempo, lag.max = 200, plot=T)
+```
+
 
 ```{r}
 pacf(serie_tiempo, main = "Gráfico de ACF", lag.max = 30)
 ```
+## ARIMA y SARIMA
+
+\begin{align*}
+\LARGE \mathbf{ARIMA} (p, d, q) {x} (P, D, Q)S
+\end{align*}
+
+Elementos de la tendencia:
+
+- p: orden autoregresivo
+- d: orden de la diferenciación (_differencing_)
+- q: orden de la media móvil
+    
+Elementos de la estacionalidad:
+
+- P: orden autoregresivo estacional.
+- D:orden de la diferenciación estacional. D=1 calcula el primer orden de la diferencia estacional
+- Q: orden de la media móvil estacional. Q=1 usa errores de primer orden en el modelo
+- S: Período estacional único
 
 ```{r}
 # Ajustar un modelo ARIMA automáticamente
-modelo_autoarima <- auto.arima(serie_tiempo)
+modelo_autoarima <- auto.arima(serie_tiempo,
+                               seasonal= TRUE)
 
 # Resumen del modelo ARIMA seleccionado automáticamente
 summary(modelo_autoarima)
@@ -79,10 +116,12 @@ summary(modelo_autoarima)
 ```{r}
 
 # Número de pasos hacia el futuro para hacer la predicción
-n_pasos <- 50  # Reemplaza con el número de pasos que desees predecir
+n_pasos <- 70  # Reemplaza con el número de pasos que desees predecir
 
 # Ajustar un modelo ARIMA con los parámetros especificados
-modelo_arima <- arima(serie_tiempo, order = c(0, 1, 1))
+modelo_arima <- arima(serie_tiempo, 
+                      order = c(0, 1, 1), 
+                      seasonal = c(0,1,0))
 
 # Hacer la predicción
 
