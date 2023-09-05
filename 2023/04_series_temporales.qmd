@@ -56,35 +56,30 @@ editor: visual
 ::: incremental
 ::: columns
 ::: {.column width="33%"}
-
 **Economía**
 
-- Precio de un producto
-- Tasa de desempleo
-- Tasa de inflación
-- Precio del dólar
-- Precio de acciones
+-   Precio de un producto
+-   Tasa de desempleo
+-   Tasa de inflación
+-   Precio del dólar
+-   Precio de acciones
 :::
 
 ::: {.column width="34%"}
-
 **Meteorología**
 
-- Temperatura máxima diaria
-- Velocidad del viento
-- Precipitaciones
-
+-   Temperatura máxima diaria
+-   Velocidad del viento
+-   Precipitaciones
 :::
 
 ::: {.column width="33%"}
-
 **Marketing**
 
-- Gastos
-- Ventas
-- Demandas
-- Ofertas
-
+-   Gastos
+-   Ventas
+-   Demandas
+-   Ofertas
 :::
 :::
 :::
@@ -94,24 +89,22 @@ editor: visual
 ![](img/st.png){.fragment width="80" fig-align="center"}
 
 ::: incremental
-- Descriptivo: ¿Cúando hay baja/alta demanda de un producto?
-- Explicativo/Inferencial: ¿A qué se debe que el producto haya aumentado/decrecido sus ventas?
-- Predictivo (_Forecasting_): Se usa el comportamiento histórico de la serie para conocer el comportamiento futuro
-
+-   Descriptivo: ¿Cúando hay baja/alta demanda de un producto?
+-   Explicativo/Inferencial: ¿A qué se debe que el producto haya aumentado/decrecido sus ventas?
+-   Predictivo (*Forecasting*): Se usa el comportamiento histórico de la serie para conocer el comportamiento futuro
 :::
 
 > Importante el conocimiento de dominio, plantear adecuadamente el objetivo y así decidir la periodicidad de la serie
 
 ## Componentes de la serie temporal
 
-**Tendencia (_Trend_):** existe un aumento o disminución a largo plazo en los datos. No tiene por qué ser lineal.
+**Tendencia (*Trend*):** existe un aumento o disminución a largo plazo en los datos. No tiene por qué ser lineal.
 
 ![](img/trend.png){.fragment width="100" fig-align="center"}
 
-
 ## Componentes de la serie temporal
 
-**Estacionalidad (_Seasonality_):** ocurre cuando una serie de tiempo se ve afectada por factores estacionales como la época del año o el día de la semana. La estacionalidad es siempre de un período fijo y conocido.
+**Estacionalidad (*Seasonality*):** ocurre cuando una serie de tiempo se ve afectada por factores estacionales como la época del año o el día de la semana. La estacionalidad es siempre de un período fijo y conocido.
 
 ![](img/seas_trend.png){.fragment width="100" fig-align="center"}
 
@@ -125,12 +118,80 @@ editor: visual
 
 ## Descomposición: Aditiva vs Multiplicativa
 
-- Aditivo: es lineal donde los cambios a lo largo del tiempo se realizan consistentemente en la misma cantidad. Una tendencia lineal es una línea recta. Una estacionalidad lineal tiene la misma frecuencia (ancho de ciclos) y amplitud (alto de ciclos).
+-   Aditivo: es lineal donde los cambios a lo largo del tiempo se realizan consistentemente en la misma cantidad. Una tendencia lineal es una línea recta. Una estacionalidad lineal tiene la misma frecuencia (ancho de ciclos) y amplitud (alto de ciclos).
 
-- Multiplicativo: es no lineal, como cuadrático o exponencial. Los cambios aumentan o disminuyen con el tiempo. Una tendencia no lineal es una línea curva. Una estacionalidad no lineal tiene una frecuencia y/o amplitud creciente o decreciente a lo largo del tiempo.
+-   Multiplicativo: es no lineal, como cuadrático o exponencial. Los cambios aumentan o disminuyen con el tiempo. Una tendencia no lineal es una línea curva. Una estacionalidad no lineal tiene una frecuencia y/o amplitud creciente o decreciente a lo largo del tiempo.
 
 ![](img/admul.png){.fragment width="70" fig-align="center"}
 
+##  {background-image="img/computadora.jpg" background-size="cover"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: center; position: absolute; top: 25%; width: 56%;">
+
+[¡Manos a R!]{style="font-size: 100px;"}
+
+</h3>
+
+::: footer
+Foto de <a href="https://unsplash.com/@emilep?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Emile Perron</a> en <a href="https://unsplash.com/es?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+:::
+
+## Modelos Autoregresivos - AR(p)
+
+Se pronostica la variable de interés utilizando una combinación lineal de valores pasados de la variable.
+
+El término autoregresivo describe la regresión de una variable consigo misma.
+
+$\LARGE y_t= c + \phi_1 * y_{t-1} + \phi_2 * y_{t-2} + ...\phi_p * y_{t-p} + \epsilon_t$
+
+$\phi_p$ = coeficientes de retardo
+
+$\epsilon_t$ = white noise
+
+
+## Modelos de media móvil - MA (q)
+
+En lugar de usar valores pasados de la variable de pronóstico en una regresión, un modelo de promedio móvil usa errores de pronóstico pasados en un modelo similar a una regresión.
+
+$\LARGE y_t= c + \epsilon_t + \theta_1 * \epsilon_{t-1} + ...\theta_q * \epsilon_{t-q}$
+
+## Diferenciación (I)
+
+Una serie es estacionaria cuando la media y la varianza son constantes a lo largo del tiempo, **es decir no tiene componente de tendencia.**
+
+## Autocorrelation Function  y Partial Autocorrelation Function
+
+![](img/acf_pacf.png){.fragment width="70" fig-align="center"}
+
+## ARIMA y SARIMA
+
+![](img/sarima.png){.fragment width="60" fig-align="center"} 
+
+## Exponential Smoothing
+
+Los pronósticos producidos son promedios ponderados de observaciones pasadas, con los pesos decayendo exponencialmente a medida que las observaciones envejecen. En otras palabras, cuanto más reciente es la observación, mayor es el peso asociado. 
+
+Exponencial vs ARIMA: Mientras que los modelos de suavizado exponencial se basan en una descripción de la tendencia y la estacionalidad de los datos, los modelos ARIMA tienen como objetivo describir las autocorrelaciones en los datos.
+
+
+## Exponential Smoothing
+
+**Suavizado simple**: este método es adecuado para pronosticar datos sin tendencia clara o patrón estacional. Los pronósticos se calculan utilizando promedios ponderados, donde los pesos disminuyen exponencialmente a medida que las observaciones provienen de más lejos en el pasado.
+
+**Suavizado doble**: este método se utiliza cuando los datos muestran una tendencia constante (creciente o decreciente) indefinidamente en el futuro.
+
+**Suavizado triple-Método Holt Winter**: este método comprende la ecuación de pronóstico y tres ecuaciones de suavizado: una para el nivel, una para la tendencia y otra para el componente estacional, con los correspondientes parámetros de suavizado.
+
+##  {background-image="img/computadora.jpg" background-size="cover"}
+
+<h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: center; position: absolute; top: 25%; width: 56%;">
+
+[¡Manos a R!]{style="font-size: 100px;"}
+
+</h3>
+
+::: footer
+Foto de <a href="https://unsplash.com/@emilep?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Emile Perron</a> en <a href="https://unsplash.com/es?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+:::
+
 ## Referencias
-
-
