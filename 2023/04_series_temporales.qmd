@@ -100,19 +100,19 @@ editor: visual
 
 **Tendencia (*Trend*):** existe un aumento o disminución a largo plazo en los datos. No tiene por qué ser lineal.
 
-![](img/trend.png){.fragment width="100" fig-align="center"}
+![](img/trend.png){fig-align="center"}
 
 ## Componentes de la serie temporal
 
 **Estacionalidad (*Seasonality*):** ocurre cuando una serie de tiempo se ve afectada por factores estacionales como la época del año o el día de la semana. La estacionalidad es siempre de un período fijo y conocido.
 
-![](img/seas_trend.png){.fragment width="100" fig-align="center"}
+![](img/seas_trend.png){fig-align="center"}
 
 ## Componentes de la serie temporal
 
 **Cíclico:** ocurre cuando la exhibición de datos sube y baja pero no con una frecuencia fija.
 
-![](img/cycle.png){.fragment width="100" fig-align="center"}
+![](img/cycle.png){ fig-align="center"}
 
 > Si las fluctuaciones no son de una frecuencia fija, entonces son cíclicas; si la frecuencia no cambia y está asociada con algún aspecto del calendario, entonces el patrón es estacional.
 
@@ -122,7 +122,7 @@ editor: visual
 
 -   Multiplicativo: es no lineal, como cuadrático o exponencial. Los cambios aumentan o disminuyen con el tiempo. Una tendencia no lineal es una línea curva. Una estacionalidad no lineal tiene una frecuencia y/o amplitud creciente o decreciente a lo largo del tiempo.
 
-![](img/admul.png){.fragment width="70" fig-align="center"}
+![](img/admul.png){fig-align="center"}
 
 ##  {background-image="img/computadora.jpg" background-size="cover"}
 
@@ -171,7 +171,20 @@ Una serie es estacionaria cuando la media y la varianza son constantes a lo larg
 
 ## Autocorrelation Function  y Partial Autocorrelation Function
 
-![](img/acf_pacf.png){.fragment width="70" fig-align="center"}
+::: columns
+::: {.column width="50%"}
+ ACF: Autocorrelacién entre la serie y una retrasada en si misma que incluye la dependecnia directa e indirecta de la información
+ 
+PACF: solo describe la relación directa entre la observación y la retrasada en el tiempo
+:::
+
+::: {.column width="50%"}
+
+![](img/acf_pacf.png){fig-align="center"}
+:::
+:::
+
+
 
 ## ARIMA y SARIMA
 

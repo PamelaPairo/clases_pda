@@ -22,17 +22,17 @@ library(tidyverse)
 library(lubridate)
 library(forecast)
 library(xts)
-
 ```
+
+## Dataset
+
+Se extrajo información de _Yahoo Finance_ sobre índice S&P 500 desde el 2015 al 2020, junto con la información del precio de cierre del conjunto de datos disponible, aunque también está disponible otra información como el precio de apertura, el precio de cierre ajustado, etc. Mas información consultar [aquí](https://www.kaggle.com/datasets/arashnic/time-series-forecasting-with-yahoo-stock-price?resource=download)
 
 ```{r}
 data <- read_csv('yahoo_stock.csv')
-
-
 glimpse(data)
 ```
 ```{r}
-
 serie_tiempo<- ts(data$High, 
          start = c(2015, 11, 23), 
          end= c(2019, 11, 01), 
@@ -41,13 +41,33 @@ serie_tiempo<- ts(data$High,
 # Graficar la serie de tiempo
 plot(serie_tiempo, main = "Serie de Tiempo Diaria", xlab = "Fecha", ylab = "")
 
-
 ```
 ```{r}
-# Resample the data to a weekly frequency
-weekly_data <- period.apply(data, endpoints(data, "weeks"), mean)
+# Resampleo para obtener información semanal
+weekly_data <- period.apply(data, 
+                            endpoints(data, "weeks"), 
+                            mean)
+head(weekly_data)
 ```
 
+```{r}
+# Resampleo para obtener información mensual
+
+monthly_data <- period.apply(data, 
+                            endpoints(data, "months"), 
+                            mean)
+head(monthly_data, 10)
+```
+
+```{r}
+ts_monthly <- ts(monthly_data$High, start = c(2015,11), frequency = 12)
+
+# Graficar la serie de tiempo
+plot(ts_monthly, main = "Serie de Tiempo Mensual", xlab = "Fecha", ylab = "")
+
+```
+
+## Descomposición de la serie temporal
 
 ```{r}
 descomposicion <- decompose(serie_tiempo)
@@ -131,4 +151,21 @@ prediccion <- forecast(modelo_arima, h = n_pasos, level = 0.95)
 # Crear un gráfico de las predicciones con banda de confianza
 plot(prediccion, main = "Predicción con Banda de Confianza")
 ```
+
+## Exponential Smoothing
+ 
+```{r}
+ses_<- forecast::ses(serie_tiempo,
+                h = 70,
+                seasonal= "additive")
+autoplot(ses_)
+```
+```{r}
+holt_ <- forecast::holt(serie_tiempo,
+                h = 50,
+                seasonal= "multiplicative")
+autoplot(holt_)
+```
+
+
 

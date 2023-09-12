@@ -1,0 +1,139 @@
+---
+title: "Aprendizaje No Supervisado"
+author: "Pamela E. Pairo"
+lang: es
+description: |
+  Trabajo Práctico n°5
+format:
+  html:
+    theme: flatly
+    code-fold: show
+    code-tools: true
+    toc: true
+    toc-location: left
+---
+
+## Carga de las librerias necesarias
+
+```{r, message=FALSE}
+# Carga de paquetes necesarios
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+library(tidyverse)
+library(palmerpenguins)
+library(factoextra)
+library(Rtsne)
+```
+
+![Arte realizado por Allison Horst](img/penguins.png){fig-align="center"}
+
+```{r}
+glimpse(penguins)
+```
+
+Se eliminan datos faltantes y unicamente trabajamos con variables numéricas
+
+```{r}
+df <- na.omit(penguins) |> 
+          select(!where(is.factor) & -year)
+
+```
+
+#Escalamos
+
+```{r}
+df <- scale(df)
+head (df)
+```
+
+# K-means
+
+```{r}
+k2 <- kmeans(df, centers = 2)
+```
+
+```{r}
+fviz_cluster(k2, data = df, geom = c("point"))
+```
+
+```{r}
+k3 <- kmeans(df, centers = 3)
+k4 <- kmeans(df, centers = 4)
+k5 <- kmeans(df, centers = 5)
+# plots to compare
+p1 <- fviz_cluster(k2, geom = "point", data = df) + ggtitle("k = 2")
+p2 <- fviz_cluster(k3, geom = "point",  data = df) + ggtitle("k = 3")
+p3 <- fviz_cluster(k4, geom = "point",  data = df) + ggtitle("k = 4")
+p4 <- fviz_cluster(k5, geom = "point",  data = df) + ggtitle("k = 5")
+
+library(gridExtra)
+
+grid.arrange(p1, p2, p3, p4, nrow = 2)
+```
+
+# Método del codo
+
+```{r}
+fviz_nbclust(df, kmeans, method = "wss")
+```
+
+# PCA
+
+```{r}
+res.pca <- prcomp(df, scale = TRUE)
+names (res.pca)
+```
+
+`center`:contienen la media de las variables previa estandarización (en la escala original)
+
+`scale`: contienen desviación típica de las variables previa estandarización (en la escala original)
+
+`rotation`: contiene los loadings
+
+```{r}
+fviz_pca_biplot(res.pca, repel = TRUE,
+                col.var = "black", 
+                palette = c("#00AFBB",  "#FC4E07"),
+                legend.title = " ",
+                # xlab="PC 1 (68%)",
+               # ylab= "PC 2 (20%)",
+                label = "var"# Variables color
+                
+)
+```
+
+```{r}
+# Eigenvalues
+eig.val <- get_eigenvalue(res.pca)
+eig.val
+  
+# Resultados por variables
+res.var <- get_pca_var(res.pca)
+res.var$coord          # Coordenadas
+res.var$contrib        # Contribución a los CP
+# Resultados por individuos
+res.ind <- get_pca_ind(res.pca)
+res.ind$coord          # Coordenadas
+```
+
+# Porcentaje de explicación de cada variable
+
+```{r}
+fviz_eig(res.pca)
+```
+
+# T-SNE
+
+``` r
+install.packages("Rtsne") # Install Rtsne package from CRAN
+``` 
+
+```{r}
+tsne <- Rtsne(df,dim = 2, perplexity=10, max_iter = 500)
+```
+
+```{r}
+plot(tsne$Y, t='n', main="tSNE", xlab="tSNE dimension 1", ylab="tSNE dimension 2", "cex.main"=2, "cex.lab"=1.5)
+text(tsne$Y, labels=penguins$species)
+```

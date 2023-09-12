@@ -423,17 +423,17 @@ Posgrado Digital Accounting
 <h2>Componentes de la serie temporal 📈</h2>
 <p><strong>Tendencia (<em>Trend</em>):</strong> existe un aumento o disminución a largo plazo en los datos. No tiene por qué ser lineal.</p>
 
-<img data-src="img/trend.png" class="fragment r-stretch quarto-figure-center" width="100"></section>
+<img data-src="img/trend.png" class="r-stretch quarto-figure-center"></section>
 <section id="componentes-de-la-serie-temporal-1" class="slide level2">
 <h2>Componentes de la serie temporal</h2>
 <p><strong>Estacionalidad (<em>Seasonality</em>):</strong> ocurre cuando una serie de tiempo se ve afectada por factores estacionales como la época del año o el día de la semana. La estacionalidad es siempre de un período fijo y conocido.</p>
 
-<img data-src="img/seas_trend.png" class="fragment r-stretch quarto-figure-center" width="100"></section>
+<img data-src="img/seas_trend.png" class="r-stretch quarto-figure-center"></section>
 <section id="componentes-de-la-serie-temporal-2" class="slide level2">
 <h2>Componentes de la serie temporal</h2>
 <p><strong>Cíclico:</strong> ocurre cuando la exhibición de datos sube y baja pero no con una frecuencia fija.</p>
 
-<img data-src="img/cycle.png" class="fragment r-stretch quarto-figure-center" width="100"><blockquote>
+<img data-src="img/cycle.png" class="r-stretch quarto-figure-center"><blockquote>
 <p>Si las fluctuaciones no son de una frecuencia fija, entonces son cíclicas; si la frecuencia no cambia y está asociada con algún aspecto del calendario, entonces el patrón es estacional.</p>
 </blockquote>
 </section>
@@ -444,7 +444,7 @@ Posgrado Digital Accounting
 <li><p>Multiplicativo: es no lineal, como cuadrático o exponencial. Los cambios aumentan o disminuyen con el tiempo. Una tendencia no lineal es una línea curva. Una estacionalidad no lineal tiene una frecuencia y/o amplitud creciente o decreciente a lo largo del tiempo.</p></li>
 </ul>
 
-<img data-src="img/admul.png" class="fragment r-stretch quarto-figure-center" width="70"></section>
+<img data-src="img/admul.png" class="r-stretch quarto-figure-center"></section>
 <section id="section" class="slide level2" data-background-image="img/computadora.jpg" data-background-size="cover">
 <h2></h2>
 <h3 style="color:black;background-color: rgba(255,255,255,0.65);padding:15px;line-height:2em; text-align: center; position: absolute; top: 25%; width: 56%;">
@@ -482,8 +482,19 @@ Posgrado Digital Accounting
 </section>
 <section id="autocorrelation-function-y-partial-autocorrelation-function" class="slide level2">
 <h2>Autocorrelation Function y Partial Autocorrelation Function</h2>
-
-<img data-src="img/acf_pacf.png" class="fragment r-stretch quarto-figure-center" width="70"></section>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>ACF: Autocorrelacién entre la serie y una retrasada en si misma que incluye la dependecnia directa e indirecta de la información</p>
+<p>PACF: solo describe la relación directa entre la observación y la retrasada en el tiempo</p>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/acf_pacf.png"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="arima-y-sarima" class="slide level2">
 <h2>ARIMA y SARIMA</h2>
 
@@ -510,6 +521,10 @@ Posgrado Digital Accounting
 </section>
 <section id="referencias" class="slide level2">
 <h2>Referencias</h2>
+<ul>
+<li><p><a href="https://www.ucm.es/data/cont/docs/518-2013-11-11-JAM-IAST-Libro.pdf">Introducción a las Series Temporales</a></p></li>
+<li><p><a href="https://otexts.com/fpp2/">Forecasting: Principles and Practice</a></p></li>
+</ul>
 
 <img src="img/logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 <p><a href="https://github.com/PamelaPairo/clases_pda">Aprendizaje Supervisado- PDA</a></p>
